@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 class ShopsListItem extends React.Component {
 
     render(){
-        return <li><Link to={`/shops/${this.props.id}`}>{this.props.name}</Link> </li>
+        return <li className="list-group-item"><Link to={`/shops/${this.props.id}`}>{this.props.name}</Link> </li>
     }
 }
 
@@ -16,14 +16,14 @@ export default class ShopsList extends React.Component {
         const shops = values(this.props.shops);
         return (
             <div>
-            <h3>This is the shop list</h3>
-            <ul>
+            <h3>Choose a shop</h3>
+            <ul className="list-group">
                 { shops.map((shop) => {
                     return <ShopsListItem {...shop} key={shop.id} onShopClick={this.props.onShopClick} />
                     })
                 }
             </ul>
-        </div>
+            </div>
         )
     }
 

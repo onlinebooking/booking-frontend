@@ -8,7 +8,12 @@ export default class ShopDetail extends React.Component {
 
     
     render(){
-        return <div>{this.props.name}: aaaaa</div>
+        return (
+        <div>
+            <h3>Shop: {this.props.name}</h3>
+            <p><b>Domain name:</b> {this.props.domain_name}</p>
+        </div>
+        )
     }
 
 
