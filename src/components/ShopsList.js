@@ -13,7 +13,7 @@ class ShopsListItem extends React.Component {
                             <h4>{this.props.name}</h4>
                             <p>Maybe Some description here.</p>
                         </div>
-                        <Image className="pull-right responsive" src="http://lorempixel.com/150/100/city/" />    
+                        <Image className="pull-right responsive" src="http://placehold.it/150x100" />    
                         <div className="clearfix"></div>
                     </div>
                     
