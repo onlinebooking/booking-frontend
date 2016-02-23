@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { loadShops } from './actions';
 import createLogger from 'redux-logger';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 
+import App from './containers/App';
 import ShopsListContainer from './containers/ShopsListContainer';
+import ShopDetailContainer from './containers/ShopDetailContainer';
 
 const store = createStore(
     rootReducer,
@@ -17,30 +19,20 @@ const store = createStore(
 );
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(hashHistory, store);
 
 
-class App extends React.Component {
-
-  render() {
-
-    store.dispatch(loadShops());
-
-    return (
-      <div>
-        
-      </div>
-    
-    );
-  }
-}
 
 
 ReactDom.render(
 
   <Provider store={store}>
-    /* Tell the Router to use our enhanced history */
-    <App />
+    <Router history={history}>
+        <Route path="/" component={App}>
+            <Route path="shops" component={ShopsListContainer}/>
+            <Route path="shops/:shopId" component={ShopDetailContainer}/>
+      </Route>
+    </Router>
   </Provider>,
   
   document.getElementById('root')
