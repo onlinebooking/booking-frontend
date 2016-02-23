@@ -7,13 +7,11 @@ export class App extends React.Component {
 
     return (
       <div>
-          <NavBar></NavBar>  
-          ahah 
-          <div>
+          <NavBar></NavBar>
+          <div className="container-fluid">
             {this.props.children}
           </div>
       </div>
-    
     );
   }
 }

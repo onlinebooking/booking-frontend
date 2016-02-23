@@ -1,5 +1,4 @@
-//require("bootstrap/less/bootstrap.less");
-
+require('bootstrap/dist/css/bootstrap.css');
 
 import { createStore, applyMiddleware } from 'redux';
 import React from 'react';
@@ -9,10 +8,10 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { loadShops } from './actions';
 import createLogger from 'redux-logger';
-import { Router, Route, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import App from './containers/App';
+import { App } from './containers/App';
 import ShopsListContainer from './containers/ShopsListContainer';
 import ShopDetailContainer from './containers/ShopDetailContainer';
 
@@ -26,13 +25,12 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 
 
-
 ReactDom.render(
 
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
-            <Route path="/shops" component={ShopsListContainer} />
+            <IndexRoute component={ShopsListContainer} />
             <Route path="/shops/:shopId" component={ShopDetailContainer} />
       </Route>
     </Router>

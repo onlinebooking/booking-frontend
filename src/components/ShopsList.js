@@ -14,12 +14,17 @@ export default class ShopsList extends React.Component {
 
     render(){
         const shops = values(this.props.shops);
-        return <ul>
-        { shops.map((shop) => {
-            return <ShopsListItem {...shop} key={shop.id} onShopClick={this.props.onShopClick} />
-            })
-        }
-        </ul>
+        return (
+            <div>
+            <h3>This is the shop list</h3>
+            <ul>
+                { shops.map((shop) => {
+                    return <ShopsListItem {...shop} key={shop.id} onShopClick={this.props.onShopClick} />
+                    })
+                }
+            </ul>
+        </div>
+        )
     }
 
 }
