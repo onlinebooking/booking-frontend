@@ -1,4 +1,5 @@
 require('bootswatch/yeti/bootstrap.css');
+require('./scss/style.scss')
 
 import { createStore, applyMiddleware } from 'redux';
 import React from 'react';

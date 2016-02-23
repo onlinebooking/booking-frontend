@@ -7,7 +7,7 @@ export class NavBar extends React.Component {
 
         return (
 
-            <Navbar>
+            <Navbar inverse>
             <Navbar.Header>
               <Navbar.Brand>
                 <a href="#">OnlineBooking</a>
