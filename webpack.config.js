@@ -14,6 +14,12 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules/
+      },
+      //https://github.com/gowravshekar/bootstrap-webpack
+      { test: /\.less$/, loader: "!style-loader!css-loader!less-loader" },
+      {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
       }
     ]
   }

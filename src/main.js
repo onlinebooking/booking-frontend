@@ -1,3 +1,6 @@
+//require("bootstrap/less/bootstrap.less");
+
+
 import { createStore, applyMiddleware } from 'redux';
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -29,8 +32,8 @@ ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
-            <Route path="shops" component={ShopsListContainer}/>
-            <Route path="shops/:shopId" component={ShopDetailContainer}/>
+            <Route path="/shops" component={ShopsListContainer} />
+            <Route path="/shops/:shopId" component={ShopDetailContainer} />
       </Route>
     </Router>
   </Provider>,

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { NavBar } from '../components/NavBar';
 
 export class App extends React.Component {
 
@@ -7,7 +7,11 @@ export class App extends React.Component {
 
     return (
       <div>
-        {this.props.children}
+          <NavBar></NavBar>  
+          ahah 
+          <div>
+            {this.props.children}
+          </div>
       </div>
     
     );
