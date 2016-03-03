@@ -12,9 +12,10 @@ import createLogger from 'redux-logger';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import { App } from './containers/App';
-import ShopsListContainer from './containers/ShopsListContainer';
-import ShopDetailContainer from './containers/ShopDetailContainer';
+import App from './containers/App';
+import ShopsListPage from './containers/ShopsListPage';
+import ShopDetailPage from './containers/ShopDetailPage';
+import ServiceBookingPage from './containers/ServiceBookingPage'
 
 const store = createStore(
     rootReducer,
@@ -31,8 +32,9 @@ ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
-            <IndexRoute component={ShopsListContainer} />
-            <Route path="/shops/:shopId" component={ShopDetailContainer} />
+            <IndexRoute component={ShopsListPage} />
+            <Route path="/shops/:shopId" component={ShopDetailPage} />
+            <Route path="/shops/:shopId/booking/:serviceId" component={ServiceBookingPage} />
       </Route>
     </Router>
   </Provider>,

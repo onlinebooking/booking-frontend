@@ -1,0 +1,53 @@
+entities : { 
+    
+    shops : {
+        1 : {},
+        2 : {}
+    },
+
+    services : {
+      1: {},
+      2: {}
+    }
+},
+
+
+homeShopList : {
+
+    fetching : true,
+    items : [1,2,3],
+    currentPage : [1,2]
+    
+},
+
+shopServices : {
+
+    1 : {
+        fetching : true,
+        items : [1,2,3],
+        currentPage : [1,2]
+    },
+
+    2 : {
+        fetching : false,
+        items : [1,2,3],
+        currentPage : [1,2]
+    }
+    
+},
+
+booking : {
+    dates  : {
+        start : null,
+        end : null,
+    },
+    ranges : []
+    selectedRange : null,
+    booking : false,
+    bookingId : null
+
+}
+
+
+
+

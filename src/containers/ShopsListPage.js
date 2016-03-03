@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-class ShopsListContainer extends React.Component {
+class ShopsListPage extends React.Component {
 
     componentWillMount(){
         this.props.loadShops()
@@ -43,5 +43,5 @@ function mapStateTopProps(state) {
 }
 
 
-export default connect(mapStateTopProps, mapDispatchToProps)(ShopsListContainer);
+export default connect(mapStateTopProps, mapDispatchToProps)(ShopsListPage);
 

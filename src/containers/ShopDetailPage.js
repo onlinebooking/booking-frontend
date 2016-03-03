@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 
-class ShopDetailContainer extends React.Component {
+class ShopDetailPage extends React.Component {
 
     componentWillMount(){
         this.props.loadShop()
@@ -55,5 +55,5 @@ function mapStateTopProps(state, ownProps) {
 }
 
 
-export default connect(mapStateTopProps, mapDispatchToProps)(ShopDetailContainer);
+export default connect(mapStateTopProps, mapDispatchToProps)(ShopDetailPage);
 

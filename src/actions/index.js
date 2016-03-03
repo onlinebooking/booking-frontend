@@ -14,6 +14,14 @@ export const SHOP_SERVICES_REQUEST = 'SHOP_SERVICES_REQUEST';
 export const SHOP_SERVICES_SUCCESS = 'SHOP_SERVICES_SUCCESS';
 export const SHOP_SERVICES_FAILURE = 'SHOP_SERVICES_FAILURE';
 
+export const SET_BOOKING_DATA = 'SET_BOOKING_DATA';
+
+export const REQUEST_BOOKING_RANGES = 'REQUEST_BOOKING_RANGES';
+export const RANGES_REQUEST = 'RANGES_REQUEST';
+export const RANGES_SUCCESS = 'RANGES_SUCCESS';
+export const RANGES_FAILURE = 'RANGES_FAILURE';
+
+export const SET_BOOKING_RANGE = 'SET_BOOKING_RANGE';
 
 
 import { keys, keyBy, isArray } from "lodash";
@@ -55,8 +63,6 @@ export function loadShopServices(shopId) {
 }
 
 
-
-
 export function apiEntity(entity, asyncOperation, types, data={}) {
   return (dispatch, getState) => {
     const [typeRequest, typeFailure, typeSuccess] = types;
@@ -84,4 +90,46 @@ export function apiEntity(entity, asyncOperation, types, data={}) {
     })
   }
 }
+
+
+export function setBookingData(data){
+    return {
+        type : SET_BOOKING_DATA,
+        ...data
+    };
+}
+
+
+export function setCurrentBookingRange(idx){
+    return {
+        type : SET_BOOKING_RANGE,
+        idx
+    };
+}
+
+export function requestBookingRanges(){
+    return (dispatch, getState) => {
+
+        const { start, end, service } = getState().booking.data;
+
+        dispatch({ type: RANGES_REQUEST });
+
+        fetch(`${API_URL}/calculate-ranges?start=${start}&end=${end}&service=${service}`)
+        .then(response => {
+            if (response.status >= 400) {
+                //throw new Error("Bad response from server");
+                dispatch({ type: RANGES_FAILURE });
+            }
+            
+            return response.json();
+        })
+        .then(ranges => {
+            dispatch({ type: RANGES_SUCCESS, ranges });
+        });
+
+    }
+    
+}
+
+
 
