@@ -38,7 +38,8 @@ class ShopsListContainer extends React.Component {
 
 
 function mapStateTopProps(state) {
-    return { shops : state.entities.shops }
+    const shops = state.homeShopList.items.map(id => state.entities.shops[id]);
+    return { shops }
 }
 
 

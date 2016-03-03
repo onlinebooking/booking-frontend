@@ -10,7 +10,7 @@ export const SHOP_REQUEST = 'SHOP_REQUEST';
 export const SHOP_SUCCESS = 'SHOP_SUCCESS';
 export const SHOP_FAILURE = 'SHOP_FAILURE';
 
-import { keys, keyBy } from "lodash";
+import { keys, keyBy, isArray } from "lodash";
 
 
 function randomShops(){
@@ -18,72 +18,53 @@ function randomShops(){
     return i % 2 == 0 ? [{name:"aaaa", id:1}, {name:"bbb", id:2}] : [{name:"ccc", id:3}, {name:"ddd", id:4}];
 }
 
+
+
 export function loadShops() {
-  return (dispatch, getState) => {
-
-    dispatch({
-        type : SHOPS_REQUEST
-    });
-    
-    fetch(`${API_URL}/shops`)
-    .then(function(response) {
-        if (response.status >= 400) {
-            //throw new Error("Bad response from server");
-            dispatch({
-                type : SHOPS_FAILURE
-            })
-
-        }
-
-        return response.json();
-    })
-    .then((shops)=>{
-        dispatch({
-            type : SHOPS_SUCCESS,
-            shops : keyBy(shops, 'id')
-        })
-    })
-  }
+    return apiEntity(
+        'shops',
+        fetch(`${API_URL}/shops`),
+        [SHOPS_REQUEST, SHOPS_FAILURE, SHOPS_SUCCESS]
+    );
 }
 
 
 export function loadShop(shopId) {
+    return apiEntity(
+        'shops',
+        fetch(`${API_URL}/shops/${shopId}`),
+        [SHOP_REQUEST, SHOP_FAILURE, SHOP_SUCCESS]
+    );
+}
+
+
+export function apiEntity(entity, asyncOperation, types, successData={}) {
   return (dispatch, getState) => {
-
-    dispatch({
-        type : SHOP_REQUEST
-    });
-
-
-    const currentState = getState();
-    if ( currentState.entities.shops[shopId] ){
-        console.log("from cache")
-        dispatch({
-            type : SHOP_SUCCESS,
-            shop : currentState.entities.shops[shopId]
-        })
-
-        return
-    }
-
+    const [typeRequest, typeFailure, typeSuccess] = types;
     
-    fetch(`${API_URL}/shops/${shopId}`)
+    dispatch({
+        type : typeRequest
+    });
+    
+    asyncOperation
     .then(function(response) {
         if (response.status >= 400) {
             //throw new Error("Bad response from server");
             dispatch({
-                type : SHOP_FAILURE
+                type : typeFailure
             })
-
         }
 
         return response.json();
     })
-    .then((shop)=>{
-        dispatch({
-            type : SHOP_SUCCESS,
-            shop : shop
-        })
+    .then((items)=>{
+        if (!isArray(items)) {
+            items = [items];
+        }
+        
+        const successAction = Object.assign({}, { type : typeSuccess, entity, items }, successData);
+        dispatch(successAction);
     })
   }
 }
+

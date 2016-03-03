@@ -19,8 +19,12 @@ class ShopDetailContainer extends React.Component {
         this.props.loadShop()
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log("got props", nextProps);
+    }
+
     render(){
-        if (this.props.loading) {
+        if (!this.props.shop) {
             return <div>....</div>
         }
         return <ShopDetail {...this.props.shop} />
@@ -30,7 +34,7 @@ class ShopDetailContainer extends React.Component {
 
 
 function mapStateTopProps(state, ownProps) {
-    return { shop : state.entities.shops[ownProps.params.shopId], loading : state.loading.shop }
+    return { shop : state.entities.shops[ownProps.params.shopId] }
 }
 
 
