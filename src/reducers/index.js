@@ -51,10 +51,44 @@ function homeShopList(state=defaultHomeShopList, action){
 }
 
 
+const defaultShopServices = { };
+
+function service(state={items:[], fetching:false}, action){
+  switch(action.type) {
+
+    case ActionTypes.SHOP_SERVICES_REQUEST:
+      return { ...state,  fetching: true }; 
+
+    case ActionTypes.SHOP_SERVICES_FAILURE:
+      return { ...state,  fetching: false }; 
+
+    case ActionTypes.SHOP_SERVICES_SUCCESS:
+      return { ...state, items: pluck(action.items, 'id'), fetching: false }; 
+  }
+
+  return state;
+}
+
+function shopServices(state=defaultShopServices, action){
+  switch(action.type) {
+
+    case ActionTypes.SHOP_SERVICES_REQUEST:
+    case ActionTypes.SHOP_SERVICES_FAILURE:
+    case ActionTypes.SHOP_SERVICES_SUCCESS:
+      return { ...state, [action.shopId] : service(state[action.shopId], action)}
+  }
+
+  return state;
+
+
+}
+
+
 
 const rootReducer = combineReducers({
   entities,
   homeShopList,
+  shopServices,
   routing
 });
 

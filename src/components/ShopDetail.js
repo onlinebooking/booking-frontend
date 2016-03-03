@@ -10,13 +10,14 @@ export default class ShopDetail extends React.Component {
     render(){
         return (
         <div>
-            <h2>Shop: {this.props.name}</h2>
-            <p><b>Domain name:</b> {this.props.domain_name}</p>
+            <h2>Shop: {this.props.shop.name}</h2>
+            <p><b>Domain name:</b> {this.props.shop.domain_name}</p>
             <h4>Servizi</h4>  
             <ListGroup>
-                <ListGroupItem>One</ListGroupItem>
-                <ListGroupItem>Two</ListGroupItem>
-                <ListGroupItem>Three</ListGroupItem>
+                { this.props.services.map(service => {
+                    return <ListGroupItem key={service.id}>{service.name}</ListGroupItem>
+                    })
+                }
             </ListGroup>
 
         </div>

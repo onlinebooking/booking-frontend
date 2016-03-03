@@ -10,6 +10,12 @@ export const SHOP_REQUEST = 'SHOP_REQUEST';
 export const SHOP_SUCCESS = 'SHOP_SUCCESS';
 export const SHOP_FAILURE = 'SHOP_FAILURE';
 
+export const SHOP_SERVICES_REQUEST = 'SHOP_SERVICES_REQUEST';
+export const SHOP_SERVICES_SUCCESS = 'SHOP_SERVICES_SUCCESS';
+export const SHOP_SERVICES_FAILURE = 'SHOP_SERVICES_FAILURE';
+
+
+
 import { keys, keyBy, isArray } from "lodash";
 
 
@@ -30,6 +36,7 @@ export function loadShops() {
 
 
 export function loadShop(shopId) {
+    //#TODO : CHECK IF NEEDED!
     return apiEntity(
         'shops',
         fetch(`${API_URL}/shops/${shopId}`),
@@ -37,22 +44,32 @@ export function loadShop(shopId) {
     );
 }
 
+export function loadShopServices(shopId) {
+    //#TODO : CHECK IF NEEDED!
+    return apiEntity(
+        'services',
+        fetch(`${API_URL}/shops/${shopId}/services`),
+        [SHOP_SERVICES_REQUEST, SHOP_SERVICES_FAILURE, SHOP_SERVICES_SUCCESS],
+        { shopId }
+    );
+}
 
-export function apiEntity(entity, asyncOperation, types, successData={}) {
+
+
+
+export function apiEntity(entity, asyncOperation, types, data={}) {
   return (dispatch, getState) => {
     const [typeRequest, typeFailure, typeSuccess] = types;
     
-    dispatch({
-        type : typeRequest
-    });
+    const requestAction = Object.assign({}, { type : typeRequest }, data);
+    dispatch(requestAction);
     
     asyncOperation
     .then(function(response) {
         if (response.status >= 400) {
             //throw new Error("Bad response from server");
-            dispatch({
-                type : typeFailure
-            })
+            const failureAction = Object.assign({}, { type : typeFailure }, data)
+            dispatch(failureAction);
         }
 
         return response.json();
@@ -62,7 +79,7 @@ export function apiEntity(entity, asyncOperation, types, successData={}) {
             items = [items];
         }
         
-        const successAction = Object.assign({}, { type : typeSuccess, entity, items }, successData);
+        const successAction = Object.assign({}, { type : typeSuccess, entity, items }, data);
         dispatch(successAction);
     })
   }
