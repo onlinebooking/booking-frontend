@@ -7,7 +7,6 @@ import ReactDom from 'react-dom';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { loadShops } from './actions';
 import createLogger from 'redux-logger';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -17,18 +16,21 @@ import ShopsListPage from './containers/ShopsListPage';
 import ShopDetailPage from './containers/ShopDetailPage';
 import ServiceBookingPage from './containers/ServiceBookingPage'
 
+import api from './middleware/api';
+
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk, createLogger())
+    applyMiddleware(thunk, api, createLogger())
 );
+
+import {loadShopService} from './actions';
+
+store.dispatch(loadShopService(1, 3));
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
 
-
-
 ReactDom.render(
-
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
@@ -38,8 +40,5 @@ ReactDom.render(
       </Route>
     </Router>
   </Provider>,
-  
   document.getElementById('root')
-)
-
-
+);

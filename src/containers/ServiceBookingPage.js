@@ -17,13 +17,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 
 function mapStateTopProps(state, ownProps) {
-    let props =  { 
+    let props =  {
         startDate : state.booking.data.start,
         endDate : state.booking.data.end,
         ranges : state.booking.ranges,
         selectedRange : state.booking.selectedRange
     }
-    
+
     return props;
 }
 
@@ -31,13 +31,17 @@ function mapStateTopProps(state, ownProps) {
 
 class ServiceBookingPage extends React.Component {
 
+    componentWillMount() {
+      //this.props.setCurrentBookingService()
+    }
+
     onEndChange(event){
 
         const m = moment(event.target.value)
         if ( m.isValid() ) {
-            this.props.setBookingData({ end : m.format('YYYY-MM-DD')})            
+            this.props.setBookingData({ end : m.format('YYYY-MM-DD')})
         } else {
-            this.props.setBookingData({ end : null })            
+            this.props.setBookingData({ end : null })
         }
 
     }
@@ -45,9 +49,9 @@ class ServiceBookingPage extends React.Component {
     onStartChange(event){
         const m = moment(event.target.value)
         if ( m.isValid() ) {
-            this.props.setBookingData({ start : m.format('YYYY-MM-DD')})            
+            this.props.setBookingData({ start : m.format('YYYY-MM-DD')})
         } else {
-            this.props.setBookingData({ start : null })            
+            this.props.setBookingData({ start : null })
         }
     }
 
@@ -59,16 +63,13 @@ class ServiceBookingPage extends React.Component {
     }
 
 
-    componentWillMount() {
-        this.props.setCurrentBookingService()
-    }
 
     render(){
         return <div>
             <div className="service-description">
-                Descrizione servizio
+
             </div>
-            <div className="row"> 
+            <div className="row">
                 <div className="col col-xs-6">
                     <label>Data inizio</label>
                     <input type="text" onChange={this.onStartChange.bind(this)}/>
@@ -82,7 +83,7 @@ class ServiceBookingPage extends React.Component {
             <div className="service-submit">
                 <button className="btn btn-default" onClick={this.findRanges.bind(this)}>Cerca</button>
             </div>
-            { 
+            {
             /*
             <div className="service-submit">
                 <button className="btn btn-default"></button>
@@ -90,7 +91,7 @@ class ServiceBookingPage extends React.Component {
             */
             }
             <ListGroup>
-            {   (() => {
+              {/*   (() => {
                     if (this.props.selectedRange === null) {
                         return this.props.ranges.map((range,i) => {
                             return <ListGroupItem key={i} onClick={ () => this.props.setCurrentBookingRange(i) } >{range.start} - {range.end}</ListGroupItem>
@@ -103,7 +104,7 @@ class ServiceBookingPage extends React.Component {
                         </div>
                     }
                 })()
-            }
+                */}
             </ListGroup>
 
         </div>
@@ -112,4 +113,5 @@ class ServiceBookingPage extends React.Component {
 
 }
 
-export default connect(mapStateTopProps, mapDispatchToProps)(ServiceBookingPage);
+//export default connect(mapStateTopProps, mapDispatchToProps)(ServiceBookingPage);
+export default connect()(ServiceBookingPage);
