@@ -3,6 +3,7 @@ import { routerReducer as routing } from 'react-router-redux';
 import * as ActionTypes from '../constants/ActionTypes';
 import entities from './entities';
 import simpleResList from './simple-res-list';
+import booking from './booking';
 
 const service = simpleResList([
   ActionTypes.SHOP_SERVICES_REQUEST,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   ]),
   shopServices,
   routing,
+  booking
 });
 
 export default rootReducer;

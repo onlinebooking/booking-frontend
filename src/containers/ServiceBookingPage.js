@@ -3,6 +3,8 @@ import React from 'react';
 import moment from 'moment';
 import { setBookingData, requestBookingRanges,  setCurrentBookingRange} from '../actions';
 import { ListGroup, ListGroupItem, Thumbnail } from 'react-bootstrap';
+import BookingCalendar from '../components/BookingCalendar';
+import { uniq } from 'lodash';
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -17,14 +19,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 
 function mapStateTopProps(state, ownProps) {
+    console.log(state)
     let props =  {
         startDate : state.booking.data.start,
         endDate : state.booking.data.end,
-        ranges : state.booking.ranges,
+        ranges : state.booking.ranges.items,
         selectedRange : state.booking.selectedRange
     }
 
     return props;
+}
+
+function createEvents(ranges){
+
+    const dates = ranges.map(range => {
+        return moment(range.start).format('YYYY-MM-DD');
+    })
+    return _.map(_.uniq(dates), item => {
+        return {
+            title : "aaa",
+            date : moment(item),
+            allDay : true
+        }
+    })
 }
 
 
@@ -32,7 +49,8 @@ function mapStateTopProps(state, ownProps) {
 class ServiceBookingPage extends React.Component {
 
     componentWillMount() {
-      //this.props.setCurrentBookingService()
+      this.props.setCurrentBookingService()
+      
     }
 
     onEndChange(event){
@@ -46,13 +64,16 @@ class ServiceBookingPage extends React.Component {
 
     }
 
-    onStartChange(event){
-        const m = moment(event.target.value)
-        if ( m.isValid() ) {
-            this.props.setBookingData({ start : m.format('YYYY-MM-DD')})
-        } else {
-            this.props.setBookingData({ start : null })
-        }
+    onCalendarChange(s, e){
+        
+        this.props.setBookingData(
+            { start : s.format('YYYY-MM-DD'), 
+              end: e.format('YYYY-MM-DD')
+            }
+        )
+
+        this.props.requestBookingRanges()
+        
     }
 
     findRanges(event){
@@ -63,12 +84,31 @@ class ServiceBookingPage extends React.Component {
     }
 
 
+    updateInterval(startDate, endDate){
+
+    }
+
+
 
     render(){
+        let events = [{
+            title : "aaa",
+            date : new moment()
+        }]
+        
+
+
         return <div>
             <div className="service-description">
-
+                Service description here
             </div>
+
+            <BookingCalendar 
+                events={createEvents(this.props.ranges)} 
+                defaultDate={moment()} 
+                onCalendarChange={this.onCalendarChange.bind(this)}/>
+            {
+            /*
             <div className="row">
                 <div className="col col-xs-6">
                     <label>Data inizio</label>
@@ -83,6 +123,8 @@ class ServiceBookingPage extends React.Component {
             <div className="service-submit">
                 <button className="btn btn-default" onClick={this.findRanges.bind(this)}>Cerca</button>
             </div>
+            */
+            }
             {
             /*
             <div className="service-submit">
@@ -113,5 +155,5 @@ class ServiceBookingPage extends React.Component {
 
 }
 
-//export default connect(mapStateTopProps, mapDispatchToProps)(ServiceBookingPage);
-export default connect()(ServiceBookingPage);
+export default connect(mapStateTopProps, mapDispatchToProps)(ServiceBookingPage);
+//export default connect()(ServiceBookingPage);
