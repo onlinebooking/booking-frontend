@@ -69,27 +69,27 @@ export function loadShopServices(shopId) {
   };
 };
 
-function fetchShopService(shopId, serviceId) {
-  return {
-    entity: 'services',
-    [CALL_API]: {
-      endpoint: `/shops/${shopId}/services/${serviceId}`,
-      types: [
-        ActionTypes.SHOP_SERVICE_REQUEST,
-        ActionTypes.SHOP_SERVICE_SUCCESS,
-        ActionTypes.SHOP_SERVICE_FAILURE
-      ]
-    }
-  }
-}
+//function fetchShopService(shopId, serviceId) {
+  //return {
+    //entity: 'services',
+    //[CALL_API]: {
+      //endpoint: `/shops/${shopId}/services/${serviceId}`,
+      //types: [
+        //ActionTypes.SHOP_SERVICE_REQUEST,
+        //ActionTypes.SHOP_SERVICE_SUCCESS,
+        //ActionTypes.SHOP_SERVICE_FAILURE
+      //]
+    //}
+  //}
+//}
 
-export function loadShopService(shopId, serviceId) {
-  return (dispatch, getState) => {
-    if (! getState().entities.services[serviceId]) {
-      return dispatch(fetchShopService(shopId, serviceId));
-    }
-  };
-};
+//export function loadShopService(shopId, serviceId) {
+  //return (dispatch, getState) => {
+    //if (! getState().entities.services[serviceId]) {
+      //return dispatch(fetchShopService(shopId, serviceId));
+    //}
+  //};
+//};
 
 //export function loadShopServices(shopId) {
     ////#TODO : CHECK IF NEEDED!

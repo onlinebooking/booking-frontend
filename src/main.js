@@ -23,9 +23,9 @@ const store = createStore(
     applyMiddleware(thunk, api, createLogger())
 );
 
-import {loadShopService} from './actions';
+//import {loadShopService} from './actions';
 
-store.dispatch(loadShopService(1, 3));
+//store.dispatch(loadShopService(1, 3));
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
