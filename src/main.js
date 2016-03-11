@@ -23,6 +23,15 @@ const store = createStore(
     applyMiddleware(thunk, api, createLogger())
 );
 
+//import $ from 'jquery';
+//require('fullcalendar');
+    //"fullcalendar": "^2.6.1",
+    //"jquery": ">=1.7.1",
+
+//require('./shitty-plugin');
+//$('body').html('JQUERY FUCKING WORK!');
+//console.log('YEAHAAAA----->', $.fullCalendar);
+
 //import {loadShopService} from './actions';
 
 //store.dispatch(loadShopService(1, 3));

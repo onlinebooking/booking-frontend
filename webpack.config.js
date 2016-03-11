@@ -1,5 +1,4 @@
 var path = require('path');
-var webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.js',
@@ -23,19 +22,6 @@ module.exports = {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
         loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
       },
-      /*
-      { test: /bower_components\/.+\.(jsx|js)$/,
-        loader: 'imports?jQuery=jquery,$=jquery,this=>window'
-      }
-      */
     ]
-  },
-  /*
-  plugins : [
-    new webpack.ProvidePlugin({
-          $: "jquery",
-          jQuery: "jquery"
-      })
-  ]
-  */
+  }
 };

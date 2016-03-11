@@ -1,10 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import 'fullcalendar/dist/fullcalendar.min.css';
-const $ = window.$;
-
-console.log("kkk", $.aaa)
-
+import $ from 'jquery';
+import 'fullcalendar';
+import 'fullcalendar/dist/fullcalendar.css';
 
 export default class BookingCalendar extends React.Component {
 
