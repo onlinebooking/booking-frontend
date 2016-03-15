@@ -15,8 +15,13 @@ class ShopDetailPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Shop id is changed, reload shop
+    if (nextProps.params.shopId != this.props.params.shopId) {
+      nextProps.loadShop();
+    }
+    // Shop is changend, relaoad relative services
     if (nextProps.shop != this.props.shop) {
-      this.props.loadShopServices();
+      nextProps.loadShopServices();
     }
   }
 
@@ -54,12 +59,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
+  const shopId = ownProps.params.shopId;
   return {
     loadShop: () => {
-        dispatch(loadShop(ownProps.params.shopId))
+        dispatch(loadShop(shopId))
     },
     loadShopServices: () => {
-      dispatch(loadShopServices(ownProps.params.shopId))
+      dispatch(loadShopServices(shopId))
     }
   };
 }

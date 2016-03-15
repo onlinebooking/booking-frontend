@@ -41,9 +41,11 @@ function fetchShop(shopId) {
 
 export function loadShop(shopId) {
   return (dispatch, getState) => {
-    if (! getState().entities.shops[shopId]) {
-      return dispatch(fetchShop(shopId));
+    const shop = getState().entities.shops[shopId];
+    if (shop) {
+      return Promise.resolve(shop);
     }
+    return dispatch(fetchShop(shopId));
   };
 };
 
@@ -128,8 +130,3 @@ export function requestBookingRanges() {
 
   }
 };
-
- 
-
-
-

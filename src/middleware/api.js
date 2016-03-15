@@ -39,19 +39,25 @@ export default store => next => action => {
 
   next(actionWith({ type: requestType }));
 
-  setTimeout(() => {
+  return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
-    data => next(actionWith({
-      data,
-      type: successType
-    })),
-    error => next(actionWith({
-      error, // Not sure of what error is
-      type: failureType
-    }))
-  );
+    data => {
+      next(actionWith({
+        data,
+        type: successType
+      }));
+      return Promise.resolve(data);
+    },
+    error => {
+      next(actionWith({
+        error, // Not sure of what error is
+        type: failureType
+      }));
+      return Promise.reject(error);
+    }
+  )
+  .then(resolve, reject)
 
-  }, 2000);
-
+  }, 1000));
 };
