@@ -1,5 +1,6 @@
 import React from 'react';
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
+import LoginModalButton from './LoginModalButton';
 
 export class NavBar extends React.Component {
 
@@ -26,6 +27,13 @@ export class NavBar extends React.Component {
               </NavDropdown>
             </Nav>
             */}
+            <Navbar.Collapse>
+            <Nav pullRight>
+              
+                <LoginModalButton></LoginModalButton>
+
+            </Nav>
+            </Navbar.Collapse>
           </Navbar>
         )
 

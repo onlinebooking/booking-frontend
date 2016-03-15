@@ -22,3 +22,20 @@ export const RANGES_SUCCESS = 'RANGES_SUCCESS';
 export const RANGES_FAILURE = 'RANGES_FAILURE';
 
 export const SET_BOOKING_RANGE = 'SET_BOOKING_RANGE';
+
+export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
+
+export const USER_LOGOUT = 'USER_LOGOUT';
+
+export const ME_REQUEST = 'ME_REQUEST';
+export const ME_SUCCESS = 'ME_SUCCESS';
+export const ME_FAILURE = 'ME_FAILURE';
+
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
+
+
+
+
+

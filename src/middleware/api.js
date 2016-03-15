@@ -39,7 +39,7 @@ export default store => next => action => {
 
   next(actionWith({ type: requestType }));
 
-  return new Promise((resolve, reject) => setTimeout(() => {
+  //return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
     data => {
@@ -57,7 +57,7 @@ export default store => next => action => {
       return Promise.reject(error);
     }
   )
-  .then(resolve, reject)
+  //.then(resolve, reject)
 
-  }, 1000));
+  //}, 0));
 };

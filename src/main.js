@@ -15,8 +15,10 @@ import App from './containers/App';
 import ShopsListPage from './containers/ShopsListPage';
 import ShopDetailPage from './containers/ShopDetailPage';
 import ServiceBookingPage from './containers/ServiceBookingPage'
+import LoginPage from './containers/LoginPage'
 
 import api from './middleware/api';
+import { loginWithToken } from './actions';
 
 const store = createStore(
     rootReducer,
@@ -39,11 +41,17 @@ const store = createStore(
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
 
+const existingUserToken = localStorage.getItem("user_token");
+if ( existingUserToken ) {
+  store.dispatch(loginWithToken(existingUserToken))
+}
+
 ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
             <IndexRoute component={ShopsListPage} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/shops/:shopId" component={ShopDetailPage} />
             <Route path="/shops/:shopId/booking/:serviceId" component={ServiceBookingPage} />
       </Route>
