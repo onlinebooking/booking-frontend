@@ -33,7 +33,6 @@ const store = createStore(
     applyMiddleware(thunk, api, createLogger())
 );
 
-
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
 

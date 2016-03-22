@@ -27,7 +27,7 @@ class LoginModalButton extends React.Component {
   renderBtnNotLogged(){
     return (
     <Navbar.Form>
-    <Button type="button" bsSize="small" navItem={true} onClick={this.open.bind(this)}>
+    <Button type="button" bsSize="small" onClick={this.open.bind(this)}>
       Login
     </Button>
     </Navbar.Form>
