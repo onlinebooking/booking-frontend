@@ -1,33 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadShop, loadShopServices } from '../actions';
 import ShopDetail from '../components/ShopDetail';
 import Spinner from '../components/Spinner';
 
 class ShopDetailPage extends React.Component {
 
-  componentWillMount() {
-    this.props.loadShop();
-    // With a valid shop we can load related services
-    if (this.props.shop) {
-      this.props.loadShopServices();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Shop id is changed, reload shop
-    if (nextProps.params.shopId != this.props.params.shopId) {
-      nextProps.loadShop();
-    }
-    // Shop is changend, relaoad relative services
-    if (nextProps.shop != this.props.shop) {
-      nextProps.loadShopServices();
-    }
-  }
-
   render() {
     // We can change this bheviur to show all loading or only a part
-    const {shop, isFetchingServices, services} = this.props;
+    const { shop, isFetchingServices, services } = this.props;
     const showSpinner = !shop || (isFetchingServices && !services.length);
 
     if (showSpinner) {
@@ -54,20 +34,8 @@ function mapStateToProps(state, ownProps) {
   return {
     shop,
     isFetchingServices,
-    services
+    services,
   };
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-  const shopId = ownProps.params.shopId;
-  return {
-    loadShop: () => {
-        dispatch(loadShop(shopId))
-    },
-    loadShopServices: () => {
-      dispatch(loadShopServices(shopId))
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShopDetailPage);
+export default connect(mapStateToProps)(ShopDetailPage);

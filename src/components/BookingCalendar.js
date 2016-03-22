@@ -6,41 +6,49 @@ import 'fullcalendar/dist/fullcalendar.css';
 
 export default class BookingCalendar extends React.Component {
 
-    updateCalendarEvents(events){
-        const { calendar } = this.refs;
-        $(calendar)
-            .fullCalendar('removeEvents')
-        $(calendar)
-        .fullCalendar('addEventSource', events);       
+  updateCalendarEvents(events) {
+    const { calendar } = this.refs;
+    $(calendar)
+      .fullCalendar('removeEvents')
+    $(calendar)
+      .fullCalendar('addEventSource', events);
+  }
 
+  updateCalendarDate(date) {
+    const { calendar } = this.refs;
+    const currentCalendarDate = $(calendar)
+      .fullCalendar('getDate').format('YYYY-MM-DD');
+    if (date != currentCalendarDate) {
+      $(calendar).fullCalendar('gotoDate', date);
+    }
+  }
 
+  componentDidMount() {
+    const { calendar } = this.refs;
+    $(calendar).fullCalendar({
+      events: this.props.events,
+      defaultDate: this.props.calendarDate,
+      eventClick: event => this.props.onEventClick(event),
+      viewRender: view => this.props.onCalendarChange(view.calendar.getDate()),
+    });
+  }
+
+  componentWillUnmount() {
+    const { calendar } = this.refs;
+    $(calendar).fullCalendar('destroy');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.events != this.props.events) {
+      this.updateCalendarEvents(nextProps.events)
     }
 
-    componentDidMount(){
-        const { calendar } = this.refs;
-        $(calendar).fullCalendar({
-            events : this.props.events,
-            defaultDate : this.props.defaultDate,
-            viewRender : (view) => { 
-                this.props.onCalendarChange(view.start, view.end);
-            }
-        });
-        
+    if (nextProps.calendarDate != this.props.calendarDate) {
+      this.updateCalendarDate(nextProps.calendarDate);
     }
+  }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.events != this.props.events) {
-            this.updateCalendarEvents(nextProps.events)
-        }
-    }
-
-    componentWillUnmount(){
-        const { calendar } = this.refs;   
-    }
-
-    render(){
-        
-        return <div ref="calendar"></div>;
-    }
-
+  render() {
+    return <div ref="calendar"></div>;
+  }
 }

@@ -42,22 +42,16 @@ export default store => next => action => {
   //return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
-    data => {
-      next(actionWith({
-        data,
-        type: successType
-      }));
-      return Promise.resolve(data);
-    },
-    error => {
-      next(actionWith({
-        error, // Not sure of what error is
-        type: failureType
-      }));
-      return Promise.reject(error);
-    }
-  )
+    data => next(actionWith({
+      data,
+      type: successType
+    })),
+    error => next(actionWith({
+      error, // Not sure of what error is
+      type: failureType
+    }))
+  )//;
   //.then(resolve, reject)
 
-  //}, 0));
+  //}, 2000));
 };

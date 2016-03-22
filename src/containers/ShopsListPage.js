@@ -1,15 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadShops } from '../actions';
 import ShopsList from '../components/ShopsList';
 import { Jumbotron } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
 
 class ShopsListPage extends React.Component {
-
-  componentWillMount() {
-    this.props.loadShops();
-  }
 
   render() {
     return (
@@ -24,10 +19,12 @@ class ShopsListPage extends React.Component {
   }
 
   renderShopList() {
-    if (this.props.isFetching && !this.props.shops.length) {
+    const { isFetching, shops } = this.props;
+
+    if (isFetching && !shops.length) {
       return <Spinner />;
     }
-    return <ShopsList shops={this.props.shops} />;
+    return <ShopsList shops={shops} />;
   }
 }
 
@@ -37,6 +34,4 @@ function mapStateToProps(state) {
   return { shops, isFetching };
 }
 
-export default connect(mapStateToProps, {
-  loadShops
-})(ShopsListPage);
+export default connect(mapStateToProps)(ShopsListPage);

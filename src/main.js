@@ -18,31 +18,27 @@ import ServiceBookingPage from './containers/ServiceBookingPage'
 import LoginPage from './containers/LoginPage'
 
 import api from './middleware/api';
-import { loginWithToken } from './actions';
+import {
+  loginWithToken,
+  loadShops,
+  loadShop,
+  loadShopServices,
+  loadShopService,
+  setBookingService,
+  loadBookingRanges
+} from './actions';
 
 const store = createStore(
     rootReducer,
     applyMiddleware(thunk, api, createLogger())
 );
 
-//import $ from 'jquery';
-//require('fullcalendar');
-    //"fullcalendar": "^2.6.1",
-    //"jquery": ">=1.7.1",
-
-//require('./shitty-plugin');
-//$('body').html('JQUERY FUCKING WORK!');
-//console.log('YEAHAAAA----->', $.fullCalendar);
-
-//import {loadShopService} from './actions';
-
-//store.dispatch(loadShopService(1, 3));
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
 
-const existingUserToken = localStorage.getItem("user_token");
-if ( existingUserToken ) {
+const existingUserToken = localStorage.getItem('user_token');
+if (existingUserToken) {
   store.dispatch(loginWithToken(existingUserToken))
 }
 
@@ -50,10 +46,22 @@ ReactDom.render(
   <Provider store={store}>
     <Router history={history}>
         <Route path="/" component={App}>
-            <IndexRoute component={ShopsListPage} />
+            <IndexRoute component={ShopsListPage} onEnter={() => {
+              store.dispatch(loadShops());
+            }} />
             <Route path="/login" component={LoginPage} />
-            <Route path="/shops/:shopId" component={ShopDetailPage} />
-            <Route path="/shops/:shopId/booking/:serviceId" component={ServiceBookingPage} />
+            <Route path="/shops/:shopId" component={ShopDetailPage} onEnter={(nextState) => {
+              const { shopId } = nextState.params;
+              store.dispatch(loadShop(shopId));
+              store.dispatch(loadShopServices(shopId));
+            }} />
+            <Route path="/shops/:shopId/booking/:serviceId" component={ServiceBookingPage} onEnter={(nextState) => {
+              const { shopId, serviceId } = nextState.params;
+              store.dispatch(loadShop(shopId));
+              store.dispatch(loadShopService(shopId, serviceId));
+              store.dispatch(setBookingService(serviceId));
+              store.dispatch(loadBookingRanges());
+            }} />
       </Route>
     </Router>
   </Provider>,
