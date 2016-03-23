@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { ListGroup, ListGroupItem, Thumbnail } from 'react-bootstrap';
+import { Link } from 'react-router';
 import BookingCalendar from '../components/BookingCalendar';
 import BookingRangeList from '../components/BookingRangeList';
 import Spinner from '../components/Spinner';
@@ -16,9 +17,10 @@ import {
 function createCalendarEvents(availableDates){
   return availableDates.map(date => {
     return {
-      title : 'Book Me!',
-      date : moment(date, 'YYYY-MM-DD'),
-      allDay : true
+      title: 'Book Me!',
+      date: moment(date, 'YYYY-MM-DD'),
+      allDay: true,
+      className: 'booking-event',
     };
   });
 }
@@ -48,7 +50,7 @@ class ServiceBookingPage extends React.Component {
     }
 
     return (
-      <div>
+      <div className="booking-container">
         {this.renderTopShopAndServiceInfo()}
         {this.renderBookingView()}
       </div>
@@ -61,7 +63,10 @@ class ServiceBookingPage extends React.Component {
     return (
       <div>
         <div className="service-description">
-          { shop.name } - { service.name }
+          <Link to={`/shops/${shop.id}`}>
+            <h1>{ shop.name }</h1>
+          </Link>
+          <p>{ service.name }</p>
         </div>
       </div>
     );
