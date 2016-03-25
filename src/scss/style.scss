@@ -22,6 +22,10 @@
   padding:20px;
 }
 
+.point {
+  cursor: pointer;
+}
+
 .spinner {
   text-align: center;
 }
@@ -35,7 +39,6 @@
   padding-top: 30px;
   padding-bottom: 30px;
 }
-
 .booked-day {
   cursor: pointer;
   background-color: #008cba;
@@ -51,5 +54,17 @@
   height: 100%;
 }
 .booking-event:hover {
+  font-weight: bold;
+}
+.booking-range-list-container {
+  padding-top: 10px;
+}
+.booking-range-list-header {
+  color: white;
+  background-color: #007196;
+  padding: 20px;
+}
+.booking-item-time {
+  font-size: 17px;
   font-weight: bold;
 }

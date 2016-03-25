@@ -13,15 +13,19 @@ class BookingRangeItem extends React.Component {
 
     let bookingBtn = null;
     if (showBookingButton) {
-      bookingBtn = <button onClick={() => onRangeBooked(range)}>Book me!</button>;
+      bookingBtn = (
+        <button
+          className="btn btn-primary"
+          onClick={() => onRangeBooked(range)}>Book me!</button>
+      );
     }
 
     return (
-        <ListGroupItem>
-          <div>{start}</div>
-          <div>{end}</div>
-          {bookingBtn}
-        </ListGroupItem>
+      <ListGroupItem className="booking-item">
+        <div className="pull-left booking-item-time">{start} - {end}</div>
+        <div className="pull-right">{bookingBtn}</div>
+        <div className="clearfix"></div>
+      </ListGroupItem>
     );
   }
 }
@@ -29,10 +33,14 @@ class BookingRangeItem extends React.Component {
 export default class BookingRangeList extends React.Component {
 
   render() {
-    const { ranges, onUndo, showBookingButton, onRangeBooked } = this.props;
+    const { ranges, date, onUndo, showBookingButton, onRangeBooked } = this.props;
     return (
       <div>
-        <button className="btn btn-default" onClick={onUndo}>Undo</button>
+        <div className="booking-range-list-header">
+          <div className="pull-left">Disponibilità del {date}</div>
+          <div className="pull-right point" onClick={onUndo}>Cambia giorno</div>
+          <div className="clearfix"></div>
+        </div>
         <ListGroup>
           {ranges.map((range) => {
             const key = `${range.start}_${range.end}`;
