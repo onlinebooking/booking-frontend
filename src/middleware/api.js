@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
 
@@ -9,12 +9,29 @@ function callApi(endpoint, callConfig = {}) {
   // Hook for adding auth token, headers or other config common stuff
   const config = { ...callConfig };
 
+  // Pick util response props
+  const pickResponse = (r) => pick(r, ['status', 'statusText']);
+
   return fetch(BASE_URL + endpoint, config)
+    .catch(message => {
+      // Connection error, name resolving problem and other stuff like
+      // Godzilla attack datacenters...
+      // Simple wrap the message in a plain object for consistency
+      return Promise.reject({ message });
+    })
     .then(response =>
-      response.json().then(json => ({ response, json: camelizeKeys(json) }))
-    ).then(({ json, response }) => {
+      response.json().then(
+        json => ({ response, json: camelizeKeys(json) }),
+        message => {
+          // Error while parsing json
+          return Promise.reject(({ ...pickResponse(response), message }));
+        }
+      )
+    )
+    .then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(json);
+        // HTTP Error with json ok
+        return Promise.reject({ ...pickResponse(response), data: json });
       }
 
       return json;
@@ -47,7 +64,7 @@ export default store => next => action => {
       type: successType
     })),
     error => next(actionWith({
-      error, // Not sure of what error is
+      error, // Object describe error
       type: failureType
     }))
   )//;
