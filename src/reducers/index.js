@@ -5,6 +5,7 @@ import entities from './entities';
 import simpleResList from './simple-res-list';
 import booking from './booking';
 import auth from './auth';
+import pageError from './page-error';
 
 const service = simpleResList([
   ActionTypes.SHOP_SERVICES_REQUEST,
@@ -38,7 +39,8 @@ const rootReducer = combineReducers({
   shopServices,
   routing,
   booking,
-  auth
+  auth,
+  pageError,
 });
 
 export default rootReducer;

@@ -17,6 +17,26 @@
   }
 }
 
+.error-container {
+  text-align: center;
+  .status {
+    font-size: 80px;
+  }
+  .status-text {
+    font-size: 50px;
+  }
+  .status-404, .status-text-404 {
+    font-weight: bold;
+    color: purple;
+  }
+  .no-service-title {
+    font-size: 50px;
+  }
+  .no-service-description {
+    font-style: italic;
+  }
+}
+
 .service-submit {
   text-align:center;
   padding:20px;

@@ -27,7 +27,8 @@ import {
   loadShopService,
   setBookingService,
   loadBookingRanges,
-  setBookingCalendarDate
+  setBookingCalendarDate,
+  resetPageError
 } from './actions';
 
 const store = createStore(

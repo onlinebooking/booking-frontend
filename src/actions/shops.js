@@ -4,6 +4,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 function fetchShops() {
   return {
     entity: 'shops',
+    isPageError: true,
     [CALL_API]: {
       endpoint: '/shops',
       types: [
@@ -26,6 +27,7 @@ export function loadShops() {
 function fetchShop(shopId) {
   return {
     entity: 'shops',
+    isPageError: true,
     [CALL_API]: {
       endpoint: `/shops/${shopId}`,
       types: [
@@ -48,6 +50,7 @@ export function loadShop(shopId) {
 function fetchShopServices(shopId) {
   return {
     shopId,
+    isPageError: true,
     entity: 'services',
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services`,

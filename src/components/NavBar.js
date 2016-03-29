@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
 import LoginModalButton from './LoginModalButton';
+import { Link } from 'react-router';
 
 export class NavBar extends React.Component {
 
@@ -11,7 +12,7 @@ export class NavBar extends React.Component {
             <Navbar inverse>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="#">OnlineBooking</a>
+                <Link to={'/'}>OnlineBooking</Link>
               </Navbar.Brand>
             </Navbar.Header>
             {/*

@@ -1,3 +1,5 @@
+export const RESET_PAGE_ERROR = 'RESET_PAGE_ERROR';
+
 export const SHOPS_REQUEST = 'SHOPS_REQUEST';
 export const SHOPS_SUCCESS = 'SHOPS_SUCCESS';
 export const SHOPS_FAILURE = 'SHOPS_FAILURE';
@@ -33,8 +35,3 @@ export const ME_SUCCESS = 'ME_SUCCESS';
 export const ME_FAILURE = 'ME_FAILURE';
 
 export const SET_USER_TOKEN = 'SET_USER_TOKEN';
-
-
-
-
-
