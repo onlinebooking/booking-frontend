@@ -2,101 +2,94 @@ import React from 'react';
 import { Button, Modal, OverlayTrigger, Navbar } from 'react-bootstrap';
 import LoginForm from '../containers/LoginForm'
 import { connect } from 'react-redux';
-import { logout } from '../actions'
+import { logout, showModalLogin, hideModalLogin } from '../actions';
+import Spinner from './Spinner';
 
 class LoginModalButton extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = { showModal: false };
-  }
-  
-
-  close() {
-    this.setState({ showModal: false });
-  }
-
-  open() {
-    this.setState({ showModal: true });
-  }
-
-  logout(){
-    this.props.logout()
-  }
-
-  renderBtnNotLogged(){
+  renderBtnNotLogged() {
     return (
-    <Navbar.Form>
-    <Button type="button" bsSize="small" onClick={this.open.bind(this)}>
-      Login
-    </Button>
-    </Navbar.Form>
-    )
-
+      <Navbar.Form>
+      <Button type="button" bsSize="small" onClick={this.props.showModalLogin}>
+        Login
+      </Button>
+      </Navbar.Form>
+    );
   }
 
-  renderBtnLogged(){
+  renderBtnLogged() {
     return (
       <span>
         <Navbar.Text pullLeft>
           Signed in as {this.props.user.email}
         </Navbar.Text>
-        
         <Navbar.Form pullLeft>
-          <Button type="button" bsSize="small" navItem={true} onClick={this.logout.bind(this)}>
+          <Button type="button" bsSize="small" navItem={true} onClick={this.props.logout}>
             Logout
           </Button>
         </Navbar.Form>
-      
       </span>
-    )
-    
+    );
   }
 
-  renderModal(){
+  renderBtnLoading() {
+    const { token } = this.props;
+
+    if (token) {
+      return <Navbar.Text pullLeft>Fetching you...</Navbar.Text>;
+    }
+
+    return <Navbar.Text pullLeft>Login you...</Navbar.Text>;
+  }
+
+  renderModal() {
     return (
-      <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+      <Modal show={this.props.showModal} onHide={this.props.hideModalLogin}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <LoginForm onLoginSuccess={this.close.bind(this)}></LoginForm>
+          <LoginForm />
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.close.bind(this)}>Close</Button>
+          <Button onClick={this.props.hideModalLogin}>Close</Button>
         </Modal.Footer>
-      </Modal> 
-    )
+      </Modal>
+    );
   }
 
+  render() {
+    const { user, loading } = this.props;
 
-  render(){
-    
-    if (this.props.user) {
-      return (
-        <span>
-        { this.renderBtnLogged() }
-        { this.renderModal() }
-        </span>
-      )
-    }
-
-    return  (
-        <span>
-        { this.renderBtnNotLogged() }
-        { this.renderModal() }
-        </span>
-    )
+    return (
+      <div>
+        {(() => {
+          if (loading) {
+            return this.renderBtnLoading();
+          }
+          if (user) {
+            return this.renderBtnLogged();
+          } else {
+            return this.renderBtnNotLogged();
+          }
+        })()}
+        {this.renderModal()}
+      </div>
+    );
   }
-    
 }
 
 function mapStateToProps(state){
   return {
-    user : state.auth.user,
-    loading : state.auth.loading
-  }
+    user: state.auth.user,
+    token: state.auth.token,
+    loading: state.auth.loading,
+    showModal: state.auth.showModal,
+  };
 }
 
-
-export default connect(mapStateToProps, { logout })(LoginModalButton)
+export default connect(mapStateToProps, {
+  logout,
+  showModalLogin,
+  hideModalLogin,
+})(LoginModalButton)

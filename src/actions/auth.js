@@ -47,6 +47,8 @@ export function login({email, password}) {
         .then((token) => {
           if (token) {
             localStorage.setItem('user_token', token);
+            // Also hide the login modal
+            dispatch(hideModalLogin());
           }
         });
       }
@@ -66,4 +68,12 @@ export function loginWithToken(token) {
     dispatch({ type: ActionTypes.SET_USER_TOKEN, token });
     dispatch(meRequest());
   };
+};
+
+export function showModalLogin() {
+  return { type: ActionTypes.SHOW_MODAL_LOGIN };
+};
+
+export function hideModalLogin() {
+  return { type: ActionTypes.HIDE_MODAL_LOGIN };
 };

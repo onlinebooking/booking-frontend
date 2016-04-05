@@ -1,6 +1,7 @@
 import { omit, pick } from 'lodash';
 import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
+import { logout } from '../actions';
 
 const BASE_URL = 'http://localhost:8000/api';
 
@@ -56,19 +57,25 @@ export default store => next => action => {
 
   next(actionWith({ type: requestType }));
 
-  //return new Promise((resolve, reject) => setTimeout(() => {
+  return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
     data => next(actionWith({
       data,
       type: successType
     })),
-    error => next(actionWith({
-      error, // Object describe error
-      type: failureType
-    }))
+    error => {
+      // Logout unauthorized users...
+      if (error.status === 401) {
+        store.dispatch(logout());
+      }
+      next(actionWith({
+        error, // Object describe error
+        type: failureType
+      }));
+    }
   )//;
-  //.then(resolve, reject)
+  .then(resolve, reject)
 
-  //}, 2000));
+  }, 2000));
 };

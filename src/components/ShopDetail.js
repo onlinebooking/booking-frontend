@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup, ListGroupItem, Thumbnail } from 'react-bootstrap';
 import { Link } from 'react-router';
 
-class ShopServiceListItem {
+class ShopServiceListItem extends React.Component {
 
   render() {
     const { shop, service } = this.props;
@@ -17,7 +17,7 @@ class ShopServiceListItem {
   }
 }
 
-class ShopServiceList {
+class ShopServiceList extends React.Component {
 
   render() {
     const { shop, services } = this.props;
@@ -40,7 +40,7 @@ class ShopServiceList {
   }
 }
 
-class ShopDetailTop {
+class ShopDetailTop extends React.Component {
 
   render() {
     const { shop } = this.props;

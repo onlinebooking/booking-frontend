@@ -16,7 +16,8 @@ import ShopDetailPage from './containers/ShopDetailPage';
 import ServiceBooking from './containers/ServiceBooking';
 import ServiceBookingCaledarPage from './containers/ServiceBookingCaledarPage';
 import ServiceBookingAtDatePage from './containers/ServiceBookingAtDatePage';
-import LoginPage from './containers/LoginPage'
+import LoginPage from './containers/LoginPage';
+import ProfilePage from './containers/ProfilePage';
 import moment from 'moment';
 import api from './middleware/api';
 import {
@@ -41,7 +42,7 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 const existingUserToken = localStorage.getItem('user_token');
 if (existingUserToken) {
-  store.dispatch(loginWithToken(existingUserToken))
+  store.dispatch(loginWithToken(existingUserToken));
 }
 
 ReactDom.render(
@@ -52,6 +53,7 @@ ReactDom.render(
           store.dispatch(loadShops());
         }} />
         <Route path="login" component={LoginPage} />
+        <Route path="profile" component={ProfilePage} />
         <Route path="shops/:shopId" component={ShopDetailPage} onEnter={(nextState) => {
           const { shopId } = nextState.params;
           store.dispatch(loadShop(shopId));

@@ -8,8 +8,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-          <NavBar></NavBar>
-          {this.renderPageContent()}
+        <NavBar />
+        {this.renderPageContent()}
       </div>
     );
   }
