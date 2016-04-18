@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import BookingRangeList from '../components/BookingRangeList';
-import { hashHistory } from 'react-router';
+import { replace } from 'react-router-redux';
 
 class ServiceBookingAtDatePage extends React.Component {
 
@@ -11,10 +11,9 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 
   onUndo() {
-    // Not perfect fix this!
-    const { shop, service } = this.props;
+    const { shop, service, replace } = this.props;
     const bookingDate = this.props.params.bookingDate;
-    hashHistory.replace(`/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`);
+    replace(`/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`);
   }
 
   render() {
@@ -41,4 +40,6 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(ServiceBookingAtDatePage);
+export default connect(mapStateToProps, {
+  replace
+})(ServiceBookingAtDatePage);

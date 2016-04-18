@@ -1,6 +1,17 @@
 import { CALL_API } from '../middleware/api';
-import * as ActionTypes from '../constants/ActionTypes';
 import { jsonPostConfig, authTokenConfig } from './utils';
+import {
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
+  ME_REQUEST,
+  ME_SUCCESS,
+  ME_FAILURE,
+  USER_LOGOUT,
+  SET_USER_TOKEN,
+  SHOW_MODAL_LOGIN,
+  HIDE_MODAL_LOGIN
+} from '../constants/ActionTypes';
 
 function loginRequest({email, password}) {
   return {
@@ -8,9 +19,9 @@ function loginRequest({email, password}) {
       endpoint: `/auth/`,
       config : jsonPostConfig({email, password}),
       types: [
-        ActionTypes.USER_LOGIN_REQUEST,
-        ActionTypes.USER_LOGIN_SUCCESS,
-        ActionTypes.USER_LOGIN_FAILURE
+        USER_LOGIN_REQUEST,
+        USER_LOGIN_SUCCESS,
+        USER_LOGIN_FAILURE
       ]
     }
   };
@@ -23,9 +34,9 @@ function meRequest() {
         endpoint: `/me/`,
         config : authTokenConfig(getState()),
         types: [
-          ActionTypes.ME_REQUEST,
-          ActionTypes.ME_SUCCESS,
-          ActionTypes.ME_FAILURE
+          ME_REQUEST,
+          ME_SUCCESS,
+          ME_FAILURE
         ]
       }
     })
@@ -58,22 +69,22 @@ export function login({email, password}) {
 
 export function logout() {
   return (dispatch, getState) => {
-    dispatch({ type: ActionTypes.USER_LOGOUT });
+    dispatch({ type: USER_LOGOUT });
     localStorage.removeItem('user_token');
   };
 }
 
 export function loginWithToken(token) {
   return (dispatch, getState) => {
-    dispatch({ type: ActionTypes.SET_USER_TOKEN, token });
+    dispatch({ type: SET_USER_TOKEN, token });
     dispatch(meRequest());
   };
 };
 
 export function showModalLogin() {
-  return { type: ActionTypes.SHOW_MODAL_LOGIN };
+  return { type: SHOW_MODAL_LOGIN };
 };
 
 export function hideModalLogin() {
-  return { type: ActionTypes.HIDE_MODAL_LOGIN };
+  return { type: HIDE_MODAL_LOGIN };
 };

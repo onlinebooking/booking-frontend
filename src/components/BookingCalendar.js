@@ -13,7 +13,7 @@ export default class BookingCalendar extends React.Component {
     $(calendar)
       .fullCalendar('addEventSource', events);
 
-    // Add boacked-day class to day with events
+    // Add booked-day class to day with events
     $(calendar).find('.fc-day').removeClass('booked-day');
     $(calendar).find('.fc-day-number').removeClass('booked-day-number');
     events.forEach(event => {

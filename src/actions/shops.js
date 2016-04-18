@@ -1,5 +1,18 @@
 import { CALL_API } from '../middleware/api';
-import * as ActionTypes from '../constants/ActionTypes';
+import {
+  SHOPS_REQUEST,
+  SHOPS_SUCCESS,
+  SHOPS_FAILURE,
+  SHOP_REQUEST,
+  SHOP_SUCCESS,
+  SHOP_FAILURE,
+  SHOP_SERVICES_REQUEST,
+  SHOP_SERVICES_SUCCESS,
+  SHOP_SERVICES_FAILURE,
+  SHOP_SERVICE_REQUEST,
+  SHOP_SERVICE_SUCCESS,
+  SHOP_SERVICE_FAILURE
+} from '../constants/ActionTypes';
 
 function fetchShops() {
   return {
@@ -8,9 +21,9 @@ function fetchShops() {
     [CALL_API]: {
       endpoint: '/shops',
       types: [
-        ActionTypes.SHOPS_REQUEST,
-        ActionTypes.SHOPS_SUCCESS,
-        ActionTypes.SHOPS_FAILURE
+        SHOPS_REQUEST,
+        SHOPS_SUCCESS,
+        SHOPS_FAILURE
       ]
     }
   };
@@ -31,9 +44,9 @@ function fetchShop(shopId) {
     [CALL_API]: {
       endpoint: `/shops/${shopId}`,
       types: [
-        ActionTypes.SHOP_REQUEST,
-        ActionTypes.SHOP_SUCCESS,
-        ActionTypes.SHOP_FAILURE
+        SHOP_REQUEST,
+        SHOP_SUCCESS,
+        SHOP_FAILURE
       ]
     }
   };
@@ -55,9 +68,9 @@ function fetchShopServices(shopId) {
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services`,
       types: [
-        ActionTypes.SHOP_SERVICES_REQUEST,
-        ActionTypes.SHOP_SERVICES_SUCCESS,
-        ActionTypes.SHOP_SERVICES_FAILURE
+        SHOP_SERVICES_REQUEST,
+        SHOP_SERVICES_SUCCESS,
+        SHOP_SERVICES_FAILURE
       ]
     }
   }
@@ -74,12 +87,13 @@ export function loadShopServices(shopId) {
 function fetchShopService(shopId, serviceId) {
   return {
     entity: 'services',
+    isPageError: true,
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services/${serviceId}`,
       types: [
-        ActionTypes.SHOP_SERVICE_REQUEST,
-        ActionTypes.SHOP_SERVICE_SUCCESS,
-        ActionTypes.SHOP_SERVICE_FAILURE
+        SHOP_SERVICE_REQUEST,
+        SHOP_SERVICE_SUCCESS,
+        SHOP_SERVICE_FAILURE
       ]
     }
   }
@@ -87,8 +101,16 @@ function fetchShopService(shopId, serviceId) {
 
 export function loadShopService(shopId, serviceId) {
   return (dispatch, getState) => {
-    if (! getState().entities.services[serviceId]) {
+    const service = getState().entities.services[serviceId];
+    if (! service) {
       dispatch(fetchShopService(shopId, serviceId));
+    } else if (Number(service.shop) !== Number(shopId)) {
+      // Force 404...
+      dispatch({
+        type: SHOP_SERVICES_FAILURE,
+        isPageError: true,
+        error: { status: 404, statusText: 'Not Found' }
+      });
     }
   };
 };

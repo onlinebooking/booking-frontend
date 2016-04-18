@@ -1,6 +1,14 @@
 import { CALL_API } from '../middleware/api';
-import * as ActionTypes from '../constants/ActionTypes';
 import moment from 'moment';
+import { replace } from 'react-router-redux';
+import {
+  BOOKING_RANGES_REQUEST,
+  BOOKING_RANGES_SUCCESS,
+  BOOKING_RANGES_FAILURE,
+  SET_BOOKING_VIEWED_DATE,
+  SET_BOOKING_CALENDAR_DATE,
+  SET_BOOKING_SERVICE,
+} from '../constants/ActionTypes';
 
 // Can do it better...
 function calculateStartAndEnd(date) {
@@ -29,9 +37,9 @@ export function loadBookingRanges() {
       [CALL_API]: {
         endpoint,
         types: [
-          ActionTypes.BOOKING_RANGES_REQUEST,
-          ActionTypes.BOOKING_RANGES_SUCCESS,
-          ActionTypes.BOOKING_RANGES_FAILURE
+          BOOKING_RANGES_REQUEST,
+          BOOKING_RANGES_SUCCESS,
+          BOOKING_RANGES_FAILURE
         ]
       }
     });
@@ -41,20 +49,26 @@ export function loadBookingRanges() {
 export function setViewedDate(date) {
   return {
     date,
-    type: ActionTypes.SET_BOOKING_VIEWED_DATE
+    type: SET_BOOKING_VIEWED_DATE
   };
 };
 
 export function setBookingService(service) {
   return {
     service,
-    type: ActionTypes.SET_BOOKING_SERVICE
+    type: SET_BOOKING_SERVICE
   };
 };
 
-export function setBookingCalendarDate(date) {
-  return {
-    date,
-    type: ActionTypes.SET_BOOKING_CALENDAR_DATE
+export function setBookingCalendarDate(date, updateLocation = false) {
+  return (dispatch, getState) => {
+    dispatch({
+      date,
+      type: SET_BOOKING_CALENDAR_DATE
+    });
+    if (updateLocation) {
+      const location = getState().routing.locationBeforeTransitions;
+      dispatch(replace({ ...location, query: { date } }));
+    }
   };
 };

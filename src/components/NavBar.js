@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
-import LoginModalButton from './LoginModalButton';
+import LoginModalButton from '../containers/LoginModalButton';
 import { Link } from 'react-router';
 
 export class NavBar extends React.Component {
@@ -30,9 +30,7 @@ export class NavBar extends React.Component {
             */}
             <Navbar.Collapse>
             <Nav pullRight>
-              
-                <LoginModalButton></LoginModalButton>
-
+              <LoginModalButton></LoginModalButton>
             </Nav>
             </Navbar.Collapse>
           </Navbar>

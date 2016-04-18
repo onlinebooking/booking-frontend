@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavBar } from '../components/NavBar';
 import ErrorPage from '../components/ErrorPage';
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   render() {
     return (

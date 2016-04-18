@@ -30,6 +30,7 @@ class BookingRangeItem extends React.Component {
   }
 }
 
+  //<Link to={'/shops/1/booking/1'}><div className="pull-right point" xonClick={onUndo}>Cambia giorno</div></Link>
 export default class BookingRangeList extends React.Component {
 
   render() {

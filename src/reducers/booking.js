@@ -1,10 +1,17 @@
 import { combineReducers } from 'redux';
-import * as ActionTypes from '../constants/ActionTypes';
 import { groupBy } from 'lodash';
 import moment from 'moment';
+import {
+  SET_BOOKING_SERVICE,
+  SET_BOOKING_CALENDAR_DATE,
+  SET_BOOKING_VIEWED_DATE,
+  BOOKING_RANGES_REQUEST,
+  BOOKING_RANGES_SUCCESS,
+  BOOKING_RANGES_FAILURE
+} from '../constants/ActionTypes';
 
 function viewedDate(state=null, action) {
-  if (action.type === ActionTypes.SET_BOOKING_VIEWED_DATE) {
+  if (action.type === SET_BOOKING_VIEWED_DATE) {
     return action.date;
   }
 
@@ -18,7 +25,7 @@ function mapRangesByStartDay(ranges) {
 }
 
 function ranges(state={items: {}, requestedAt: null}, action) {
-  if (action.type === ActionTypes.BOOKING_RANGES_SUCCESS) {
+  if (action.type === BOOKING_RANGES_SUCCESS) {
     if (!state.requestedAt || action.requestedAt > state.requestedAt) {
       const items = mapRangesByStartDay(action.data);
       return { ...state, items, requestedAt: action.requestedAt };
@@ -26,7 +33,7 @@ function ranges(state={items: {}, requestedAt: null}, action) {
   }
 
   // Service of booking is changed, can't accept request prior to now
-  if (action.type === ActionTypes.SET_BOOKING_SERVICE) {
+  if (action.type === SET_BOOKING_SERVICE) {
     return { ...state, requestedAt: Date.now() };
   }
 
@@ -38,7 +45,7 @@ function calendarDate(state, action) {
     return moment().format('YYYY-MM-DD');
   }
 
-  if (action.type === ActionTypes.SET_BOOKING_CALENDAR_DATE) {
+  if (action.type === SET_BOOKING_CALENDAR_DATE) {
     return action.date;
   }
 
@@ -46,7 +53,7 @@ function calendarDate(state, action) {
 }
 
 function service(state=null, action) {
-  if (action.type === ActionTypes.SET_BOOKING_SERVICE) {
+  if (action.type === SET_BOOKING_SERVICE) {
     return action.service;
   }
 
@@ -62,7 +69,7 @@ const bookingReducer = combineReducers({
 
 export default function bookingReducerWithReset(state, action) {
   // Reset state when set a new service of booking
-  if (action.type === ActionTypes.SET_BOOKING_SERVICE) {
+  if (action.type === SET_BOOKING_SERVICE) {
     return bookingReducer(undefined, action);
   }
 

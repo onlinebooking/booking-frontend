@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { login } from '../actions/';
 import classNames from 'classnames';
 import Spinner from '../components/Spinner';
+import { connect } from 'react-redux';
+import { login } from '../actions/auth';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -10,12 +10,6 @@ class LoginForm extends React.Component {
 
     this.onLoginFormSubmit = this.onLoginFormSubmit.bind(this);
   }
-
-  //componentWillReceiveProps(nextProps) {
-    //if ( nextProps.userData && nextProps.userData !== this.props.userData && this.props.onLoginSuccess ) {
-      //this.props.onLoginSuccess()
-    //}
-  //}
 
   renderErrors() {
     const { error, loading } = this.props;

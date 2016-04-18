@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Modal, OverlayTrigger, Navbar } from 'react-bootstrap';
-import LoginForm from '../containers/LoginForm'
+import LoginForm from './LoginForm'
+import Spinner from '../components/Spinner';
 import { connect } from 'react-redux';
-import { logout, showModalLogin, hideModalLogin } from '../actions';
-import Spinner from './Spinner';
+import { logout, showModalLogin, hideModalLogin } from '../actions/auth';
 
 class LoginModalButton extends React.Component {
 

@@ -1,6 +1,17 @@
 import { combineReducers } from 'redux';
 import { LOCATION_CHANGE } from 'react-router-redux'
-import * as ActionTypes from '../constants/ActionTypes';
+import {
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
+  ME_REQUEST,
+  ME_SUCCESS,
+  ME_FAILURE,
+  SET_USER_TOKEN,
+  USER_LOGOUT,
+  SHOW_MODAL_LOGIN,
+  HIDE_MODAL_LOGIN
+} from '../constants/ActionTypes';
 
 const initialState = {
   loading: false,
@@ -12,30 +23,30 @@ const initialState = {
 
 export default function auth(state=initialState, { type, data, error, token }) {
   switch (type) {
-    case ActionTypes.USER_LOGIN_REQUEST:
-    case ActionTypes.ME_REQUEST:
+    case USER_LOGIN_REQUEST:
+    case ME_REQUEST:
       return { ...state, loading: true };
 
-    case ActionTypes.USER_LOGIN_FAILURE:
-    case ActionTypes.ME_FAILURE:
+    case USER_LOGIN_FAILURE:
+    case ME_FAILURE:
       return { ...state, loading: false, error };
 
-    case ActionTypes.USER_LOGIN_SUCCESS:
+    case USER_LOGIN_SUCCESS:
       return { ...state, token: data.token, error: null };
 
-    case ActionTypes.ME_SUCCESS:
+    case ME_SUCCESS:
       return { ...state, user: data, loading: false, error: null };
 
-    case ActionTypes.SET_USER_TOKEN:
+    case SET_USER_TOKEN:
       return { ...state, token };
 
-    case ActionTypes.USER_LOGOUT:
+    case USER_LOGOUT:
       return initialState;
 
-    case ActionTypes.SHOW_MODAL_LOGIN:
+    case SHOW_MODAL_LOGIN:
       return { ...state, showModal: true, error: null };
 
-    case ActionTypes.HIDE_MODAL_LOGIN:
+    case HIDE_MODAL_LOGIN:
     case LOCATION_CHANGE:
       return { ...state, showModal: false, error: null };
 

@@ -4,12 +4,13 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import BookingCalendar from '../components/BookingCalendar';
 import { keys } from 'lodash';
-import { hashHistory } from 'react-router';
+import { push } from 'react-router-redux';
 import {
   loadBookingRanges,
   setBookingCalendarDate
-} from '../actions';
+} from '../actions/booking';
 
+// TODO: Re-selectize!
 function createCalendarEvents(availableDates){
   return availableDates.map(date => {
     return {
@@ -26,22 +27,17 @@ class ServiceBookingCaledarPage extends React.Component {
   onCalendarChange(calendarDate) {
     const date = calendarDate.format('YYYY-MM-DD');
     if (date != this.props.calendarDate) {
-      this.props.setBookingCalendarDate(date);
+      // Set in store and update location
+      this.props.setBookingCalendarDate(date, true);
       this.props.loadBookingRanges();
-      // Update date in query string
-      const pathname = this.props.location.pathname;
-      hashHistory.replace({
-        pathname,
-        query: { date }
-      });
     }
   }
 
   onEventClick(event) {
     // Go to booking date page
-    const pathname = this.props.location.pathname;
+    const { shop, service, push } = this.props;
     const bookingDate = event.date.format('YYYY-MM-DD');
-    hashHistory.push(`${pathname}/at/${bookingDate}`);
+    push(`shops/${shop.id}/booking/${service.id}/at/${bookingDate}`);
   }
 
   render() {
@@ -69,4 +65,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   setBookingCalendarDate,
   loadBookingRanges,
+  push,
 })(ServiceBookingCaledarPage);
