@@ -55,6 +55,14 @@
   margin-right: 20px;
 }
 
+.booking-loading {
+  color: white;
+  padding: 2px;
+  font-size: 11px;
+  display: inline;
+  background-color: deepskyblue;
+}
+
 .booking-calendar-container {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -68,10 +76,9 @@
 }
 .booking-event {
   cursor: pointer;
-  border-color: #008cba;
   text-align: center;
-  background-color: #008cba;
-  height: 100%;
+  border-color: #008cba !important;
+  background-color: #008cba !important;
 }
 .booking-event:hover {
   font-weight: bold;

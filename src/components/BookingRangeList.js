@@ -1,6 +1,5 @@
 import React from 'react';
 import { values } from 'lodash';
-import { Link } from 'react-router';
 import { ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -30,7 +29,6 @@ class BookingRangeItem extends React.Component {
   }
 }
 
-  //<Link to={'/shops/1/booking/1'}><div className="pull-right point" xonClick={onUndo}>Cambia giorno</div></Link>
 export default class BookingRangeList extends React.Component {
 
   render() {

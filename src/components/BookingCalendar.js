@@ -13,6 +13,21 @@ export default class BookingCalendar extends React.Component {
     $(calendar)
       .fullCalendar('addEventSource', events);
 
+    this.setClassesToBookedDayCell(events);
+  }
+
+  updateCalendarDate(date) {
+    const { calendar } = this.refs;
+    const currentCalendarDate = $(calendar)
+      .fullCalendar('getDate').format('YYYY-MM-DD');
+    if (date != currentCalendarDate) {
+      $(calendar).fullCalendar('gotoDate', date);
+    }
+  }
+
+  setClassesToBookedDayCell(events) {
+    const { calendar } = this.refs;
+
     // Add booked-day class to day with events
     $(calendar).find('.fc-day').removeClass('booked-day');
     $(calendar).find('.fc-day-number').removeClass('booked-day-number');
@@ -27,17 +42,9 @@ export default class BookingCalendar extends React.Component {
     });
   }
 
-  updateCalendarDate(date) {
-    const { calendar } = this.refs;
-    const currentCalendarDate = $(calendar)
-      .fullCalendar('getDate').format('YYYY-MM-DD');
-    if (date != currentCalendarDate) {
-      $(calendar).fullCalendar('gotoDate', date);
-    }
-  }
-
   componentDidMount() {
     const { calendar } = this.refs;
+
     $(calendar).fullCalendar({
       lang: 'it',
       events: this.props.events,
@@ -51,6 +58,8 @@ export default class BookingCalendar extends React.Component {
       eventClick: event => this.props.onEventClick(event),
       viewRender: view => this.props.onCalendarChange(view.calendar.getDate()),
     });
+
+    this.setClassesToBookedDayCell(this.props.events);
   }
 
   componentWillUnmount() {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
+import { Alert } from 'react-bootstrap';
 import BookingCalendar from '../components/BookingCalendar';
 import { keys } from 'lodash';
 import { push } from 'react-router-redux';
@@ -24,6 +25,13 @@ function createCalendarEvents(availableDates){
 
 class ServiceBookingCaledarPage extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.onEventClick = this.onEventClick.bind(this);
+    this.onCalendarChange = this.onCalendarChange.bind(this);
+  }
+
   onCalendarChange(calendarDate) {
     const date = calendarDate.format('YYYY-MM-DD');
     if (date != this.props.calendarDate) {
@@ -43,13 +51,32 @@ class ServiceBookingCaledarPage extends React.Component {
   render() {
     return (
       <div className="booking-calendar-container">
+        {this.renderError()}
+        {this.renderLoading()}
         <BookingCalendar
           events={createCalendarEvents(this.props.availableDates)}
           calendarDate={this.props.calendarDate}
-          onEventClick={this.onEventClick.bind(this)}
-          onCalendarChange={this.onCalendarChange.bind(this)} />
+          onEventClick={this.onEventClick}
+          onCalendarChange={this.onCalendarChange} />
       </div>
     );
+  }
+
+  renderLoading() {
+    const visibility = this.props.loading ? 'visible' : 'hidden';
+    return <div className="booking-loading" style={{visibility}}>Loading...</div>;
+  }
+
+  renderError() {
+    if (this.props.error) {
+      const { status, statusText } = this.props.error;
+      return (
+        <Alert bsStyle="danger">
+          <h4>Error Getting Ranges!</h4>
+          <p>{status} {statusText}</p>
+        </Alert>
+      );
+    }
   }
 }
 
@@ -58,6 +85,8 @@ function mapStateToProps(state) {
 
   return {
     calendarDate,
+    loading: ranges.isFetching,
+    error: ranges.error,
     availableDates: keys(ranges.items),
   };
 }

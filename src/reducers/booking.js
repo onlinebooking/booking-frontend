@@ -24,17 +24,57 @@ function mapRangesByStartDay(ranges) {
   });
 }
 
-function ranges(state={items: {}, requestedAt: null}, action) {
+const initialRangesState = {
+  items: {},
+  isFetching: false,
+  lastRequestedAt: null,
+  lastSuceessedAt: null,
+};
+function ranges(state=initialRangesState, action) {
+  if (action.type === BOOKING_RANGES_REQUEST) {
+    return { ...state, isFetching: true, lastRequestedAt: action.requestedAt };
+  }
+
   if (action.type === BOOKING_RANGES_SUCCESS) {
-    if (!state.requestedAt || action.requestedAt > state.requestedAt) {
+    let nextState = state;
+
+    if (!state.lastSuceessedAt || action.requestedAt > state.lastSuceessedAt) {
       const items = mapRangesByStartDay(action.data);
-      return { ...state, items, requestedAt: action.requestedAt };
+      nextState = { ...nextState, items, lastSuceessedAt: action.requestedAt, error: null };
     }
+
+    // No pending request!
+    if (!state.lastRequestedAt || action.requestedAt === state.lastRequestedAt) {
+      nextState = { ...nextState, isFetching: false };
+    }
+
+    return nextState;
+  }
+
+  if (action.type === BOOKING_RANGES_FAILURE) {
+    let nextState = state;
+
+    if (!state.lastSuceessedAt || action.requestedAt > state.lastSuceessedAt) {
+      nextState = { ...nextState, error: action.error };
+    }
+
+    // No pending request!
+    if (!state.lastRequestedAt || action.requestedAt === state.lastRequestedAt) {
+      nextState = { ...nextState, isFetching: false };
+    }
+
+    return nextState;
   }
 
   // Service of booking is changed, can't accept request prior to now
   if (action.type === SET_BOOKING_SERVICE) {
-    return { ...state, requestedAt: Date.now() };
+    return {
+      ...state,
+      lastRequestedAt: Date.now(),
+      lastSuceessedAt: Date.now(),
+      isFetching: false,
+      error: null
+    };
   }
 
   return state;
