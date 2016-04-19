@@ -64,7 +64,10 @@ class ServiceBookingAtDatePage extends React.Component {
   renderInvalidBookingDate() {
     return (
       <div className="booking-range-list-container">
-        <div>No Ranges In This Date Bro!</div>
+        <div>
+          <p>No Ranges In This Date Bro!</p>
+          <button className="btn btn-primary" onClick={this.onUndo}>Change Date</button>
+        </div>
       </div>
     );
   }
