@@ -11,7 +11,7 @@ import {
 } from '../constants/ActionTypes';
 
 // Can do it better...
-function calculateStartAndEnd(date) {
+function calculateStartAndEndForCalendar(date) {
   const m = moment(date, 'YYYY-MM-DD');
   return {
     start: moment(m).subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),
@@ -19,18 +19,33 @@ function calculateStartAndEnd(date) {
   };
 }
 
-export function loadBookingRanges() {
+function calculateStartAndEndForSingleDay(date) {
+  const m = moment(date, 'YYYY-MM-DD');
+  return {
+    start: date,
+    end: moment(m).add(1, 'day').format('YYYY-MM-DD')
+  };
+}
+
+export function loadBookingRanges(options = { loadSingleDay: false }) {
   return (dispatch, getState) => {
     const bookingState = getState().booking;
+
     // No enought info for a booking request
     if (!bookingState.service || !bookingState.calendarDate) {
       return;
     }
-    const service = bookingState.service;
-    const { start, end } = calculateStartAndEnd(bookingState.calendarDate);
+
+    const { service, calendarDate } = bookingState;
+    const { loadSingleDay } = options;
+    const { start, end } = loadSingleDay
+      ? calculateStartAndEndForSingleDay(calendarDate)
+      : calculateStartAndEndForCalendar(calendarDate);
     const endpoint = `/calculate-ranges?start=${start}&end=${end}&service=${service}`;
+
     dispatch({
       service,
+      loadSingleDay,
       start,
       end,
       requestedAt: Date.now(),

@@ -49,7 +49,7 @@ export default (store) => (
         const { bookingDate, shopId, serviceId } = nextState.params;
         if (moment(bookingDate, 'YYYY-MM-DD', true).isValid()) {
           store.dispatch(setBookingCalendarDate(bookingDate));
-          store.dispatch(loadBookingRanges());
+          store.dispatch(loadBookingRanges({ loadSingleDay: true }));
         } else {
           redirect(`/shops/${shopId}/booking/${serviceId}`);
         }

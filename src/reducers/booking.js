@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { groupBy } from 'lodash';
+import { groupBy, pick, omit, merge } from 'lodash';
 import moment from 'moment';
 import {
   SET_BOOKING_SERVICE,
@@ -27,6 +27,7 @@ function mapRangesByStartDay(ranges) {
 const initialRangesState = {
   items: {},
   isFetching: false,
+  error: null,
   lastRequestedAt: null,
   lastSuceessedAt: null,
 };
@@ -39,7 +40,11 @@ function ranges(state=initialRangesState, action) {
     let nextState = state;
 
     if (!state.lastSuceessedAt || action.requestedAt > state.lastSuceessedAt) {
-      const items = mapRangesByStartDay(action.data);
+      let items = mapRangesByStartDay(action.data);
+      // We know we have only a single day, smart 'merge' it instead of replace
+      if (action.loadSingleDay) {
+        items = merge(omit(state.items, action.start), pick(items, action.start));
+      }
       nextState = { ...nextState, items, lastSuceessedAt: action.requestedAt, error: null };
     }
 
@@ -68,13 +73,7 @@ function ranges(state=initialRangesState, action) {
 
   // Service of booking is changed, can't accept request prior to now
   if (action.type === SET_BOOKING_SERVICE) {
-    return {
-      ...state,
-      lastRequestedAt: Date.now(),
-      lastSuceessedAt: Date.now(),
-      isFetching: false,
-      error: null
-    };
+    return { ...state, lastRequestedAt: Date.now(), lastSuceessedAt: Date.now() };
   }
 
   return state;
