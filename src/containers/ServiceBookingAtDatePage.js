@@ -1,28 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Alert } from 'react-bootstrap';
 import BookingRangeList from '../components/BookingRangeList';
-import { replace, push } from 'react-router-redux';
+import ErrorAlert from '../components/ErrorAlert';
+import InvalidBookPeriod from '../components/InvalidBookPeriod';
+import { push } from 'react-router-redux';
 import Spinner from '../components/Spinner';
+import moment from 'moment';
 
 class ServiceBookingAtDatePage extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.onUndo = this.onUndo.bind(this);
     this.onRangeBooked = this.onRangeBooked.bind(this);
+  }
+
+  changeDateUrl() {
+    const { bookingDate, shop, service } = this.props;
+    return `/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`;
   }
 
   onRangeBooked(range) {
     const { shop, service, push } = this.props;
     push(`/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`);
-  }
-
-  onUndo() {
-    const { shop, service, replace, bookingDate } = this.props;
-    replace(`/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`);
   }
 
   render() {
@@ -45,43 +46,47 @@ class ServiceBookingAtDatePage extends React.Component {
       return this.renderInvalidBookingDate();
     }
 
+    // We can render the range list
+    return this.renderRangeList();
+  }
+
+  renderRangeList() {
+    const { bookingDate, bookingRanges, loading } = this.props;
     // Or this is also a very COOL bheaviur ;)
     const opacity = loading ? '0.5' : '1';
 
     return (
-      <div style={{opacity}} className="booking-range-list-container">
+      <div style={{opacity}}>
         <BookingRangeList
           date={bookingDate}
           ranges={bookingRanges}
           showBookingButton={true}
+          changeDateUrl={this.changeDateUrl()}
           onRangeBooked={this.onRangeBooked}
-          onUndo={this.onUndo}
         />
       </div>
     );
   }
 
   renderInvalidBookingDate() {
-    return (
-      <div className="booking-range-list-container">
-        <div>
-          <p>No Ranges In This Date Bro!</p>
-          <button className="btn btn-primary" onClick={this.onUndo}>Change Date</button>
-        </div>
-      </div>
-    );
+    const { bookingDate } = this.props;
+
+    return <InvalidBookPeriod
+      date={bookingDate}
+      isDateBookable={false}
+      changeDateUrl={this.changeDateUrl()}
+    />;
   }
 
   renderError() {
-    // TODO: Maybe move error into separated component
-    const { status, statusText } = this.props.error;
+    const { error, bookingDate } = this.props;
+    const formattedDate = moment(bookingDate, 'YYYY-MM-DD').format('dddd D MMMM YYYY');
+
     return (
-      <div className="booking-range-list-container">
-        <Alert bsStyle="danger">
-          <h4>Error Getting Ranges!</h4>
-          <p>{status} {statusText}</p>
-        </Alert>
-      </div>
+      <ErrorAlert
+        title={`Error nel recupero degli orari di ${formattedDate}.`}
+        {...error}
+      />
     );
   }
 }
@@ -99,6 +104,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  replace,
   push,
 })(ServiceBookingAtDatePage);

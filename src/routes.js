@@ -74,6 +74,9 @@ export default (store) => (
 );
 
 /*
+
+
+
   <Route path="login" component={LoginPage} />
     <Route path="profile" component={ProfilePage} />
   </Route>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { values } from 'lodash';
+import { Link } from 'react-router';
 import { ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ class BookingRangeItem extends React.Component {
       bookingBtn = (
         <button
           className="btn btn-primary"
-          onClick={() => onRangeBooked(range)}>Book me!</button>
+          onClick={() => onRangeBooked(range)}>Prenota</button>
       );
     }
 
@@ -32,12 +32,16 @@ class BookingRangeItem extends React.Component {
 export default class BookingRangeList extends React.Component {
 
   render() {
-    const { ranges, date, onUndo, showBookingButton, onRangeBooked } = this.props;
+    const { ranges, date, changeDateUrl, showBookingButton, onRangeBooked } = this.props;
+    const formattedDate = moment(date, 'YYYY-MM-DD').format('dddd D MMMM YYYY');
+
     return (
       <div>
         <div className="booking-range-list-header">
-          <div className="pull-left">Disponibilità del {date}</div>
-          <div className="pull-right point" onClick={onUndo}>Cambia giorno</div>
+          <div className="pull-left">{formattedDate}</div>
+          <div className="pull-right">
+            <Link className="change-day-link" to={changeDateUrl}>Cambia Giorno</Link>
+          </div>
           <div className="clearfix"></div>
         </div>
         <ListGroup>

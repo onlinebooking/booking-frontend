@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Alert } from 'react-bootstrap';
+import ErrorAlert from '../components/ErrorAlert';
+import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
 import BookingRange from '../components/BookingRange';
@@ -11,6 +12,16 @@ class ServiceBookingRangePage extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  changeDateUrl() {
+    const { bookingDate, shop, service } = this.props;
+    return `/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`;
+  }
+
+  changeRangeUrl() {
+    const { bookingDate, shop, service } = this.props;
+    return `/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`;
   }
 
   render() {
@@ -37,47 +48,41 @@ class ServiceBookingRangePage extends React.Component {
 
   renderBookingRange() {
     const { range, isFetchingRange, bookingDate } = this.props;
+    const opacity = isFetchingRange ? '0.5' : '1';
 
-    return <BookingRange
-      range={range}
-      date={bookingDate}
-    />;
+    return (
+      <div style={{opacity}}>
+        <BookingRange
+          range={range}
+          date={bookingDate}
+          changeDateUrl={this.changeDateUrl()}
+          changeRangeUrl={this.changeRangeUrl()}
+        />
+      </div>
+    );
   }
 
   renderFetchingRangeError() {
-    // TODO: Maybe move error into separated component
-    const { status, statusText } = this.props.fetchingRangeError;
-    <div className="booking-range-list-container">
-      <Alert bsStyle="danger">
-        <h4>Error Getting Ranges!</h4>
-        <p>{status} {statusText}</p>
-      </Alert>
-    </div>
+    const { fetchingRangeError } = this.props;
+
+    return (
+      <ErrorAlert
+        title={'Errore nel recupero della disponibilità richiesta.'}
+        {...fetchingRangeError}
+      />
+    );
   }
 
   renderInvalidRange() {
-    const { isDateBookable, bookingDate, shop, service } = this.props;
-    const baseBookingUrl = `/shops/${shop.id}/booking/${service.id}`;
+    const { isDateBookable, bookingDate, requestedRange } = this.props;
 
-    if (isDateBookable) {
-      // Invalid range but valid date, user can change ranges in date
-      const toBookingAtPageUrl = `${baseBookingUrl}/at/${bookingDate}`;
-      return (
-        <div className="booking-range-container">
-          <div>Orario invalido o non più disponibile</div>
-          <Link to={toBookingAtPageUrl}>Cambia orario</Link>
-        </div>
-      );
-    } else {
-      // Invalid range and date, user must change date
-      const toBookingCalendarPageUrl = `${baseBookingUrl}?date=${bookingDate}`;
-      return (
-        <div className="booking-range-container">
-          <div>Giorno non disponibile</div>
-          <Link to={toBookingCalendarPageUrl}>Cambia giorno</Link>
-        </div>
-      );
-    }
+    return <InvalidBookPeriod
+      date={bookingDate}
+      range={requestedRange}
+      isDateBookable={isDateBookable}
+      changeDateUrl={this.changeDateUrl()}
+      changeRangeUrl={this.changeRangeUrl()}
+    />;
   }
 }
 
@@ -94,6 +99,7 @@ function mapStateToProps(state) {
 
   return {
     range,
+    requestedRange,
     bookingDate,
     isDateBookable,
     isFetchingRange: state.booking.ranges.isFetching,

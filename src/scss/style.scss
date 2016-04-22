@@ -50,12 +50,21 @@
   text-align: center;
 }
 
-.booking-container {
+/** booking **/
+
+.booking-page-container {
   margin-left: 20px;
   margin-right: 20px;
 }
+.booking-container {
+  margin-top: 10px;
+}
 
-.booking-loading {
+.booking-calendar-container {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+.booking-calendar-loader {
   color: white;
   padding: 2px;
   font-size: 11px;
@@ -63,10 +72,7 @@
   background-color: deepskyblue;
 }
 
-.booking-calendar-container {
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
+/** fullcalendar booking classes */
 .booked-day {
   cursor: pointer;
   background-color: #008cba;
@@ -84,19 +90,43 @@
   font-weight: bold;
 }
 
-.booking-range-list-container {
-  padding-top: 10px;
-}
 .booking-range-list-header {
   color: white;
   background-color: #007196;
   padding: 20px;
 }
+.change-day-link {
+  color: white;
+}
+.change-day-link:hover {
+  color: white;
+  text-decoration: none;
+}
 .booking-item-time {
   font-size: 17px;
   font-weight: bold;
 }
+.no-books {
+  /*border-left: 1px solid #007196;*/
+  /*margin-top: -10px;*/
+  /*border-right: 1px solid #007196;*/
+  /*border-bottom: 1px solid #007196;*/
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  /*background-color: #f2f2f2;*/
+  /*text-align: center;*/
+  .no-books-text {
+    margin-bottom: 90px;
+    color: #007196;
+    /*font-weight: bold;*/
+    font-size: 23px;
+  }
+}
 
-.booking-range-container {
-  padding-top: 10px;
+.booking-range {
+  text-align: center;
+  font-size: 23px;
+  color: #007196;
 }

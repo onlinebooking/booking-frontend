@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
-import { Alert } from 'react-bootstrap';
 import BookingCalendar from '../components/BookingCalendar';
+import ErrorAlert from '../components/ErrorAlert';
 import { keys } from 'lodash';
 import { push } from 'react-router-redux';
 import {
@@ -15,7 +15,7 @@ import {
 function createCalendarEvents(availableDates){
   return availableDates.map(date => {
     return {
-      title: 'Book Me!',
+      title: 'Prenota',
       date: moment(date, 'YYYY-MM-DD'),
       allDay: true,
       className: 'booking-event',
@@ -64,18 +64,17 @@ class ServiceBookingCaledarPage extends React.Component {
 
   renderLoading() {
     const visibility = this.props.loading ? 'visible' : 'hidden';
-    return <div className="booking-loading" style={{visibility}}>Loading...</div>;
+    return <div className="booking-calendar-loader" style={{visibility}}>Loading...</div>;
   }
 
   renderError() {
-    if (this.props.error) {
-      const { status, statusText } = this.props.error;
-      return (
-        <Alert bsStyle="danger">
-          <h4>Error Getting Ranges!</h4>
-          <p>{status} {statusText}</p>
-        </Alert>
-      );
+    const { error } = this.props;
+
+    if (error) {
+      return <ErrorAlert
+        title={"Errore nel recupero dei giorni disponibili, riprova più tardi."}
+        {...error}
+      />;
     }
   }
 }

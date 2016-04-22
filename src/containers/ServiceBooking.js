@@ -14,12 +14,14 @@ class ServiceBooking extends React.Component {
     }
 
     return (
-      <div className="booking-container">
+      <div className="booking-page-container">
         {this.renderTopShopAndServiceInfo()}
-        {this.props.children && React.cloneElement(this.props.children, {
-          shop,
-          service,
-        })}
+        <div className="booking-container">
+          {this.props.children && React.cloneElement(this.props.children, {
+            shop,
+            service,
+          })}
+        </div>
       </div>
     );
   }
