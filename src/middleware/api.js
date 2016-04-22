@@ -77,5 +77,5 @@ export default store => next => action => {
   )//;
   .then(resolve, reject)
 
-  }, 2000));
+  }, 200));
 };

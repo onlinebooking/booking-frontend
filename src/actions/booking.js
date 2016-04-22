@@ -2,12 +2,12 @@ import { CALL_API } from '../middleware/api';
 import moment from 'moment';
 import { replace } from 'react-router-redux';
 import {
-  BOOKING_RANGES_REQUEST,
-  BOOKING_RANGES_SUCCESS,
-  BOOKING_RANGES_FAILURE,
-  SET_BOOKING_VIEWED_DATE,
+  AVAILABLES_BOOKING_RANGES_REQUEST,
+  AVAILABLES_BOOKING_RANGES_SUCCESS,
+  AVAILABLES_BOOKING_RANGES_FAILURE,
   SET_BOOKING_CALENDAR_DATE,
   SET_BOOKING_SERVICE,
+  SET_BOOKING_RANGE
 } from '../constants/ActionTypes';
 
 // Can do it better...
@@ -52,19 +52,12 @@ export function loadBookingRanges(options = { loadSingleDay: false }) {
       [CALL_API]: {
         endpoint,
         types: [
-          BOOKING_RANGES_REQUEST,
-          BOOKING_RANGES_SUCCESS,
-          BOOKING_RANGES_FAILURE
+          AVAILABLES_BOOKING_RANGES_REQUEST,
+          AVAILABLES_BOOKING_RANGES_SUCCESS,
+          AVAILABLES_BOOKING_RANGES_FAILURE
         ]
       }
     });
-  };
-};
-
-export function setViewedDate(date) {
-  return {
-    date,
-    type: SET_BOOKING_VIEWED_DATE
   };
 };
 
@@ -85,5 +78,12 @@ export function setBookingCalendarDate(date, updateLocation = false) {
       const location = getState().routing.locationBeforeTransitions;
       dispatch(replace({ ...location, query: { date } }));
     }
+  };
+};
+
+export function setBookingRange(range) {
+  return {
+    range,
+    type: SET_BOOKING_RANGE
   };
 };

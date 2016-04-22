@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Alert } from 'react-bootstrap';
 import BookingRangeList from '../components/BookingRangeList';
-import { replace } from 'react-router-redux';
+import { replace, push } from 'react-router-redux';
 import Spinner from '../components/Spinner';
 
 class ServiceBookingAtDatePage extends React.Component {
@@ -16,17 +16,17 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 
   onRangeBooked(range) {
-    alert(`Want to book ${range.start} - ${range.end}`);
+    const { shop, service, push } = this.props;
+    push(`/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`);
   }
 
   onUndo() {
-    const { shop, service, replace } = this.props;
-    const bookingDate = this.props.params.bookingDate;
+    const { shop, service, replace, bookingDate } = this.props;
     replace(`/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`);
   }
 
   render() {
-    const { error, loading, bookingRanges, params: { bookingDate } } = this.props; // wOw
+    const { error, loading, bookingRanges, bookingDate } = this.props; // wOw
 
     // First render error if necessary
     if (error) {
@@ -86,17 +86,19 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const { ranges } = state.booking;
-  const bookingRanges = ranges.items[ownProps.params.bookingDate] || [];
+  const bookingRanges = ranges.items[state.booking.calendarDate] || [];
 
   return {
     bookingRanges,
+    bookingDate: state.booking.calendarDate,
     loading: ranges.isFetching,
     error: ranges.error,
   };
 }
 
 export default connect(mapStateToProps, {
-  replace
+  replace,
+  push,
 })(ServiceBookingAtDatePage);

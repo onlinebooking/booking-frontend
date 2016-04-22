@@ -4,19 +4,14 @@ import moment from 'moment';
 import {
   SET_BOOKING_SERVICE,
   SET_BOOKING_CALENDAR_DATE,
-  SET_BOOKING_VIEWED_DATE,
-  BOOKING_RANGES_REQUEST,
-  BOOKING_RANGES_SUCCESS,
-  BOOKING_RANGES_FAILURE
+  SET_BOOKING_RANGE,
+  AVAILABLES_BOOKING_RANGES_REQUEST,
+  AVAILABLES_BOOKING_RANGES_SUCCESS,
+  AVAILABLES_BOOKING_RANGES_FAILURE,
+  BOOK_RANGE_REQUEST,
+  BOOK_RANGE_SUCCESS,
+  BOOK_RANGE_FAILURE
 } from '../constants/ActionTypes';
-
-function viewedDate(state=null, action) {
-  if (action.type === SET_BOOKING_VIEWED_DATE) {
-    return action.date;
-  }
-
-  return state;
-}
 
 function mapRangesByStartDay(ranges) {
   return groupBy(ranges, range => {
@@ -32,11 +27,11 @@ const initialRangesState = {
   lastSuceessedAt: null,
 };
 function ranges(state=initialRangesState, action) {
-  if (action.type === BOOKING_RANGES_REQUEST) {
+  if (action.type === AVAILABLES_BOOKING_RANGES_REQUEST) {
     return { ...state, isFetching: true, lastRequestedAt: action.requestedAt };
   }
 
-  if (action.type === BOOKING_RANGES_SUCCESS) {
+  if (action.type === AVAILABLES_BOOKING_RANGES_SUCCESS) {
     let nextState = state;
 
     if (!state.lastSuceessedAt || action.requestedAt > state.lastSuceessedAt) {
@@ -56,7 +51,7 @@ function ranges(state=initialRangesState, action) {
     return nextState;
   }
 
-  if (action.type === BOOKING_RANGES_FAILURE) {
+  if (action.type === AVAILABLES_BOOKING_RANGES_FAILURE) {
     let nextState = state;
 
     if (!state.lastSuceessedAt || action.requestedAt > state.lastSuceessedAt) {
@@ -99,11 +94,38 @@ function service(state=null, action) {
   return state;
 }
 
+const initialBookState = {
+  range: null,
+  isSaving: false,
+  error: null,
+  bookedRange: null,
+};
+function book(state = initialBookState, action) {
+  // When set a booking range reset the state and set the new range
+  if (action.type === SET_BOOKING_RANGE) {
+    return { ...initialBookState, range: action.range };
+  }
+
+  if (action.type === BOOK_RANGE_REQUEST) {
+    return { ...state, isSaving: true };
+  }
+
+  if (action.type === BOOK_RANGE_SUCCESS) {
+    return { ...state, isSaving: false, bookedRange: action.data};
+  }
+
+  if (action.type === BOOK_RANGE_SUCCESS) {
+    return { ...state, isSaving: false, error: action.error };
+  }
+
+  return state;
+}
+
 const bookingReducer = combineReducers({
     service,
     calendarDate,
     ranges,
-    viewedDate,
+    book,
 });
 
 export default function bookingReducerWithReset(state, action) {

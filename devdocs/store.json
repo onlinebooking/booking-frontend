@@ -41,7 +41,18 @@ booking : {
         start : null,
         end : null,
     },
-    ranges : []
+    ranges : [],
+    book: {
+      range: {
+        start,
+        end,
+      },
+      isSaving: true,
+      error: null,
+      bookedRange: {
+        id: 22,
+      }
+    },
     selectedRange : null,
     booking : false,
     bookingId : null
