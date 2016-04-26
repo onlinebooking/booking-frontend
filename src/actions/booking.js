@@ -1,13 +1,18 @@
 import { CALL_API } from '../middleware/api';
 import moment from 'moment';
 import { replace } from 'react-router-redux';
+import { jsonPostConfig, authTokenConfig } from './utils';
+import { merge } from 'lodash';
 import {
   AVAILABLES_BOOKING_RANGES_REQUEST,
   AVAILABLES_BOOKING_RANGES_SUCCESS,
   AVAILABLES_BOOKING_RANGES_FAILURE,
   SET_BOOKING_CALENDAR_DATE,
   SET_BOOKING_SERVICE,
-  SET_BOOKING_RANGE
+  SET_BOOKING_RANGE,
+  BOOK_REQUEST,
+  BOOK_SUCCESS,
+  BOOK_FAILURE
 } from '../constants/ActionTypes';
 
 // Can do it better...
@@ -85,5 +90,36 @@ export function setBookingRange(range) {
   return {
     range,
     type: SET_BOOKING_RANGE
+  };
+};
+
+export function book() {
+  return (dispatch, getState) => {
+    const {service, book: { range } } = getState().booking;
+
+    // No enought info for booking
+    if (!service || !range) {
+      return;
+    }
+
+    const { start, end } = range;
+    const config = merge(authTokenConfig(getState()), jsonPostConfig({
+      service,
+      start,
+      end
+    }));
+    const endpoint = `/book-service/?start=${start}&end=${end}&service=${service}`;
+
+    dispatch({
+      [CALL_API]: {
+        endpoint,
+        config,
+        types: [
+          BOOK_REQUEST,
+          BOOK_SUCCESS,
+          BOOK_FAILURE
+        ]
+      }
+    });
   };
 };

@@ -8,9 +8,9 @@ import {
   AVAILABLES_BOOKING_RANGES_REQUEST,
   AVAILABLES_BOOKING_RANGES_SUCCESS,
   AVAILABLES_BOOKING_RANGES_FAILURE,
-  BOOK_RANGE_REQUEST,
-  BOOK_RANGE_SUCCESS,
-  BOOK_RANGE_FAILURE
+  BOOK_REQUEST,
+  BOOK_SUCCESS,
+  BOOK_FAILURE
 } from '../constants/ActionTypes';
 
 function mapRangesByStartDay(ranges) {
@@ -106,15 +106,15 @@ function book(state = initialBookState, action) {
     return { ...initialBookState, range: action.range };
   }
 
-  if (action.type === BOOK_RANGE_REQUEST) {
+  if (action.type === BOOK_REQUEST) {
     return { ...state, isSaving: true };
   }
 
-  if (action.type === BOOK_RANGE_SUCCESS) {
+  if (action.type === BOOK_SUCCESS) {
     return { ...state, isSaving: false, bookedRange: action.data};
   }
 
-  if (action.type === BOOK_RANGE_SUCCESS) {
+  if (action.type === BOOK_FAILURE) {
     return { ...state, isSaving: false, error: action.error };
   }
 

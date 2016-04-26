@@ -5,6 +5,7 @@ import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
 import BookingRange from '../components/BookingRange';
+import { book } from '../actions/booking';
 import { find, isEqual, isArray } from 'lodash';
 import moment from 'moment';
 
@@ -12,6 +13,8 @@ class ServiceBookingRangePage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.onConfirmBooking = this.onConfirmBooking.bind(this)
   }
 
   changeDateUrl() {
@@ -22,6 +25,10 @@ class ServiceBookingRangePage extends React.Component {
   changeRangeUrl() {
     const { bookingDate, shop, service } = this.props;
     return `/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`;
+  }
+
+  onConfirmBooking() {
+    this.props.book();
   }
 
   render() {
@@ -47,7 +54,14 @@ class ServiceBookingRangePage extends React.Component {
   }
 
   renderBookingRange() {
-    const { range, isFetchingRange, bookingDate } = this.props;
+    const {
+      range,
+      isFetchingRange,
+      isSavingBook,
+      bookingDate,
+      bookedRange,
+      savingBookError
+    } = this.props;
     const opacity = isFetchingRange ? '0.5' : '1';
 
     return (
@@ -55,6 +69,10 @@ class ServiceBookingRangePage extends React.Component {
         <BookingRange
           range={range}
           date={bookingDate}
+          loading={isSavingBook}
+          error={savingBookError}
+          bookedRange={bookedRange}
+          onConfirmBooking={this.onConfirmBooking}
           changeDateUrl={this.changeDateUrl()}
           changeRangeUrl={this.changeRangeUrl()}
         />
@@ -111,6 +129,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+  book,
   //replace,
   //push,
 })(ServiceBookingRangePage);

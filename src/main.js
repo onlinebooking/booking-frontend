@@ -6,6 +6,7 @@ import ReactDom from 'react-dom';
 import { hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './store/configureStore';
+import { loginWithToken } from './actions/auth';
 import Root from './containers/Root';
 import moment from 'moment';
 
