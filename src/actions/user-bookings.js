@@ -1,5 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
+import { Schemas } from '../constants/Schemas';
 import {
   USER_BOOKINGS_REQUEST,
   USER_BOOKINGS_SUCCESS,
@@ -10,7 +11,7 @@ function fetchUserBookings() {
   return (dispatch, getState) => {
     console.log(authTokenConfig(getState()));
     return dispatch({
-      entity: 'bookings',
+      entitySchema: Schemas.BOOKING_ARRAY,
       isPageError: true,
       [CALL_API]: {
         endpoint: '/bookings/',

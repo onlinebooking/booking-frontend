@@ -1,4 +1,5 @@
-import { keyBy } from 'lodash';
+import { merge } from 'lodash';
+import { normalize } from 'normalizr';
 
 const initialState = {
   shops: {},
@@ -6,22 +7,11 @@ const initialState = {
   bookings: {},
 };
 
-// Map data to entity object -> { id: item }
-function mapToEntityObj(data) {
-  const items = Array.isArray(data) ? data : [data];
-  return keyBy(items, 'id');
-}
-
 export default function entities(state = initialState, action) {
-  if (action.entity && action.data) {
-    return {
-      ...state,
-      [action.entity]: Object.assign(
-        {},
-        state[action.entity],
-        mapToEntityObj(action.data)
-      )
-    };
+  // Normalize data and merge to entities
+  if (action.entitySchema && action.data) {
+    const { entities } = normalize(action.data, action.entitySchema);
+    return merge({}, state, entities);
   }
 
   return state;

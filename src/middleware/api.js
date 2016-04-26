@@ -31,7 +31,7 @@ function callApi(endpoint, callConfig = {}) {
     )
     .then(({ json, response }) => {
       if (!response.ok) {
-        // HTTP Error with json ok
+        // HTTP Error with correct json
         return Promise.reject({ ...pickResponse(response), data: json });
       }
 

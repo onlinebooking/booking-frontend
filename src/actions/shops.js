@@ -1,4 +1,5 @@
 import { CALL_API } from '../middleware/api';
+import { Schemas } from '../constants/Schemas';
 import {
   SHOPS_REQUEST,
   SHOPS_SUCCESS,
@@ -16,7 +17,7 @@ import {
 
 function fetchShops() {
   return {
-    entity: 'shops',
+    entitySchema: Schemas.SHOP_ARRAY,
     isPageError: true,
     [CALL_API]: {
       endpoint: '/shops',
@@ -39,7 +40,7 @@ export function loadShops() {
 
 function fetchShop(shopId) {
   return {
-    entity: 'shops',
+    entitySchema: Schemas.SHOP,
     isPageError: true,
     [CALL_API]: {
       endpoint: `/shops/${shopId}`,
@@ -64,7 +65,7 @@ function fetchShopServices(shopId) {
   return {
     shopId,
     isPageError: true,
-    entity: 'services',
+    entitySchema: Schemas.SERVICE_ARRAY,
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services`,
       types: [
@@ -86,7 +87,7 @@ export function loadShopServices(shopId) {
 
 function fetchShopService(shopId, serviceId) {
   return {
-    entity: 'services',
+    entitySchema: Schemas.SERVICE,
     isPageError: true,
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services/${serviceId}`,
