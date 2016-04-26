@@ -45,6 +45,7 @@ export default class BookingCalendar extends React.Component {
   componentDidMount() {
     const { calendar } = this.refs;
 
+    // TODO: Remap jQuery class when redray the view
     $(calendar).fullCalendar({
       lang: 'it',
       events: this.props.events,

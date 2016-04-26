@@ -1,27 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import { Link } from 'react-router';
 import BookingCalendar from '../components/BookingCalendar';
 import ErrorAlert from '../components/ErrorAlert';
-import { keys } from 'lodash';
+import { getBookingAvailblesCalendarDates } from '../selectors/calendar';
 import { push } from 'react-router-redux';
 import {
   loadBookingRanges,
   setBookingCalendarDate
 } from '../actions/booking';
-
-// TODO: Re-selectize!
-function createCalendarEvents(availableDates){
-  return availableDates.map(date => {
-    return {
-      title: 'Prenota',
-      date: moment(date, 'YYYY-MM-DD'),
-      allDay: true,
-      className: 'booking-event',
-    };
-  });
-}
 
 class ServiceBookingCaledarPage extends React.Component {
 
@@ -54,7 +41,7 @@ class ServiceBookingCaledarPage extends React.Component {
         {this.renderError()}
         {this.renderLoading()}
         <BookingCalendar
-          events={createCalendarEvents(this.props.availableDates)}
+          events={this.props.availableDates}
           calendarDate={this.props.calendarDate}
           onEventClick={this.onEventClick}
           onCalendarChange={this.onCalendarChange} />
@@ -86,7 +73,7 @@ function mapStateToProps(state) {
     calendarDate,
     loading: ranges.isFetching,
     error: ranges.error,
-    availableDates: keys(ranges.items),
+    availableDates: getBookingAvailblesCalendarDates(state),
   };
 }
 

@@ -9,7 +9,6 @@ import {
 
 function fetchUserBookings() {
   return (dispatch, getState) => {
-    console.log(authTokenConfig(getState()));
     return dispatch({
       entitySchema: Schemas.BOOKING_ARRAY,
       isPageError: true,
