@@ -31,9 +31,9 @@ export default class ShopsList extends React.Component {
     return (
       <div>
         <ListGroup>
-          {shops.map((shop) => {
-            return <ShopsListItem {...shop} key={shop.id} />;
-          })}
+          {shops.map(shop => (
+            <ShopsListItem {...shop} key={shop.id} />
+          ))}
         </ListGroup>
       </div>
     );

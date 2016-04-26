@@ -82,7 +82,10 @@ export default class BookingRange extends React.Component {
     const { bookedRange } = this.props;
 
     return (
-      <div>Wooooooo this is {bookedRange.id}</div>
+      <div>
+        Wooooooo this is {bookedRange.id}
+        <div><Link to={'/my-bookings'}>Prenotazioni</Link></div>
+      </div>
     );
   }
 }

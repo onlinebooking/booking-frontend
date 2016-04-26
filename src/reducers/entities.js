@@ -3,6 +3,7 @@ import { keyBy } from 'lodash';
 const initialState = {
   shops: {},
   services: {},
+  bookings: {},
 };
 
 // Map data to entity object -> { id: item }

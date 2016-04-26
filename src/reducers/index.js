@@ -3,6 +3,7 @@ import { routerReducer as routing } from 'react-router-redux';
 import entities from './entities';
 import simpleResList from './simple-res-list';
 import booking from './booking';
+import userBookings from './user-bookings';
 import auth from './auth';
 import pageError from './page-error';
 import {
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   shopServices,
   booking,
   auth,
+  userBookings,
   pageError,
   routing,
 });

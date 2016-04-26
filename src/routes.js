@@ -8,6 +8,7 @@ import ServiceBooking from './containers/ServiceBooking';
 import ServiceBookingCaledarPage from './containers/ServiceBookingCaledarPage';
 import ServiceBookingAtDatePage from './containers/ServiceBookingAtDatePage';
 import ServiceBookingRangePage from './containers/ServiceBookingRangePage';
+import UserBookingsPage from './containers/UserBookingsPage';
 //import LoginPage from './containers/LoginPage';
 import ProfilePage from './containers/ProfilePage';
 import {
@@ -22,6 +23,9 @@ import {
   setBookingCalendarDate,
   setBookingRange
 } from './actions/booking';
+import {
+  loadUserBookings
+} from './actions/user-bookings';
 
 export default (store) => (
   <Route path="/" component={App}>
@@ -70,6 +74,9 @@ export default (store) => (
         }
       }} />
     </Route>
+    <Route path="my-bookings" component={UserBookingsPage} onEnter={(nextState) => {
+      store.dispatch(loadUserBookings());
+    }} />
   </Route>
 );
 
