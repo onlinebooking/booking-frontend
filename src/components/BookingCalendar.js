@@ -12,8 +12,6 @@ export default class BookingCalendar extends React.Component {
       .fullCalendar('removeEvents')
     $(calendar)
       .fullCalendar('addEventSource', events);
-
-    this.setClassesToBookedDayCell(events);
   }
 
   updateCalendarDate(date) {
@@ -25,8 +23,9 @@ export default class BookingCalendar extends React.Component {
     }
   }
 
-  setClassesToBookedDayCell(events) {
+  setClassesToBookedDayCell() {
     const { calendar } = this.refs;
+    const events = $(calendar).fullCalendar('clientEvents');
 
     // Add booked-day class to day with events
     $(calendar).find('.fc-day').removeClass('booked-day');
@@ -45,7 +44,6 @@ export default class BookingCalendar extends React.Component {
   componentDidMount() {
     const { calendar } = this.refs;
 
-    // TODO: Remap jQuery class when redray the view
     $(calendar).fullCalendar({
       lang: 'it',
       events: this.props.events,
@@ -58,9 +56,8 @@ export default class BookingCalendar extends React.Component {
       defaultDate: this.props.calendarDate,
       eventClick: event => this.props.onEventClick(event),
       viewRender: view => this.props.onCalendarChange(view.calendar.getDate()),
+      eventAfterAllRender: view => this.setClassesToBookedDayCell(),
     });
-
-    this.setClassesToBookedDayCell(this.props.events);
   }
 
   componentWillUnmount() {
