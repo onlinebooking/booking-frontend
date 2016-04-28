@@ -9,6 +9,7 @@ import ServiceBookingCaledarPage from './containers/ServiceBookingCaledarPage';
 import ServiceBookingAtDatePage from './containers/ServiceBookingAtDatePage';
 import ServiceBookingRangePage from './containers/ServiceBookingRangePage';
 import UserBookingsPage from './containers/UserBookingsPage';
+import UserBookingDetailPage from './containers/UserBookingDetailPage';
 //import LoginPage from './containers/LoginPage';
 import ProfilePage from './containers/ProfilePage';
 import {
@@ -24,7 +25,8 @@ import {
   setBookingRange
 } from './actions/booking';
 import {
-  loadUserBookings
+  loadUserBookings,
+  loadUserBooking
 } from './actions/user-bookings';
 
 export default (store) => (
@@ -76,6 +78,10 @@ export default (store) => (
     </Route>
     <Route path="my-bookings" component={UserBookingsPage} onEnter={(nextState) => {
       store.dispatch(loadUserBookings());
+    }} />
+    <Route path="my-bookings/:bookingId" component={UserBookingDetailPage} onEnter={(nextState) => {
+      const { bookingId } = nextState.params;
+      store.dispatch(loadUserBooking(bookingId));
     }} />
   </Route>
 );

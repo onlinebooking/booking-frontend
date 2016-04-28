@@ -12,7 +12,7 @@ export class NavBar extends React.Component {
             <Navbar inverse>
             <Navbar.Header>
               <Navbar.Brand>
-                <Link to={'/'}>QnandoBooking</Link>
+                <Link to={'/'}>Qando Booking</Link>
               </Navbar.Brand>
             </Navbar.Header>
             {/*

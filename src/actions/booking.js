@@ -3,6 +3,7 @@ import moment from 'moment';
 import { replace } from 'react-router-redux';
 import { jsonPostConfig, authTokenConfig } from './utils';
 import { merge } from 'lodash';
+import { Schemas } from '../constants/Schemas';
 import {
   AVAILABLES_BOOKING_RANGES_REQUEST,
   AVAILABLES_BOOKING_RANGES_SUCCESS,
@@ -111,6 +112,7 @@ export function book() {
     const endpoint = `/book-service/?start=${start}&end=${end}&service=${service}`;
 
     dispatch({
+      entitySchema: Schemas.BOOKING,
       [CALL_API]: {
         endpoint,
         config,

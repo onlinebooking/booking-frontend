@@ -21,3 +21,17 @@ export const getUserBookings = createSelector(
     shops
   ))
 );
+
+const getUserBooking = (state, props) =>
+  state.entities.bookings[props.params.bookingId];
+
+export const makeGetUserBooking = () => {
+  return createSelector(
+    [ getUserBooking, getServicesEntity, getShopsEntity ],
+    (booking, services, shops) => (
+      typeof booking === 'undefined'
+      ? null
+      : nestServiceShop(booking, services, shops)
+    )
+  );
+};

@@ -7,7 +7,7 @@ import moment from 'moment';
 class UserBookingListItem extends React.Component {
 
   render() {
-    const { service, status } = this.props;
+    const { service, status, id } = this.props;
 
     const formattedDate = moment(this.props.start, moment.ISO_8601).format('dddd D MMMM YYYY');
     const formattedRange = {
@@ -17,13 +17,15 @@ class UserBookingListItem extends React.Component {
     const { start, end } = formattedRange;
 
     return (
-      <ListGroupItem>
-        <div>{service.name}</div>
-        <div>{service.shop.name}</div>
-        <div>{formattedDate}</div>
-        <div>{start} - {end}</div>
-        <div>{status}</div>
-      </ListGroupItem>
+      <Link to={`/my-bookings/${id}`}>
+        <ListGroupItem>
+            <div>{service.name}</div>
+            <div>{service.shop.name}</div>
+            <div>{formattedDate}</div>
+            <div>{start} - {end}</div>
+            <div>{status}</div>
+        </ListGroupItem>
+      </Link>
     );
   }
 }
