@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
 import BookingRange from '../components/BookingRange';
 import { book } from '../actions/booking';
+import { getBookedRange } from '../selectors/bookings';
 import { find, isEqual, isArray } from 'lodash';
 import moment from 'moment';
 
@@ -124,12 +125,10 @@ function mapStateToProps(state) {
     fetchingRangeError: state.booking.ranges.error,
     isSavingBook: state.booking.book.isSaving,
     savingBookError: state.booking.book.error,
-    bookedRange: state.booking.book.bookedRange,
+    bookedRange: getBookedRange(state),
   };
 }
 
 export default connect(mapStateToProps, {
   book,
-  //replace,
-  //push,
 })(ServiceBookingRangePage);

@@ -1,4 +1,4 @@
-import simpleResList from './simple-res-list';
+import simpleResList from './utils/simple-res-list';
 import {
   USER_BOOKINGS_REQUEST,
   USER_BOOKINGS_SUCCESS,

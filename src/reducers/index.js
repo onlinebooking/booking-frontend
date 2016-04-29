@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 import entities from './entities';
-import simpleResList from './simple-res-list';
+import simpleResList from './utils/simple-res-list';
 import booking from './booking';
-import userBookings from './user-bookings';
+import userData from './user-data';
 import auth from './auth';
 import pageError from './page-error';
 import {
@@ -49,7 +49,7 @@ const rootReducer = combineReducers({
   shopServices,
   booking,
   auth,
-  userBookings,
+  userData,
   pageError,
   routing,
 });

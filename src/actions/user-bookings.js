@@ -30,7 +30,7 @@ function fetchUserBookings() {
 
 export function loadUserBookings() {
   return (dispatch, getState) => {
-    if (!getState().userBookings.isFetching) {
+    if (!getState().userData.bookings.isFetching) {
       dispatch(fetchUserBookings());
     }
   };

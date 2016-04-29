@@ -98,7 +98,7 @@ const initialBookState = {
   range: null,
   isSaving: false,
   error: null,
-  bookedRange: null,
+  id: null,
 };
 function book(state = initialBookState, action) {
   // When set a booking range reset the state and set the new range
@@ -111,7 +111,7 @@ function book(state = initialBookState, action) {
   }
 
   if (action.type === BOOK_SUCCESS) {
-    return { ...state, isSaving: false, bookedRange: action.data};
+    return { ...state, isSaving: false, id: action.data.id };
   }
 
   if (action.type === BOOK_FAILURE) {

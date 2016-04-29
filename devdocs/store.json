@@ -1,5 +1,5 @@
-entities : { 
-    
+entities : {
+
     shops : {
         1 : {},
         2 : {}
@@ -8,6 +8,10 @@ entities : {
     services : {
       1: {},
       2: {}
+    },
+
+    bookings : {
+      22: {}
     }
 },
 
@@ -17,7 +21,7 @@ homeShopList : {
     fetching : true,
     items : [1,2,3],
     currentPage : [1,2]
-    
+
 },
 
 shopServices : {
@@ -33,14 +37,11 @@ shopServices : {
         items : [1,2,3],
         currentPage : [1,2]
     }
-    
+
 },
 
 booking : {
-    dates  : {
-        start : null,
-        end : null,
-    },
+  calendarDate,
     ranges : [],
     book: {
       range: {
@@ -49,16 +50,27 @@ booking : {
       },
       isSaving: true,
       error: null,
-      bookedRange: {
-        id: 22,
-      }
+      id: 22,
     },
-    selectedRange : null,
-    booking : false,
-    bookingId : null
-
+    service,
 }
 
+userData: {
 
+  bookings: {
+    items: {
+      isFetching,
+      items: 1
+    },
+    actions: {
+      1: {
+        name: 'cancel',
+        isSaving,
+        error,
+      }
+    }
+  },
+}
 
-
+'ACTION_ON_USER_BOOKING_REQUEST'
+'ACTION_ON_USER_BOOKING_REQUEST'

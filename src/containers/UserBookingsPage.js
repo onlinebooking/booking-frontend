@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUserBookings } from '../selectors/user-bookings';
+import { getUserBookings } from '../selectors/bookings';
 import UserBookingsList from '../components/UserBookingsList';
 import Spinner from '../components/Spinner';
 
@@ -25,7 +25,7 @@ class UserBookingsPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const isFetching = state.userBookings.isFetching;
+  const isFetching = state.userData.bookings.isFetching;
   return {
     bookings: getUserBookings(state),
     isFetching

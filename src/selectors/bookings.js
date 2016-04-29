@@ -9,7 +9,7 @@ function nestServiceShop(model, services, shops) {
 }
 
 const getBookingsEntity = (state) => state.entities.bookings;
-const getUserBookingsIds = (state) => state.userBookings.ids;
+const getUserBookingsIds = (state) => state.userData.bookings.ids;
 const getShopsEntity = (state) => state.entities.shops;
 const getServicesEntity = (state) => state.entities.services;
 
@@ -35,3 +35,14 @@ export const makeGetUserBooking = () => {
     )
   );
 };
+
+const getBookedRangeId = (state) => state.booking.book.id;
+
+export const getBookedRange = createSelector(
+  [ getBookedRangeId, getBookingsEntity, getServicesEntity, getShopsEntity ],
+  (id, bookings, services, shops) => (
+    id === null
+    ? null
+    : nestServiceShop(bookings[id], services, shops)
+  )
+);

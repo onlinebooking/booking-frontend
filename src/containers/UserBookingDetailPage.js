@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { makeGetUserBooking } from '../selectors/user-bookings';
+import { makeGetUserBooking } from '../selectors/bookings';
 import Spinner from '../components/Spinner';
 import moment from 'moment';
 
