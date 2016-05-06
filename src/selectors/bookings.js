@@ -9,7 +9,7 @@ function nestServiceShop(model, services, shops) {
 }
 
 const getBookingsEntity = (state) => state.entities.bookings;
-const getUserBookingsIds = (state) => state.userData.bookings.ids;
+const getUserBookingsIds = (state) => state.userData.bookings.list.ids;
 const getShopsEntity = (state) => state.entities.shops;
 const getServicesEntity = (state) => state.entities.services;
 

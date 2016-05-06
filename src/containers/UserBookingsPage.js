@@ -25,7 +25,7 @@ class UserBookingsPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const isFetching = state.userData.bookings.isFetching;
+  const isFetching = state.userData.bookings.list.isFetching;
   return {
     bookings: getUserBookings(state),
     isFetching

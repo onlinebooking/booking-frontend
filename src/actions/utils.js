@@ -1,9 +1,9 @@
-export function authTokenConfig(state, config={headers : {}}) {
+export function authTokenConfig(state, config = {headers: {}}) {
   const authtoken = state.auth ? 'JWT ' + state.auth.token : null;
   return { ...config, headers: { ...config.headers, Authorization: authtoken } };
 }
 
-export function jsonPostConfig(body) {
+export function jsonPostConfig(body = {}) {
   return {
     method: 'post',
     headers: {

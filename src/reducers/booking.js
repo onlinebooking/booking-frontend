@@ -26,7 +26,7 @@ const initialRangesState = {
   lastRequestedAt: null,
   lastSuceessedAt: null,
 };
-function ranges(state=initialRangesState, action) {
+function ranges(state = initialRangesState, action) {
   if (action.type === AVAILABLES_BOOKING_RANGES_REQUEST) {
     return { ...state, isFetching: true, lastRequestedAt: action.requestedAt };
   }
@@ -86,7 +86,7 @@ function calendarDate(state, action) {
   return state;
 }
 
-function service(state=null, action) {
+function service(state = null, action) {
   if (action.type === SET_BOOKING_SERVICE) {
     return action.service;
   }
@@ -111,7 +111,7 @@ function book(state = initialBookState, action) {
   }
 
   if (action.type === BOOK_SUCCESS) {
-    return { ...state, isSaving: false, id: action.data.id };
+    return { ...state, isSaving: false, id: action.data.id, error: null };
   }
 
   if (action.type === BOOK_FAILURE) {

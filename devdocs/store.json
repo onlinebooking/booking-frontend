@@ -58,19 +58,20 @@ booking : {
 userData: {
 
   bookings: {
-    items: {
+    list: {
       isFetching,
-      items: 1
+      ids,
     },
     actions: {
       1: {
-        name: 'cancel',
         isSaving,
+        action,
         error,
       }
     }
   },
 }
 
+userData.bookings.actions[1].action
 'ACTION_ON_USER_BOOKING_REQUEST'
 'ACTION_ON_USER_BOOKING_REQUEST'

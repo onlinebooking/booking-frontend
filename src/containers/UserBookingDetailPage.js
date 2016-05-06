@@ -1,9 +1,11 @@
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { makeGetUserBooking } from '../selectors/bookings';
 import Spinner from '../components/Spinner';
-import moment from 'moment';
+import ErrorAlert from '../components/ErrorAlert';
+import { actionOnUserBooking } from '../actions/user-bookings';
 
 class UserBookingDetailPage extends React.Component {
 
@@ -39,20 +41,73 @@ class UserBookingDetailPage extends React.Component {
           <div>{formattedDate}</div>
           <div>{formattedRange.start} - {formattedRange.end}</div>
           <div>{status}</div>
+          <hr />
+          <div>{this.renderBookingActions()}</div>
         </div>
       </div>
      );
+  }
+
+  renderBookingActions() {
+    const {
+      booking: { reachableStates, id },
+      currentActionName,
+      isActionSaving
+    } = this.props;
+
+    // Performing action...
+    if (isActionSaving) {
+      return (
+        <div>
+          <div>{currentActionName}</div>
+          <Spinner />
+        </div>
+      );
+    }
+
+    // Render the reachable actions
+    return (
+      <div>
+      {this.renderBookingActionError()}
+      {reachableStates.map(a => (
+        <button
+          key={a}
+          onClick={() => this.props.actionOnUserBooking(id, a)}>{a}</button>
+      ))}
+      </div>
+    );
+  }
+
+  renderBookingActionError() {
+    const { actionError, currentActionName } = this.props;
+
+    if (actionError) {
+      return (
+        <ErrorAlert
+          title={`Errore durante ${currentActionName}.`}
+          {...actionError}
+        />
+      );
+    }
   }
 }
 
 const makeMapStateToProps = () => {
   const getUserBooking = makeGetUserBooking();
   const mapStateToProps = (state, props) => {
-    return {
-      booking: getUserBooking(state, props)
-    };
-  }
-  return mapStateToProps
-}
+    const { bookingId } = props.params;
+    const actionPerformed = state.userData.bookings.actions[bookingId] || {};
 
-export default connect(makeMapStateToProps)(UserBookingDetailPage);
+    return {
+      booking: getUserBooking(state, props),
+      currentActionName: actionPerformed.actionName,
+      actionError: actionPerformed.error,
+      isActionSaving: actionPerformed.isSaving,
+    };
+  };
+  return mapStateToProps;
+};
+
+export default connect(makeMapStateToProps, {
+  actionOnUserBooking,
+})(UserBookingDetailPage);

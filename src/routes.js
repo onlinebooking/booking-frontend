@@ -26,7 +26,8 @@ import {
 } from './actions/booking';
 import {
   loadUserBookings,
-  loadUserBooking
+  loadUserBooking,
+  clearActionErrorOnUserBooking
 } from './actions/user-bookings';
 
 export default (store) => (
@@ -82,6 +83,7 @@ export default (store) => (
     <Route path="my-bookings/:bookingId" component={UserBookingDetailPage} onEnter={(nextState) => {
       const { bookingId } = nextState.params;
       store.dispatch(loadUserBooking(bookingId));
+      store.dispatch(clearActionErrorOnUserBooking(bookingId));
     }} />
   </Route>
 );
