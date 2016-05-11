@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { NavBar } from '../components/NavBar';
+import NavBar from './NavBar';
 import ErrorPage from '../components/ErrorPage';
 
 class App extends React.Component {
@@ -8,7 +8,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar showAuthNav={this.props.showAuthNav} />
         {this.renderPageContent()}
       </div>
     );
@@ -31,7 +31,13 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   const error = state.pageError.error;
-  return { error };
+  // Hide the AuthNav when page errors occurs and in the login/reg page
+  const showAuthNav = !error;
+
+  return {
+    error,
+    showAuthNav,
+  };
 }
 
 export default connect(mapStateToProps)(App);

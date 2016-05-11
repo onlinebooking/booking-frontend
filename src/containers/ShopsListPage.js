@@ -10,7 +10,7 @@ class ShopsListPage extends React.Component {
     return (
       <div>
         <Jumbotron className="text-center home-jumbo">
-          <h1>Qando Booking</h1>
+          <h1>Qando</h1>
           <p>La piattaforma di prenotazioni multiservizio</p>
         </Jumbotron>
         {this.renderShopList()}

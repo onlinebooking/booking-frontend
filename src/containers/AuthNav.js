@@ -1,45 +1,39 @@
 import React from 'react';
-import { Button, Modal, OverlayTrigger, Navbar } from 'react-bootstrap';
+import { Button, Modal, OverlayTrigger, Navbar, Nav } from 'react-bootstrap';
 import LoginForm from './LoginForm'
 import Spinner from '../components/Spinner';
 import { connect } from 'react-redux';
 import { logout, showModalLogin, hideModalLogin } from '../actions/auth';
 
-class LoginModalButton extends React.Component {
+class AuthNav extends React.Component {
 
-  renderBtnNotLogged() {
+  renderNavNotLogged() {
     return (
-      <Navbar.Form>
-      <Button type="button" bsSize="small" onClick={this.props.showModalLogin}>
-        Login
-      </Button>
+      <Navbar.Form pullRight>
+        <Button type="button" bsSize="small" onClick={this.props.showModalLogin}>Login</Button>
       </Navbar.Form>
     );
   }
 
-  renderBtnLogged() {
+  renderNavLogged() {
     return (
       <span>
-        <Navbar.Text pullLeft>
-          Signed in as {this.props.user.email}
-        </Navbar.Text>
-        <Navbar.Form pullLeft>
-          <Button type="button" bsSize="small" navItem={true} onClick={this.props.logout}>
-            Logout
-          </Button>
+        <Navbar.Form pullRight>
+          <Button type="button" bsSize="small" onClick={this.props.logout}>Logout</Button>
         </Navbar.Form>
+        <Navbar.Text pullRight>Signed in as {this.props.user.email}</Navbar.Text>
       </span>
     );
   }
 
-  renderBtnLoading() {
+  renderNavLoading() {
     const { token } = this.props;
 
     if (token) {
-      return <Navbar.Text pullLeft>Fetching you...</Navbar.Text>;
+      return <Navbar.Text pullRight>Fetching you...</Navbar.Text>;
     }
 
-    return <Navbar.Text pullLeft>Login you...</Navbar.Text>;
+    return <Navbar.Text pullRight>Login you...</Navbar.Text>;
   }
 
   renderModal() {
@@ -62,19 +56,19 @@ class LoginModalButton extends React.Component {
     const { user, loading } = this.props;
 
     return (
-      <div>
+      <span>
         {(() => {
           if (loading) {
-            return this.renderBtnLoading();
+            return this.renderNavLoading();
           }
           if (user) {
-            return this.renderBtnLogged();
+            return this.renderNavLogged();
           } else {
-            return this.renderBtnNotLogged();
+            return this.renderNavNotLogged();
           }
         })()}
         {this.renderModal()}
-      </div>
+      </span>
     );
   }
 }
@@ -92,4 +86,4 @@ export default connect(mapStateToProps, {
   logout,
   showModalLogin,
   hideModalLogin,
-})(LoginModalButton)
+})(AuthNav);
