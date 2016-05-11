@@ -1,16 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Link } from 'react-router';
 import BookingCalendar from '../components/BookingCalendar';
 import ErrorAlert from '../components/ErrorAlert';
 import { getBookingAvailblesCalendarDates } from '../selectors/calendar';
 import { push } from 'react-router-redux';
-import {
-  loadBookingRanges,
-  setBookingCalendarDate
-} from '../actions/booking';
+import { loadBookingRanges, setBookingCalendarDate } from '../actions/booking';
+
+function loadData(props) {
+  const { shopId, serviceId } = props.params;
+  const calendarDate = moment(props.location.query.date, 'YYYY-MM-DD', true);
+  if (calendarDate.isValid()) {
+    props.setBookingCalendarDate(calendarDate.format('YYYY-MM-DD'));
+  }
+  props.loadBookingRanges();
+}
 
 class ServiceBookingCaledarPage extends React.Component {
+
+  componentWillMount() {
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.shopId !== this.props.params.shopId ||
+        nextProps.params.serviceId !== this.props.params.serviceId ||
+        nextProps.location.query.date !== this.props.location.query.date) {
+      loadData(nextProps);
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -24,7 +43,6 @@ class ServiceBookingCaledarPage extends React.Component {
     if (date != this.props.calendarDate) {
       // Set in store and update location
       this.props.setBookingCalendarDate(date, true);
-      this.props.loadBookingRanges();
     }
   }
 

@@ -2,8 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ShopDetail from '../components/ShopDetail';
 import Spinner from '../components/Spinner';
+import { loadShop, loadShopServices } from '../actions/shops';
+
+function loadData(props) {
+  const { shopId } = props.params;
+  props.loadShop(shopId);
+  props.loadShopServices(shopId);
+}
 
 class ShopDetailPage extends React.Component {
+
+  componentWillMount() {
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.shopId !== this.props.params.shopId) {
+      loadData(nextProps);
+    }
+  }
 
   render() {
     // We can change this bheviur to show all loading or only a part
@@ -38,4 +55,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(ShopDetailPage);
+export default connect(mapStateToProps, {
+  loadShop,
+  loadShopServices,
+})(ShopDetailPage);

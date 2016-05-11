@@ -5,9 +5,29 @@ import { connect } from 'react-redux';
 import { makeGetUserBooking } from '../selectors/bookings';
 import Spinner from '../components/Spinner';
 import ErrorAlert from '../components/ErrorAlert';
-import { actionOnUserBooking } from '../actions/user-bookings';
+import {
+  actionOnUserBooking,
+  loadUserBooking,
+  clearActionErrorOnUserBooking
+} from '../actions/user-bookings';
+
+function loadData(props) {
+  const { bookingId } = props.params;
+  props.loadUserBooking(bookingId);
+  props.clearActionErrorOnUserBooking(bookingId);
+}
 
 class UserBookingDetailPage extends React.Component {
+
+  componentWillMount() {
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.bookingId !== this.props.params.bookingId) {
+      loadData(nextProps);
+    }
+  }
 
   render() {
     const { booking } = this.props;
@@ -109,5 +129,7 @@ const makeMapStateToProps = () => {
 };
 
 export default connect(makeMapStateToProps, {
+  loadUserBooking,
+  clearActionErrorOnUserBooking,
   actionOnUserBooking,
 })(UserBookingDetailPage);

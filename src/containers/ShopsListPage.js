@@ -3,8 +3,17 @@ import { connect } from 'react-redux';
 import ShopsList from '../components/ShopsList';
 import { Jumbotron } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
+import { loadShops } from '../actions/shops';
+
+function loadData(props) {
+  props.loadShops();
+}
 
 class ShopsListPage extends React.Component {
+
+  componentWillMount() {
+    loadData(this.props);
+  }
 
   render() {
     return (
@@ -34,4 +43,6 @@ function mapStateToProps(state) {
   return { shops, isFetching };
 }
 
-export default connect(mapStateToProps)(ShopsListPage);
+export default connect(mapStateToProps, {
+  loadShops,
+})(ShopsListPage);

@@ -5,10 +5,30 @@ import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
 import BookingRange from '../components/BookingRange';
-import { book } from '../actions/booking';
 import { getBookedRange } from '../selectors/bookings';
 import { find, isEqual, isArray } from 'lodash';
 import moment from 'moment';
+import { replace } from 'react-router-redux';
+import {
+  book,
+  setBookingCalendarDate,
+  setBookingRange,
+  loadBookingRanges
+} from '../actions/booking';
+
+function loadData(props) {
+  const { rangeStart, rangeEnd, shopId, serviceId } = props.params;
+  const start = moment(rangeStart, moment.ISO_8601, true);
+  const end = moment(rangeEnd, moment.ISO_8601, true);
+
+  if (start.isValid() && end.isValid()) {
+    props.setBookingCalendarDate(start.format('YYYY-MM-DD'));
+    props.setBookingRange({ start: rangeStart, end: rangeEnd });
+    props.loadBookingRanges({ loadSingleDay: true });
+  } else {
+    props.replace(`/shops/${shopId}/booking/${serviceId}`);
+  }
+}
 
 class ServiceBookingRangePage extends React.Component {
 
@@ -16,6 +36,19 @@ class ServiceBookingRangePage extends React.Component {
     super(props);
 
     this.onConfirmBooking = this.onConfirmBooking.bind(this)
+  }
+
+  componentWillMount() {
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.shopId !== this.props.params.shopId ||
+        nextProps.params.serviceId !== this.props.params.serviceId ||
+        nextProps.params.rangeStart !== this.props.params.rangeStart ||
+        nextProps.params.rangeEnd !== this.props.params.rangeEnd) {
+      loadData(nextProps);
+    }
   }
 
   changeDateUrl() {
@@ -33,7 +66,12 @@ class ServiceBookingRangePage extends React.Component {
   }
 
   render() {
-    const { range, fetchingRangeError, isFetchingRange } = this.props;
+    const { range, requestedRange, fetchingRangeError, isFetchingRange } = this.props;
+
+    // Not yet a requested range
+    if (!requestedRange) {
+      return <Spinner />;
+    }
 
     // Error while fetching range
     if (fetchingRangeError) {
@@ -130,5 +168,9 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+  replace,
+  setBookingCalendarDate,
+  setBookingRange,
+  loadBookingRanges,
   book,
 })(ServiceBookingRangePage);

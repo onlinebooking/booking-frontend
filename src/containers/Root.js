@@ -8,7 +8,7 @@ export default class Root extends React.Component {
     const { store, history } = this.props;
     return (
       <Provider store={store}>
-        <Router history={history} routes={routes(store)} />
+        <Router history={history} routes={routes} />
       </Provider>
     );
   }

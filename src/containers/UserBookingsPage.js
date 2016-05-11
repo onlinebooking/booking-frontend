@@ -3,8 +3,17 @@ import { connect } from 'react-redux';
 import { getUserBookings } from '../selectors/bookings';
 import UserBookingsList from '../components/UserBookingsList';
 import Spinner from '../components/Spinner';
+import { loadUserBookings } from '../actions/user-bookings';
+
+function loadData(props) {
+  props.loadUserBookings();
+}
 
 class UserBookingsPage extends React.Component {
+
+  componentWillMount() {
+    loadData(this.props);
+  }
 
   render() {
     return (
@@ -32,4 +41,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(UserBookingsPage);
+export default connect(mapStateToProps, {
+  loadUserBookings,
+})(UserBookingsPage);

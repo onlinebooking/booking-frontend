@@ -1,12 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Link } from 'react-router';
 import BookingRangeList from '../components/BookingRangeList';
 import ErrorAlert from '../components/ErrorAlert';
 import InvalidBookPeriod from '../components/InvalidBookPeriod';
-import { push } from 'react-router-redux';
+import { push, replace } from 'react-router-redux';
 import Spinner from '../components/Spinner';
-import moment from 'moment';
+import { loadBookingRanges, setBookingCalendarDate } from '../actions/booking';
+import { showModalLogin } from '../actions/auth';
+
+function loadData(props) {
+  const { bookingDate, shopId, serviceId } = props.params;
+  if (moment(bookingDate, 'YYYY-MM-DD', true).isValid()) {
+    props.setBookingCalendarDate(bookingDate);
+    props.loadBookingRanges({ loadSingleDay: true });
+  } else {
+    props.replace(`/shops/${shopId}/booking/${serviceId}`);
+  }
+}
 
 class ServiceBookingAtDatePage extends React.Component {
 
@@ -16,14 +28,30 @@ class ServiceBookingAtDatePage extends React.Component {
     this.onRangeBooked = this.onRangeBooked.bind(this);
   }
 
+  componentWillMount() {
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.shopId !== this.props.params.shopId ||
+        nextProps.params.serviceId !== this.props.params.serviceId ||
+        nextProps.params.bookingDate !== this.props.params.bookingDate) {
+      loadData(nextProps);
+    }
+  }
+
   changeDateUrl() {
     const { bookingDate, shop, service } = this.props;
     return `/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`;
   }
 
   onRangeBooked(range) {
-    const { shop, service, push } = this.props;
-    push(`/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`);
+    if (this.props.authenticated) {
+      const { shop, service, push } = this.props;
+      push(`/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`);
+    } else {
+      this.props.showModalLogin();
+    }
   }
 
   render() {
@@ -41,7 +69,7 @@ class ServiceBookingAtDatePage extends React.Component {
       return <Spinner />;
     }
 
-    // No loading, lo ranges, this date is not good
+    // No loading, no ranges, this date is not good
     if (!loading && !bookingRanges.length) {
       return this.renderInvalidBookingDate();
     }
@@ -93,9 +121,11 @@ class ServiceBookingAtDatePage extends React.Component {
 
 function mapStateToProps(state) {
   const { ranges } = state.booking;
+  const authenticated = !!state.auth.user;
   const bookingRanges = ranges.items[state.booking.calendarDate] || [];
 
   return {
+    authenticated,
     bookingRanges,
     bookingDate: state.booking.calendarDate,
     loading: ranges.isFetching,
@@ -104,5 +134,9 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+  loadBookingRanges,
+  setBookingCalendarDate,
+  showModalLogin,
   push,
+  replace,
 })(ServiceBookingAtDatePage);

@@ -1,3 +1,4 @@
+import { replace } from 'react-router-redux';
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
 import {
@@ -71,6 +72,7 @@ export function logout() {
   return (dispatch, getState) => {
     dispatch({ type: USER_LOGOUT });
     localStorage.removeItem('user_token');
+    dispatch(replace('/'));
   };
 }
 

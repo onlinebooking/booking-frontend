@@ -2,11 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Spinner from '../components/Spinner';
+import { loadShop, loadShopService } from '../actions/shops';
+import { setBookingService } from '../actions/booking';
+
+function loadData(props) {
+  const { shopId, serviceId } = props.params;
+  props.loadShop(shopId);
+  props.loadShopService(shopId, serviceId);
+  props.setBookingService(serviceId);
+}
 
 class ServiceBooking extends React.Component {
 
-  render() {
+  componentWillMount() {
+    loadData(this.props);
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.shopId !== this.props.params.shopId ||
+        nextProps.params.serviceId !== this.props.params.serviceId) {
+      loadData(nextProps);
+    }
+  }
+
+  render() {
     const { shop, service } = this.props;
 
     if (!shop || !service) {
@@ -62,4 +81,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(ServiceBooking);
+export default connect(mapStateToProps, {
+  loadShop,
+  loadShopService,
+  setBookingService,
+})(ServiceBooking);
