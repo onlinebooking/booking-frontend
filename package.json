@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.js --inline --hot --progress",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+    "clean": "rimraf dist",
+    "dist": "npm run clean && npm run build"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
@@ -21,6 +23,7 @@
     "less-loader": "^2.2.2",
     "node-sass": "^3.4.2",
     "resolve-url-loader": "^1.4.3",
+    "rimraf": "^2.5.2",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
