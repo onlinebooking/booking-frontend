@@ -19,9 +19,11 @@ const initialState = {
   error: null,
   token: null,
   user: null,
+  redirect: null,
 };
 
-export default function auth(state=initialState, { type, data, error, token }) {
+export default function auth(state=initialState, action) {
+  const { type, data, error, token, redirect } = action;
   switch (type) {
     case USER_LOGIN_REQUEST:
     case ME_REQUEST:
@@ -44,11 +46,11 @@ export default function auth(state=initialState, { type, data, error, token }) {
       return initialState;
 
     case SHOW_MODAL_LOGIN:
-      return { ...state, showModal: true, error: null };
+      return { ...state, redirect, showModal: true, error: null };
 
     case HIDE_MODAL_LOGIN:
     case LOCATION_CHANGE:
-      return { ...state, showModal: false, error: null };
+      return { ...state, redirect: null, showModal: false, error: null };
 
     default:
       return state;

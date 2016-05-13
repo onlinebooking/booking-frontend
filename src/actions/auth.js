@@ -1,4 +1,4 @@
-import { replace } from 'react-router-redux';
+import { replace, push } from 'react-router-redux';
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
 import {
@@ -59,6 +59,9 @@ export function login({email, password}) {
         .then((token) => {
           if (token) {
             localStorage.setItem('user_token', token);
+            // Redirect after login if set
+            const redirect = getState().auth.redirect;
+            redirect && dispatch(push(redirect));
             // Also hide the login modal
             dispatch(hideModalLogin());
           }
@@ -83,8 +86,9 @@ export function loginWithToken(token) {
   };
 };
 
-export function showModalLogin() {
-  return { type: SHOW_MODAL_LOGIN };
+export function showModalLogin(options = {}) {
+  const { redirect } = { ...{ redirect: null }, ...options };
+  return { type: SHOW_MODAL_LOGIN, redirect };
 };
 
 export function hideModalLogin() {

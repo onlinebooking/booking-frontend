@@ -46,11 +46,12 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 
   onRangeBooked(range) {
+    const { shop, service, push } = this.props;
+    const redirect = `/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`;
     if (this.props.authenticated) {
-      const { shop, service, push } = this.props;
-      push(`/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`);
+      push(redirect);
     } else {
-      this.props.showModalLogin();
+      this.props.showModalLogin({ redirect });
     }
   }
 
