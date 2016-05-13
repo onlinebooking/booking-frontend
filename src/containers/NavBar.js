@@ -19,7 +19,7 @@ class QandoNavBar extends React.Component {
     }
 
     return (
-      <Navbar inverse>
+      <Navbar inverse fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to={'/'}>Qando</Link>
