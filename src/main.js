@@ -3,7 +3,7 @@ import 'bootswatch/yeti/bootstrap.css';
 import './scss/style.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
-import { hashHistory } from 'react-router';
+import { hashHistory, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './store/configureStore';
 import { loginWithToken } from './actions/auth';
@@ -14,7 +14,9 @@ import moment from 'moment';
 moment.locale('it');
 
 const store = configureStore();
-const history = syncHistoryWithStore(hashHistory, store);
+const history = syncHistoryWithStore((() => {
+  return process.env.NODE_ENV === 'production' ? browserHistory : hashHistory;
+})(), store);
 
 const existingUserToken = localStorage.getItem('user_token');
 if (existingUserToken) {

@@ -50,7 +50,7 @@ class ServiceBookingCaledarPage extends React.Component {
     // Go to booking date page
     const { shop, service, push } = this.props;
     const bookingDate = event.date.format('YYYY-MM-DD');
-    push(`shops/${shop.id}/booking/${service.id}/at/${bookingDate}`);
+    push(`/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`);
   }
 
   render() {

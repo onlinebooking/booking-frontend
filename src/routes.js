@@ -10,11 +10,12 @@ import ServiceBookingAtDatePage from './containers/ServiceBookingAtDatePage';
 import ServiceBookingRangePage from './containers/ServiceBookingRangePage';
 import UserBookingsPage from './containers/UserBookingsPage';
 import UserBookingDetailPage from './containers/UserBookingDetailPage';
+import NotFoundPage from './components/NotFoundPage';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { routerActions } from 'react-router-redux';
 
 const UserIsAuthenticated = UserAuthWrapper({
-  authSelector: state => state.auth.user,
+  authSelector: state => state.auth.token,
   redirectAction: routerActions.replace,
   wrapperDisplayName: 'UserIsAuthenticated',
   failureRedirectPath: '/',
@@ -32,5 +33,6 @@ export default (
     </Route>
     <Route path="my-bookings" component={UserIsAuthenticated(UserBookingsPage)} />
     <Route path="my-bookings/:bookingId" component={UserIsAuthenticated(UserBookingDetailPage)} />
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );
