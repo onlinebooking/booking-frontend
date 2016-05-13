@@ -55,6 +55,7 @@ class ServiceBooking extends React.Component {
             <h1>{shop.name}</h1>
           </Link>
           <p>{service.name}</p>
+          <p>{service.description}</p>
         </div>
       </div>
     );

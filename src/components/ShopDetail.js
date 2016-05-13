@@ -10,7 +10,9 @@ class ShopServiceListItem extends React.Component {
     return (
       <ListGroupItem>
         <Link to={`/shops/${shop.id}/booking/${service.id}`}>
-          {service.name}
+          <div>{service.name}</div>
+          <br />
+          <p>{service.description}</p>
         </Link>
       </ListGroupItem>
     );
@@ -58,6 +60,7 @@ export default class ShopDetail extends React.Component {
 
   render() {
     const { shop, services } = this.props;
+    console.log(services);
 
     return (
       <div>
