@@ -3,7 +3,9 @@ import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
 import { logout } from '../actions/auth';
 
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'http://api.qando.it/api'
+  : 'http://localhost:8000/api';
 
 function callApi(endpoint, callConfig = {}) {
 
