@@ -3,13 +3,23 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import { routerMiddleware } from 'react-router-redux';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import api from '../middleware/api';
 
 export default function configureStore(initialState) {
-  return createStore(
+  const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(thunk, api, routerMiddleware(hashHistory), createLogger())
+    applyMiddleware(thunk, api, routerMiddleware(browserHistory), createLogger())
   );
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers').default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
 };

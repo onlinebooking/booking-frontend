@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.config.dev.js --inline --hot --progress",
+    "dev": "node server.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "clean": "rimraf dist",
     "dist": "npm run clean && npm run build"
@@ -17,6 +17,7 @@
     "bootstrap-sass": "^3.3.6",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
+    "express": "^4.13.4",
     "file-loader": "^0.8.5",
     "imports-loader": "^0.6.5",
     "less": "^2.6.0",
@@ -28,7 +29,8 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.7.4",
