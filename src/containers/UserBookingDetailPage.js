@@ -52,7 +52,7 @@ class UserBookingDetailPage extends React.Component {
     return (
       <div>
         <div>
-          <Link to={'/my-bookings'}>Elenco Prenotazioni</Link>
+          <Link to={'/my-bookings/incoming'}>Elenco Prenotazioni</Link>
         </div>
         <br />
         <div>

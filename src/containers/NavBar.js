@@ -13,7 +13,11 @@ class QandoNavBar extends React.Component {
     if (authenticated) {
       userNav = (
         <Nav>
-          <NavItem eventKey={1} componentClass={Link} href="/my-bookings" to="/my-bookings">Le mie prenotazioni</NavItem>
+          <NavItem
+            eventKey={1}
+            componentClass={Link}
+            href="/my-bookings/incoming"
+            to="/my-bookings/incoming">Le mie prenotazioni</NavItem>
         </Nav>
       );
     }

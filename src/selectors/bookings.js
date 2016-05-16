@@ -1,4 +1,9 @@
 import { createSelector } from 'reselect';
+import { groupBy, transform } from 'lodash';
+import {
+  INCOMING_USER_BOOKINGS_BY_SHOP,
+  INCOMING_USER_BOOKINGS_LIST,
+} from '../constants/ViewTypes';
 
 function nestShop(model, shops) {
   return {...model, shop: shops[model.shop]};
@@ -9,17 +14,35 @@ function nestServiceShop(model, services, shops) {
 }
 
 const getBookingsEntity = (state) => state.entities.bookings;
-const getUserBookingsIds = (state) => state.userData.bookings.list.ids;
+const getUserBookingsIds = (state) => state.userData.bookings.incoming.list.ids;
 const getShopsEntity = (state) => state.entities.shops;
 const getServicesEntity = (state) => state.entities.services;
 
-export const getUserBookings = createSelector(
+const getUserBookings = createSelector(
   [ getUserBookingsIds, getBookingsEntity, getServicesEntity, getShopsEntity ],
   (ids, bookings, services, shops) => ids.map(id => nestServiceShop(
     bookings[id],
     services,
     shops
   ))
+);
+
+const getUserBookingsView = (state) => state.userData.bookings.incoming.view;
+export const getUserBookingsViewed = createSelector(
+  [ getUserBookings, getUserBookingsView ],
+  (bookings, view) => {
+    switch (view) {
+      case INCOMING_USER_BOOKINGS_BY_SHOP:
+        return transform(groupBy(bookings, 'service.shop.id'), (r, v, k) => {
+          const { service: { shop } } = v[0];
+          r.push({ shop, bookings: v });
+        }, []);
+      case INCOMING_USER_BOOKINGS_LIST:
+        return bookings;
+      default:
+        return bookings;
+    }
+  }
 );
 
 const getUserBooking = (state, props) =>

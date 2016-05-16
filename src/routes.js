@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import moment from 'moment';
 import App from './containers/App';
 import ShopsListPage from './containers/ShopsListPage';
@@ -34,7 +34,7 @@ export default (
       <Route path="at/:bookingDate" component={ServiceBookingAtDatePage} />
       <Route path="book/:rangeStart/:rangeEnd" component={UserIsAuthenticated(ServiceBookingRangePage)} />
     </Route>
-    <Route path="my-bookings" component={UserIsAuthenticated(UserBookingsPage)} />
+    <Route path="my-bookings/incoming(/:view)" component={UserIsAuthenticated(UserBookingsPage)} />
     <Route path="my-bookings/:bookingId" component={UserIsAuthenticated(UserBookingDetailPage)} />
     <Route path="*" component={NotFoundPage} />
   </Route>

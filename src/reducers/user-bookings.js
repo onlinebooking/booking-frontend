@@ -1,20 +1,35 @@
 import { combineReducers } from 'redux';
 import simpleResList from './utils/simple-res-list';
 import {
-  USER_BOOKINGS_REQUEST,
-  USER_BOOKINGS_SUCCESS,
-  USER_BOOKINGS_FAILURE,
+  INCOMING_USER_BOOKINGS_REQUEST,
+  INCOMING_USER_BOOKINGS_SUCCESS,
+  INCOMING_USER_BOOKINGS_FAILURE,
+  SET_INCOMING_USER_BOOKINGS_VIEW,
   ACTION_ON_USER_BOOKING_REQUEST,
   ACTION_ON_USER_BOOKING_SUCCESS,
   ACTION_ON_USER_BOOKING_FAILURE,
   CLEAR_ACTION_ERROR_ON_USER_BOOKING
 } from '../constants/ActionTypes';
+import {
+  INCOMING_USER_BOOKINGS_BY_SHOP,
+  INCOMING_USER_BOOKINGS_LIST,
+} from '../constants/ViewTypes';
 
-const userBookingsList = simpleResList([
-  USER_BOOKINGS_REQUEST,
-  USER_BOOKINGS_SUCCESS,
-  USER_BOOKINGS_FAILURE
+const incomingUserBookingsList = simpleResList([
+  INCOMING_USER_BOOKINGS_REQUEST,
+  INCOMING_USER_BOOKINGS_SUCCESS,
+  INCOMING_USER_BOOKINGS_FAILURE
 ]);
+
+function incomingUserBookingsView(state = INCOMING_USER_BOOKINGS_LIST, action) {
+  const { view, type } = action;
+
+  if (type === SET_INCOMING_USER_BOOKINGS_VIEW) {
+    return view;
+  }
+
+  return state;
+}
 
 const initialUserBookingActionState = {
   isSaving: false,
@@ -59,6 +74,9 @@ function userBookingsActions(state = {}, action) {
 }
 
 export default combineReducers({
-  list: userBookingsList,
+  incoming: combineReducers({
+    list: incomingUserBookingsList,
+    view: incomingUserBookingsView,
+  }),
   actions: userBookingsActions,
 });

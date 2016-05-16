@@ -60,7 +60,6 @@ export default class ShopDetail extends React.Component {
 
   render() {
     const { shop, services } = this.props;
-    console.log(services);
 
     return (
       <div>

@@ -85,7 +85,7 @@ export default class BookingRange extends React.Component {
       <div>
         Prenotazione effettuata con successo!
         <div><Link to={`/my-bookings/${bookedRange.id}`}>Prenotazione</Link></div>
-        <div><Link to={'/my-bookings'}>Lista Prenotazioni</Link></div>
+        <div><Link to={'/my-bookings/incoming'}>Lista Prenotazioni</Link></div>
       </div>
     );
   }
