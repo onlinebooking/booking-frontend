@@ -16,6 +16,9 @@ import {
   ACTION_ON_USER_BOOKING_FAILURE,
   CLEAR_ACTION_ERROR_ON_USER_BOOKING
 } from '../constants/ActionTypes';
+import {
+  MAX_PAGE_SIZE
+} from '../constants/Api';
 
 function fetchIncomingUserBookings() {
   return (dispatch, getState) => {
@@ -25,7 +28,7 @@ function fetchIncomingUserBookings() {
       entitySchema: Schemas.BOOKING_ARRAY,
       isPageError: true,
       [CALL_API]: {
-        endpoint: `/bookings/?start__gte=${start}`,
+        endpoint: `/bookings/?start__gte=${start}&page_size=${MAX_PAGE_SIZE}`,
         config: authTokenConfig(getState()),
         types: [
           INCOMING_USER_BOOKINGS_REQUEST,

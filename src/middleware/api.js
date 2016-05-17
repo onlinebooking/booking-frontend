@@ -62,16 +62,27 @@ export default store => next => action => {
   //return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
-    data => next(actionWith({
-      data,
-      type: successType
-    })),
+    json => {
+      // Check if a paginate response
+      if (json.results) {
+        return next(actionWith({
+          data: json.results,
+          pagination: omit(json, 'results'),
+          type: successType
+        }));
+      } else {
+        return next(actionWith({
+          data: json,
+          type: successType
+        }));
+      }
+    },
     error => {
       // Logout unauthorized users...
       if (error.status === 401) {
         store.dispatch(logout());
       }
-      next(actionWith({
+      return next(actionWith({
         error, // Object describe error
         type: failureType
       }));
