@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { makeGetUserBooking } from '../selectors/bookings';
+import { humanizeBookingStatus, humanizeBookingAction } from '../utils/booking';
 import Spinner from '../components/Spinner';
 import ErrorAlert from '../components/ErrorAlert';
 import {
@@ -60,7 +61,7 @@ class UserBookingDetailPage extends React.Component {
           <div>{shop.name}</div>
           <div>{formattedDate}</div>
           <div>{formattedRange.start} - {formattedRange.end}</div>
-          <div>{status}</div>
+          <div>{humanizeBookingStatus(status)}</div>
           <hr />
           <div>{this.renderBookingActions()}</div>
         </div>
@@ -79,7 +80,7 @@ class UserBookingDetailPage extends React.Component {
     if (isActionSaving) {
       return (
         <div>
-          <div>{currentActionName}</div>
+          <div>{humanizeBookingAction(currentActionName)}</div>
           <Spinner />
         </div>
       );
@@ -92,7 +93,8 @@ class UserBookingDetailPage extends React.Component {
       {reachableStates.map(a => (
         <button
           key={a}
-          onClick={() => this.props.actionOnUserBooking(id, a)}>{a}</button>
+          onClick={() => this.props.actionOnUserBooking(id, a)}
+        >{humanizeBookingAction(a)}</button>
       ))}
       </div>
     );

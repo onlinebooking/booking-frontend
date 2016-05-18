@@ -1,7 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { ListGroup, ListGroupItem, Image, Badge } from 'react-bootstrap';
+import classNames from 'classnames';
 import moment from 'moment';
+import { Link } from 'react-router';
+import {
+  humanizeBookingStatus,
+  getBookingsStatusesList
+} from '../utils/booking';
+import {
+  ListGroup,
+  ListGroupItem,
+  Image,
+  Badge,
+  FormGroup,
+  FormControl,
+  ButtonGroup,
+  Button
+} from 'react-bootstrap';
 import {
   INCOMING_USER_BOOKINGS_BY_SHOP,
   INCOMING_USER_BOOKINGS_LIST,
@@ -26,7 +40,7 @@ class UserBookingListItem extends React.Component {
             <div>{service.shop.name}</div>
             <div>{formattedDate}</div>
             <div>{start} - {end}</div>
-            <div>{status}</div>
+            <div>{humanizeBookingStatus(status)}</div>
         </ListGroupItem>
       </Link>
     );
@@ -35,13 +49,50 @@ class UserBookingListItem extends React.Component {
 
 export default class UserBookingsList extends React.Component {
 
+  constructor() {
+    super();
+
+    this.onSearchTextChanged = this.onSearchTextChanged.bind(this);
+  }
+
+  onSearchTextChanged(e) {
+    this.props.onSearchTextChanged(e.target.value);
+  }
+
   render() {
+    const { searchText, statusFilter, onStatusFilterChanged } = this.props;
     return (
       <div>
         <div>
-          <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}`}>List</Link>
+          <FormGroup>
+            <FormControl
+              type="text"
+              placeholder="Cerca"
+              value={searchText}
+              onChange={this.onSearchTextChanged} />
+          </FormGroup>
+        </div>
+        <div>
+         <ButtonGroup>
+           {getBookingsStatusesList().map(status => (
+             <Button
+               key={status}
+               className={{ 'active': status === statusFilter }}
+               onClick={() => onStatusFilterChanged(status)}
+             >{humanizeBookingStatus(status)}</Button>
+           ))}
+           <Button
+             className={{ 'active': statusFilter === null }}
+             onClick={() => onStatusFilterChanged(null)}
+           >Tutti</Button>
+          </ButtonGroup>
+          <br />
+          <br />
+        </div>
+        <div>
+          <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}?search=${searchText}&status=${statusFilter}`}>List</Link>
           {' | '}
-          <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}`}>Per Shop</Link>
+          <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}?search=${searchText}&status=${statusFilter}`}>Per Shop</Link>
         </div>
         {this.renderList()}
       </div>

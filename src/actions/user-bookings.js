@@ -1,4 +1,5 @@
 import { merge } from 'lodash';
+import { replace } from 'react-router-redux';
 import moment from 'moment';
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
@@ -8,6 +9,8 @@ import {
   INCOMING_USER_BOOKINGS_SUCCESS,
   INCOMING_USER_BOOKINGS_FAILURE,
   SET_INCOMING_USER_BOOKINGS_VIEW,
+  SET_INCOMING_USER_BOOKINGS_STATUS_FILTER,
+  SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER,
   USER_BOOKING_REQUEST,
   USER_BOOKING_SUCCESS,
   USER_BOOKING_FAILURE,
@@ -28,7 +31,7 @@ function fetchIncomingUserBookings() {
       entitySchema: Schemas.BOOKING_ARRAY,
       isPageError: true,
       [CALL_API]: {
-        endpoint: `/bookings/?start__gte=${start}&page_size=${MAX_PAGE_SIZE}`,
+        endpoint: `/bookings/?start__gte=${start}&page_size=${MAX_PAGE_SIZE}&ordering=+start`,
         config: authTokenConfig(getState()),
         types: [
           INCOMING_USER_BOOKINGS_REQUEST,
@@ -52,6 +55,32 @@ export function setIncomingUserBookingsView(view) {
   return {
     view,
     type: SET_INCOMING_USER_BOOKINGS_VIEW,
+  };
+};
+
+export function setIncomingUserBookingsSearchFilter(search, updateLocation = false) {
+  return (dispatch, getState) => {
+    dispatch({
+      search,
+      type: SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER,
+    });
+    const location = getState().routing.locationBeforeTransitions;
+    if (updateLocation) {
+      dispatch(replace(merge(location, { query: { search } })));
+    }
+  };
+};
+
+export function setIncomingUserBookingsStatusFilter(status, updateLocation = false) {
+  return (dispatch, getState) => {
+    dispatch({
+      status,
+      type: SET_INCOMING_USER_BOOKINGS_STATUS_FILTER,
+    });
+    const location = getState().routing.locationBeforeTransitions;
+    if (updateLocation) {
+      dispatch(replace(merge(location, { query: { status } })));
+    }
   };
 };
 

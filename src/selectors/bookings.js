@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { groupBy, transform } from 'lodash';
+import { groupBy, transform, identity, curry, flow } from 'lodash';
+import { searchRegExp } from '../utils/regex';
 import {
   INCOMING_USER_BOOKINGS_BY_SHOP,
   INCOMING_USER_BOOKINGS_LIST,
@@ -18,6 +19,7 @@ const getUserBookingsIds = (state) => state.userData.bookings.incoming.list.ids;
 const getShopsEntity = (state) => state.entities.shops;
 const getServicesEntity = (state) => state.entities.services;
 
+// List of user bookings with nested relation for UI
 const getUserBookings = createSelector(
   [ getUserBookingsIds, getBookingsEntity, getServicesEntity, getShopsEntity ],
   (ids, bookings, services, shops) => ids.map(id => nestServiceShop(
@@ -27,9 +29,35 @@ const getUserBookings = createSelector(
   ))
 );
 
+const getUserBookingsSearchFilter = (state) => state.userData.bookings.incoming.filters.search;
+const getUserBookingsStatusFilter = (state) => state.userData.bookings.incoming.filters.status;
+
+// List of user bookings filtered by state
+const getUserBookingsFiltered = createSelector(
+  [ getUserBookings, getUserBookingsSearchFilter, getUserBookingsStatusFilter ],
+  (bookings, search, status) => {
+    // Relax, this mean no filter stuff when falsy value given
+    const maybeFilter = fn => v => v ? curry(fn)(v) : identity;
+
+    const searchFilter = (search, booking) => {
+      const regex = searchRegExp(search);
+      return booking.service.name.match(regex) ||
+             booking.service.shop.name.match(regex);
+    };
+    const statusFilter = (status, booking) => booking.status === status;
+
+    return flow(
+      bookings => bookings.filter(maybeFilter(searchFilter)(search)),
+      bookings => bookings.filter(maybeFilter(statusFilter)(status))
+    )(bookings);
+  }
+);
+
 const getUserBookingsView = (state) => state.userData.bookings.incoming.view;
-export const getUserBookingsViewed = createSelector(
-  [ getUserBookings, getUserBookingsView ],
+
+// List of user bookings filtered and viewed
+export const getUserBookingsFilteredAndViewed = createSelector(
+  [ getUserBookingsFiltered, getUserBookingsView ],
   (bookings, view) => {
     switch (view) {
       case INCOMING_USER_BOOKINGS_BY_SHOP:
