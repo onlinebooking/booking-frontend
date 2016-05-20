@@ -1,11 +1,15 @@
 import React from 'react';
 import { includes } from 'lodash';
 import { connect } from 'react-redux';
-import { getUserBookingsFilteredAndViewed } from '../selectors/bookings';
-import UserBookingsList from '../components/UserBookingsList';
+import IncomingUserBookings from '../components/IncomingUserBookings';
 import Spinner from '../components/Spinner';
 import { replace } from 'react-router-redux';
 import { getBookingsStatusesList } from '../utils/booking';
+import {
+  getIncomingUserBookingsFilteredAndViewed,
+  getIncomingUserBookingsTotalCount,
+  getIncomingUserBookingsCountFiltered
+} from '../selectors/bookings';
 import {
   loadIncomingUserBookings,
   setIncomingUserBookingsView,
@@ -52,7 +56,7 @@ function setFilters(props) {
   }
 }
 
-class UserBookingsPage extends React.Component {
+class IncomingUserBookingsPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -86,22 +90,25 @@ class UserBookingsPage extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.renderBookingList()}
-      </div>
-    );
-  }
+    const {
+      loading,
+      bookings,
+      view,
+      searchText,
+      statusFilter,
+      bookingsCount,
+      bookingsCountFiltered
+    } = this.props;
 
-  renderBookingList() {
-    const { isFetching, bookings, view, searchText, statusFilter } = this.props;
-
-    if (isFetching && !bookings.length) {
+    if (loading && !bookings.length) {
       return <Spinner />;
     }
 
-    return <UserBookingsList
+    return <IncomingUserBookings
       bookings={bookings}
+      bookingsCount={bookingsCount}
+      bookingsCountFiltered={bookingsCountFiltered}
+      loading={loading}
       statusFilter={statusFilter}
       view={view}
       searchText={searchText}
@@ -112,16 +119,18 @@ class UserBookingsPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const isFetching = state.userData.bookings.incoming.list.isFetching;
+  const loading = state.userData.bookings.incoming.list.isFetching;
   const view = state.userData.bookings.incoming.view;
   const searchText = state.userData.bookings.incoming.filters.search;
   const statusFilter = state.userData.bookings.incoming.filters.status;
   return {
-    bookings: getUserBookingsFilteredAndViewed(state),
+    bookings: getIncomingUserBookingsFilteredAndViewed(state),
+    bookingsCount: getIncomingUserBookingsTotalCount(state),
+    bookingsCountFiltered: getIncomingUserBookingsCountFiltered(state),
     view,
     statusFilter,
     searchText,
-    isFetching,
+    loading,
   };
 }
 
@@ -132,4 +141,4 @@ export default connect(mapStateToProps, {
   setIncomingUserBookingsSearchFilter,
   setPageError,
   replace,
-})(UserBookingsPage);
+})(IncomingUserBookingsPage);
