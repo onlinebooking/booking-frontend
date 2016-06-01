@@ -15,6 +15,8 @@ import {
   HISTORY_USER_BOOKINGS_SUCCESS,
   HISTORY_USER_BOOKINGS_FAILURE,
   SET_HISTORY_USER_BOOKINGS_PAGE,
+  RESET_HISTORY_USER_BOOKINGS_PAGINATION,
+  SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER,
   USER_BOOKING_REQUEST,
   USER_BOOKING_SUCCESS,
   USER_BOOKING_FAILURE,
@@ -68,8 +70,8 @@ export function setIncomingUserBookingsSearchFilter(search, updateLocation = fal
       search,
       type: SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER,
     });
-    const location = getState().routing.locationBeforeTransitions;
     if (updateLocation) {
+      const location = getState().routing.locationBeforeTransitions;
       dispatch(replace(merge(location, { query: { search } })));
     }
   };
@@ -81,8 +83,8 @@ export function setIncomingUserBookingsStatusFilter(status, updateLocation = fal
       status,
       type: SET_INCOMING_USER_BOOKINGS_STATUS_FILTER,
     });
-    const location = getState().routing.locationBeforeTransitions;
     if (updateLocation) {
+      const location = getState().routing.locationBeforeTransitions;
       dispatch(replace(merge(location, { query: { status } })));
     }
   };
@@ -91,17 +93,21 @@ export function setIncomingUserBookingsStatusFilter(status, updateLocation = fal
 export function loadHistoryUserBookings() {
   return (dispatch, getState) => {
     const {
-      pageSize,
-      currentPage
-    } = getState().userData.bookings.history.list.pagination;
+      list: { pagination },
+      filters
+    } = getState().userData.bookings.history;
+    const { pageSize, currentPage } = pagination;
+    const { search } = filters;
 
     return dispatch({
+      filters,
       pageSize,
       page: currentPage,
       entitySchema: Schemas.BOOKING_ARRAY,
+      // TODO: Consider to take isPageError as argument
       isPageError: true,
       [CALL_API]: {
-        endpoint: `/bookings/?page_size=${pageSize}&page=${currentPage}&ordering=-start`,
+        endpoint: `/bookings/?search=${search}&page_size=${pageSize}&page=${currentPage}&ordering=-start`,
         config: authTokenConfig(getState()),
         types: [
           HISTORY_USER_BOOKINGS_REQUEST,
@@ -113,10 +119,35 @@ export function loadHistoryUserBookings() {
   };
 };
 
-export function setPage(page) {
+export function setHistoryUserBookingsPage(page, updateLocation = false) {
   return (dispatch, getState) => {
     dispatch({ type: SET_HISTORY_USER_BOOKINGS_PAGE, page });
-    dispatch(loadHistoryUserBookings());
+    if (updateLocation) {
+      const location = getState().routing.locationBeforeTransitions;
+      dispatch(replace(merge(location, { query: { page } })));
+    }
+  };
+};
+
+function resetHistoryUserBookingsPagination() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: RESET_HISTORY_USER_BOOKINGS_PAGINATION
+    });
+  };
+}
+
+export function setHistoryUserBookingsSearchFilter(search, updateLocation = false) {
+  return (dispatch, getState) => {
+    dispatch({
+      search,
+      type: SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER,
+    });
+    if (updateLocation) {
+      const location = getState().routing.locationBeforeTransitions;
+      dispatch(replace(merge(location, { query: { search, page: 1 } })));
+    }
+    dispatch(resetHistoryUserBookingsPagination());
   };
 };
 

@@ -90,5 +90,5 @@ export default store => next => action => {
   );
   //.then(resolve, reject)
 
-  //}, 200));
+  //}, 100));
 };

@@ -1,11 +1,12 @@
-import { map as pluck } from 'lodash';
+import { map as pluck, isEqual } from 'lodash';
 import { combineReducers } from 'redux';
 import {
   HISTORY_USER_BOOKINGS_REQUEST,
   HISTORY_USER_BOOKINGS_SUCCESS,
   HISTORY_USER_BOOKINGS_FAILURE,
   SET_HISTORY_USER_BOOKINGS_PAGE,
-  RESET_HISTORY_USER_BOOKINGS_PAGINATION
+  RESET_HISTORY_USER_BOOKINGS_PAGINATION,
+  SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER
 } from '../../constants/ActionTypes';
 
 const initialPaginateListState = {
@@ -14,7 +15,7 @@ const initialPaginateListState = {
   pagination: {
     count: null,
     currentPage: 1,
-    pageSize: 2,
+    pageSize: 10,
   }
 };
 function historyUserBookingsPaginateList(state = initialPaginateListState, action) {
@@ -48,7 +49,6 @@ function historyUserBookingsPaginateList(state = initialPaginateListState, actio
     return { ...state, pagination: {
       ...state.pagination,
       currentPage: page,
-      count: null,
     }};
   }
 
@@ -63,11 +63,35 @@ function historyUserBookingsPaginateList(state = initialPaginateListState, actio
   return state;
 }
 
-export default combineReducers({
-  //filters: combineReducers({
-    //search: historyUserBookingsSearchFilter,
+function historyUserBookingsSearchFilter(state = '', action) {
+  if (action.type === SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER) {
+    return action.search;
+  }
+
+  return state;
+}
+
+function validFilters(reducer) {
+  return (state, action) => {
+    const { type, filters } = action;
+
+    // When filters of http call are different from current filters action is
+    // simply ignored
+    if ((type === HISTORY_USER_BOOKINGS_SUCCESS ||
+         type === HISTORY_USER_BOOKINGS_FAILURE) && !isEqual(state.filters, filters)) {
+      return state;
+    }
+
+    return reducer(state, action);
+  };
+}
+
+
+export default validFilters(combineReducers({
+  filters: combineReducers({
+    search: historyUserBookingsSearchFilter,
     //status: historyUserBookingsStatusFilter,
     //shop: historyUserBookingsShopFilter,
-  //}),
+  }),
   list: historyUserBookingsPaginateList,
-});
+}));

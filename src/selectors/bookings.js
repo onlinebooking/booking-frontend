@@ -29,6 +29,30 @@ const mapBookingsIdsToUIList = (ids, bookings, services, shops) => (
   ))
 );
 
+const getHistoryUserBookingsIds = (state) => state.userData.bookings.history.list.ids;
+
+// List of history user bookings with nested relation for UI
+export const getHistoryUserBookings = createSelector(
+  [ getHistoryUserBookingsIds, getBookingsEntity, getServicesEntity, getShopsEntity ],
+  mapBookingsIdsToUIList
+);
+
+const getHistoryUserBookingsPaginationData = (state) => state.userData.bookings.history.list.pagination;
+
+// Pagination stuff of history user bookings
+export const getHistoryUserBookingsPagination = createSelector(
+  [ getHistoryUserBookingsPaginationData ],
+  pagination => {
+    let pages = 0;
+
+    if (pagination.count && pagination.pageSize) {
+      pages = Math.ceil(pagination.count / pagination.pageSize);
+    }
+
+    return { ...pagination, pages };
+  }
+);
+
 const getIncomingUserBookingsIds = (state) => state.userData.bookings.incoming.list.ids;
 
 // List of incoming user bookings with nested relation for UI

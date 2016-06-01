@@ -1,13 +1,12 @@
 import React from 'react';
-import moment from 'moment';
 import { Link } from 'react-router';
+import UserBookingListItem from './UserBookingListItem';
 import {
   humanizeBookingStatus,
   getBookingsStatusesList
 } from '../utils/booking';
 import {
   ListGroup,
-  ListGroupItem,
   Badge,
   FormGroup,
   FormControl,
@@ -18,32 +17,6 @@ import {
   INCOMING_USER_BOOKINGS_BY_SHOP,
   INCOMING_USER_BOOKINGS_LIST,
 } from '../constants/ViewTypes';
-
-class IncomingUserBookingListItem extends React.Component {
-
-  render() {
-    const { service, status, id } = this.props;
-
-    const formattedDate = moment(this.props.start, moment.ISO_8601).format('dddd D MMMM YYYY');
-    const formattedRange = {
-      start: moment(this.props.start, moment.ISO_8601).format('HH:mm'),
-      end: moment(this.props.end, moment.ISO_8601).format('HH:mm')
-    };
-    const { start, end } = formattedRange;
-
-    return (
-      <Link to={`/my-bookings/${id}`}>
-        <ListGroupItem>
-            <div>{service.name}</div>
-            <div>{service.shop.name}</div>
-            <div>{formattedDate}</div>
-            <div>{start} - {end}</div>
-            <div>{humanizeBookingStatus(status)}</div>
-        </ListGroupItem>
-      </Link>
-    );
-  }
-}
 
 class IncomingUserBookingsList extends React.Component {
 
@@ -79,7 +52,7 @@ class IncomingUserBookingsList extends React.Component {
     return (
       <ListGroup>
         {bookings.map(booking => (
-          <IncomingUserBookingListItem {...booking} key={booking.id} />
+          <UserBookingListItem {...booking} key={booking.id} />
         ))}
       </ListGroup>
     );
@@ -94,7 +67,7 @@ class IncomingUserBookingsList extends React.Component {
           <div key={shop.id} style={{ padding: '10px' }}>
             <p>{shop.name} <Badge>{bookings.length}</Badge></p>
             {bookings.map(booking => (
-              <IncomingUserBookingListItem {...booking} key={booking.id} />
+              <UserBookingListItem {...booking} key={booking.id} />
             ))}
           </div>
         ))}

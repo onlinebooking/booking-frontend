@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import AuthNav from './AuthNav';
 import { Link } from 'react-router';
@@ -13,11 +13,20 @@ class QandoNavBar extends React.Component {
     if (authenticated) {
       userNav = (
         <Nav>
-          <NavItem
-            eventKey={1}
-            componentClass={Link}
-            href="/my-bookings/incoming"
-            to="/my-bookings/incoming">Le mie prenotazioni</NavItem>
+          <NavDropdown eventKey={1} title="Le mie prenotazioni" id="bookings-nav-dropdown">
+            <MenuItem
+              eventKey={1.1}
+              href="/my-bookings/incoming"
+              to="/my-bookings/incoming"
+              componentClass={Link}
+            >Future</MenuItem>
+            <MenuItem
+              eventKey={1.2}
+              href="/my-bookings/history"
+              to="/my-bookings/history"
+              componentClass={Link}
+            >Archivio</MenuItem>
+          </NavDropdown>
         </Nav>
       );
     }
