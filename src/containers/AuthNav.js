@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Modal, OverlayTrigger, Navbar, Nav } from 'react-bootstrap';
+import { Button, Modal, Navbar } from 'react-bootstrap';
 import LoginForm from './LoginForm'
-import Spinner from '../components/Spinner';
 import { connect } from 'react-redux';
 import { logout, showModalLogin, hideModalLogin } from '../actions/auth';
 

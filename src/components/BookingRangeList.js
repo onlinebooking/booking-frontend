@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { ListGroup, ListGroupItem, Image } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import moment from 'moment';
 
 class BookingRangeItem extends React.Component {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Link } from 'react-router';
 import BookingCalendar from '../components/BookingCalendar';
 import ErrorAlert from '../components/ErrorAlert';
 import { getBookingAvailblesCalendarDates } from '../selectors/calendar';
@@ -9,7 +8,6 @@ import { push } from 'react-router-redux';
 import { loadBookingRanges, setBookingCalendarDate } from '../actions/booking';
 
 function loadData(props) {
-  const { shopId, serviceId } = props.params;
   const calendarDate = moment(props.location.query.date, 'YYYY-MM-DD', true);
   if (calendarDate.isValid()) {
     props.setBookingCalendarDate(calendarDate.format('YYYY-MM-DD'));

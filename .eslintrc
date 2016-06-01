@@ -15,7 +15,9 @@
   "rules": {
     "no-extra-semi": 0,
     "comma-dangle": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "no-case-declarations": 0,
+    "no-unused-vars": ["error", { "vars": "all", "args": "none" }]
   },
   "globals": {
     "Promise": false,

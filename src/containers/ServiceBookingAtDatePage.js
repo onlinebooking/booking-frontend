@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Link } from 'react-router';
 import BookingRangeList from '../components/BookingRangeList';
 import ErrorAlert from '../components/ErrorAlert';
 import InvalidBookPeriod from '../components/InvalidBookPeriod';
@@ -56,7 +55,7 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 
   render() {
-    const { error, loading, bookingRanges, bookingDate } = this.props; // wOw
+    const { error, loading, bookingRanges } = this.props; // wOw
 
     // First render error if necessary
     if (error) {

@@ -3,7 +3,7 @@ import { normalize } from 'normalizr';
 
 // Two level deep shallow merge only
 function mergeEntities(state, entities) {
-  return _.mapValues(state, (v, k) => _.assign({}, v, entities[k]));
+  return mapValues(state, (v, k) => assign({}, v, entities[k]));
 }
 
 const initialState = {

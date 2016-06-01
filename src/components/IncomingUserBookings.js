@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import moment from 'moment';
 import { Link } from 'react-router';
 import {
@@ -9,7 +8,6 @@ import {
 import {
   ListGroup,
   ListGroupItem,
-  Image,
   Badge,
   FormGroup,
   FormControl,

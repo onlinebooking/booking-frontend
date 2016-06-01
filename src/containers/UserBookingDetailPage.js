@@ -41,7 +41,7 @@ class UserBookingDetailPage extends React.Component {
   }
 
   renderBooking() {
-    const { booking: { id, service, start, end, status } } = this.props;
+    const { booking: { service, start, end, status } } = this.props;
     const { shop } = service;
 
     const formattedDate = moment(start, moment.ISO_8601).format('dddd D MMMM YYYY');

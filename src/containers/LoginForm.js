@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import Spinner from '../components/Spinner';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ErrorAlert from '../components/ErrorAlert';
 import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { connect } from 'react-redux';

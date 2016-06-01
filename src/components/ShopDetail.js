@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Thumbnail } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 
 class ShopServiceListItem extends React.Component {

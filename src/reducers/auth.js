@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { LOCATION_CHANGE } from 'react-router-redux'
 import {
   USER_LOGIN_REQUEST,

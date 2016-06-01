@@ -1,5 +1,4 @@
 import React from 'react';
-import { values } from 'lodash';
 import { Link } from 'react-router';
 import { ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 

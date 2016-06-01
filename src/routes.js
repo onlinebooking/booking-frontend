@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, IndexRedirect } from 'react-router';
-import moment from 'moment';
+import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import ShopsListPage from './containers/ShopsListPage';
 import ShopDetailPage from './containers/ShopDetailPage';

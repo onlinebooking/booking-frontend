@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import $ from 'jquery';
 import 'fullcalendar';
 import 'fullcalendar/dist/fullcalendar.css';

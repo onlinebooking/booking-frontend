@@ -9,7 +9,6 @@ import {
   SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER
 } from '../../constants/ActionTypes';
 import {
-  INCOMING_USER_BOOKINGS_BY_SHOP,
   INCOMING_USER_BOOKINGS_LIST
 } from '../../constants/ViewTypes';
 
