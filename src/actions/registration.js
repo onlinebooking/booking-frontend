@@ -11,7 +11,7 @@ import {
 export function register({name, email, password}) {
   return (dispatch, getState) => {
     // TODO: Handle the custom redirect...
-    const redirect = `${BOOKING_FRONTED_URL}/`;
+    const redirect = `${BOOKING_FRONTED_URL}?loginOpenModal=1`;
 
     return dispatch({
       [CALL_API]: {
