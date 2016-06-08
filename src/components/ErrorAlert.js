@@ -9,7 +9,14 @@ export default class ErrorAlert extends React.Component {
     return (
       <Alert bsStyle="danger">
         <h4>{title}</h4>
-        <p>{status} {statusText}</p>
+        {
+          typeof status !== 'undefined'
+          ? <p>{status} {statusText}</p>
+          : <p>
+              <div>Unvailable API service</div>
+              <div>A TEAM of expert monkeys is trying to fix the problem.</div>
+            </p>
+        }
         {this.props.children}
       </Alert>
     );

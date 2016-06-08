@@ -9,6 +9,7 @@ class QandoNavBar extends React.Component {
   render() {
     const { authenticated, showAuthNav } = this.props;
     let userNav = null;
+    let guestNav = null;
 
     if (authenticated) {
       userNav = (
@@ -29,6 +30,16 @@ class QandoNavBar extends React.Component {
           </NavDropdown>
         </Nav>
       );
+    } else {
+      guestNav = (
+        <Nav>
+          <NavItem
+            href="/signup"
+            to="/signup"
+            componentClass={Link}
+          >Registrati</NavItem>
+        </Nav>
+      );
     }
 
     return (
@@ -41,6 +52,7 @@ class QandoNavBar extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           {userNav}
+          {guestNav}
           {(() => {
             if (showAuthNav) {
               return <AuthNav />;

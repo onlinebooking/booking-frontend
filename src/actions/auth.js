@@ -26,7 +26,7 @@ function loginRequest({email, password}) {
       ]
     }
   };
-};
+}
 
 function meRequest() {
   return (dispatch, getState) => {
@@ -42,7 +42,7 @@ function meRequest() {
       }
     })
   };
-};
+}
 
 export function login({email, password}) {
   return (dispatch, getState) => {
@@ -69,7 +69,7 @@ export function login({email, password}) {
       }
     });
   };
-};
+}
 
 export function logout() {
   return (dispatch, getState) => {
@@ -84,13 +84,13 @@ export function loginWithToken(token) {
     dispatch({ type: SET_USER_TOKEN, token });
     dispatch(meRequest());
   };
-};
+}
 
 export function showModalLogin(options = {}) {
   const { redirect } = { ...{ redirect: null }, ...options };
   return { type: SHOW_MODAL_LOGIN, redirect };
-};
+}
 
 export function hideModalLogin() {
   return { type: HIDE_MODAL_LOGIN };
-};
+}

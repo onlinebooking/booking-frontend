@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
+import {reducer as formReducer} from 'redux-form';
 import entities from './entities';
 import simpleResList from './utils/simple-res-list';
 import booking from './booking';
 import userData from './user-data';
 import auth from './auth';
+import registration from './registration';
 import pageError from './page-error';
 import {
   SHOPS_REQUEST,
@@ -49,9 +51,11 @@ const rootReducer = combineReducers({
   shopServices,
   booking,
   auth,
+  registration,
   userData,
   pageError,
   routing,
+  form: formReducer,
 });
 
 export default rootReducer;
