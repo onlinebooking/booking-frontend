@@ -2,10 +2,7 @@ import { omit, pick } from 'lodash';
 import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
 import { logout } from '../actions/auth';
-
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'http://api.qando.it/api'
-  : 'http://localhost:8000/api';
+import { BOOKING_API_URL } from '../constants/Urls';
 
 function callApi(endpoint, callConfig = {}) {
 
@@ -15,7 +12,7 @@ function callApi(endpoint, callConfig = {}) {
   // Pick util response props
   const pickResponse = (r) => pick(r, ['status', 'statusText']);
 
-  return fetch(BASE_URL + endpoint, config)
+  return fetch(BOOKING_API_URL + endpoint, config)
     .catch(message => {
       // Connection error, name resolving problem and other stuff like
       // Godzilla attack datacenters...
