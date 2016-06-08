@@ -3,6 +3,7 @@ import { replace } from 'react-router-redux';
 import moment from 'moment';
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
+import { isPageError } from './page-error';
 import { Schemas } from '../constants/Schemas';
 import {
   INCOMING_USER_BOOKINGS_REQUEST,
@@ -35,7 +36,7 @@ function fetchIncomingUserBookings() {
     const start = moment().subtract(1, 'hours').format('YYYY-MM-DDTHH:00:00');
     return dispatch({
       entitySchema: Schemas.BOOKING_ARRAY,
-      isPageError: true,
+      ...isPageError(),
       [CALL_API]: {
         endpoint: `/bookings/?start__gte=${start}&page_size=${MAX_PAGE_SIZE}&ordering=+start`,
         config: authTokenConfig(getState()),
@@ -57,12 +58,10 @@ export function loadIncomingUserBookings() {
   };
 };
 
-export function setIncomingUserBookingsView(view) {
-  return {
-    view,
-    type: SET_INCOMING_USER_BOOKINGS_VIEW,
-  };
-};
+export const setIncomingUserBookingsView = (view) => ({
+  view,
+  type: SET_INCOMING_USER_BOOKINGS_VIEW,
+});
 
 export function setIncomingUserBookingsSearchFilter(search, updateLocation = false) {
   return (dispatch, getState) => {
@@ -105,7 +104,7 @@ export function loadHistoryUserBookings() {
       page: currentPage,
       entitySchema: Schemas.BOOKING_ARRAY,
       // TODO: Consider to take isPageError as argument
-      isPageError: true,
+      ...isPageError(),
       [CALL_API]: {
         endpoint: `/bookings/?search=${search}&page_size=${pageSize}&page=${currentPage}&ordering=-start`,
         config: authTokenConfig(getState()),
@@ -155,7 +154,7 @@ function fetchUserBooking(bookingId) {
   return (dispatch, getState) => {
     return dispatch({
       entitySchema: Schemas.BOOKING,
-      isPageError: true,
+      ...isPageError(),
       [CALL_API]: {
         endpoint: `/bookings/${bookingId}/`,
         config: authTokenConfig(getState()),
@@ -202,9 +201,7 @@ export function actionOnUserBooking(bookingId, actionName) {
   };
 };
 
-export function clearActionErrorOnUserBooking(bookingId) {
-  return {
-    bookingId,
-    type: CLEAR_ACTION_ERROR_ON_USER_BOOKING
-  };
-};
+export const clearActionErrorOnUserBooking = (bookingId) => ({
+  bookingId,
+  type: CLEAR_ACTION_ERROR_ON_USER_BOOKING
+});

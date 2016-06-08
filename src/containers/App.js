@@ -31,7 +31,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   const error = state.pageError.error;
-  // Hide the AuthNav when page errors occurs and in the login/reg page
+  // Hide the AuthNav when page errors occurs
   const showAuthNav = !error;
 
   return {

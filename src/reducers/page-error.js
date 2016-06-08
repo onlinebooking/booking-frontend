@@ -6,12 +6,63 @@ import {
 } from '../constants/ActionTypes';
 
 const initialState = {
-  error: null
+  error: null,
+  asyncRequests: [],
 };
 
-export default function pageError(state = initialState, { type, error, isPageError }) {
-  if (error && isPageError && !includes([401], error.status)) {
-    return { ...state, error };
+const isPageErrorHandledHttpStatus = status => !includes([401], status);
+
+export default function pageError(state = initialState, action) {
+  const { type, error, isRequestAction, pageError } = action;
+
+  // Async request action that should handled by page error
+  if (pageError) {
+    const { seqId } = pageError;
+
+    if (isRequestAction) {
+      // Request start
+
+      // Push the seqId as an async request handled by page error
+      return {
+        ...state,
+        asyncRequests: [...state.asyncRequests, seqId]
+      };
+    } else if (error) {
+      // Request failed
+
+      if (includes(state.asyncRequests, seqId)) {
+        // The seqId is handled by page error
+
+        if (isPageErrorHandledHttpStatus(error.status)) {
+          // Finally can set the page error and remove seqId
+          return {
+            ...state,
+            error,
+            asyncRequests: state.asyncRequests.filter(id => id !== seqId)
+          };
+        } else {
+          // The http status should not handled by page error
+          // remove only the seqId and go on...
+          return {
+            ...state,
+            asyncRequests: state.asyncRequests.filter(id => id !== seqId)
+          };
+        }
+
+      } else {
+        alert('Escape forever from crisi, with evasi!');
+        // The seqId is not handled any more by page-error, nothing to do...
+        return state;
+      }
+    } else {
+      // Request ok
+
+      // Remove seqId from async request handled by page error
+      return {
+        ...state,
+        asyncRequests: state.asyncRequests.filter(id => id !== seqId)
+      };
+    }
   }
 
   // Explicit page error

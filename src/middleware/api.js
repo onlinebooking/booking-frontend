@@ -57,7 +57,10 @@ export default store => next => action => {
 
   const actionWith = data => Object.assign({}, omit(action, [CALL_API]), data);
 
-  next(actionWith({ type: requestType }));
+  next(actionWith({
+    type: requestType,
+    isRequestAction: true, // Other reducer can now distinguish this kind of action
+  }));
 
   //return new Promise((resolve, reject) => setTimeout(() => {
 
@@ -90,5 +93,5 @@ export default store => next => action => {
   );
   //.then(resolve, reject)
 
-  //}, 100));
+  //}, 1500));
 };

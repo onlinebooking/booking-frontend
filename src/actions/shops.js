@@ -1,5 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import { Schemas } from '../constants/Schemas';
+import { isPageError, setPageError } from './page-error';
 import {
   SHOPS_REQUEST,
   SHOPS_SUCCESS,
@@ -18,7 +19,7 @@ import {
 function fetchShops() {
   return {
     entitySchema: Schemas.SHOP_ARRAY,
-    isPageError: true,
+    ...isPageError(),
     [CALL_API]: {
       endpoint: '/shops',
       types: [
@@ -41,7 +42,7 @@ export function loadShops() {
 function fetchShop(shopId) {
   return {
     entitySchema: Schemas.SHOP,
-    isPageError: true,
+    ...isPageError(),
     [CALL_API]: {
       endpoint: `/shops/${shopId}`,
       types: [
@@ -64,7 +65,7 @@ export function loadShop(shopId) {
 function fetchShopServices(shopId) {
   return {
     shopId,
-    isPageError: true,
+    ...isPageError(),
     entitySchema: Schemas.SERVICE_ARRAY,
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services`,
@@ -88,7 +89,7 @@ export function loadShopServices(shopId) {
 function fetchShopService(shopId, serviceId) {
   return {
     entitySchema: Schemas.SERVICE,
-    isPageError: true,
+    ...isPageError(),
     [CALL_API]: {
       endpoint: `/shops/${shopId}/services/${serviceId}`,
       types: [
@@ -107,11 +108,10 @@ export function loadShopService(shopId, serviceId) {
       dispatch(fetchShopService(shopId, serviceId));
     } else if (Number(service.shop) !== Number(shopId)) {
       // Force 404...
-      dispatch({
-        type: SHOP_SERVICES_FAILURE,
-        isPageError: true,
-        error: { status: 404, statusText: 'Not Found' }
-      });
+      dispatch(setPageError({
+        status: 404,
+        statusText: 'Not Found'
+      }));
     }
   };
 };
