@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import moment from 'moment';
-import { replace } from 'react-router-redux';
+import { replaceQuery } from './routing';
 import { jsonPostConfig, authTokenConfig } from './utils';
 import { merge } from 'lodash';
 import { Schemas } from '../constants/Schemas';
@@ -81,8 +81,7 @@ export function setBookingCalendarDate(date, updateLocation = false) {
       type: SET_BOOKING_CALENDAR_DATE
     });
     if (updateLocation) {
-      const location = getState().routing.locationBeforeTransitions;
-      dispatch(replace({ ...location, query: { date } }));
+      dispatch(replaceQuery({ date }));
     }
   };
 };

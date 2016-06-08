@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { replace } from 'react-router-redux';
+import { replaceQuery } from '../actions/routing';
 import { loginWithToken, showModalLogin } from '../actions/auth';
 
 // Login user with persistent local storage jwt token
@@ -18,8 +18,8 @@ function showModalLoginFromQueryString(store) {
 
     if (loginOpenModal) {
       // Remove shit from url
-      const newQuery = omit(query, ['loginOpenModal', 'loginEmail']);
-      store.dispatch(replace({ query: newQuery }));
+      store.dispatch(replaceQuery(omit(query, [
+        'loginOpenModal', 'loginEmail'])));
       // Open modal
       store.dispatch(showModalLogin());
     }

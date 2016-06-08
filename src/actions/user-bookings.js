@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { replace } from 'react-router-redux';
+import { replaceQuery } from './routing';
 import moment from 'moment';
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig, authTokenConfig } from './utils';
@@ -70,8 +70,8 @@ export function setIncomingUserBookingsSearchFilter(search, updateLocation = fal
       type: SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER,
     });
     if (updateLocation) {
-      const location = getState().routing.locationBeforeTransitions;
-      dispatch(replace(merge(location, { query: { search } })));
+      const query = getState().routing.locationBeforeTransitions.query;
+      dispatch(replaceQuery({ ...query, search }));
     }
   };
 };
@@ -83,8 +83,8 @@ export function setIncomingUserBookingsStatusFilter(status, updateLocation = fal
       type: SET_INCOMING_USER_BOOKINGS_STATUS_FILTER,
     });
     if (updateLocation) {
-      const location = getState().routing.locationBeforeTransitions;
-      dispatch(replace(merge(location, { query: { status } })));
+      const query = getState().routing.locationBeforeTransitions.query;
+      dispatch(replaceQuery({ ...query, status }));
     }
   };
 };
@@ -122,8 +122,8 @@ export function setHistoryUserBookingsPage(page, updateLocation = false) {
   return (dispatch, getState) => {
     dispatch({ type: SET_HISTORY_USER_BOOKINGS_PAGE, page });
     if (updateLocation) {
-      const location = getState().routing.locationBeforeTransitions;
-      dispatch(replace(merge(location, { query: { page } })));
+      const query = getState().routing.locationBeforeTransitions.query;
+      dispatch(replaceQuery({ ...query, page }));
     }
   };
 };
@@ -143,8 +143,8 @@ export function setHistoryUserBookingsSearchFilter(search, updateLocation = fals
       type: SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER,
     });
     if (updateLocation) {
-      const location = getState().routing.locationBeforeTransitions;
-      dispatch(replace(merge(location, { query: { search, page: 1 } })));
+      const query = getState().routing.locationBeforeTransitions.query;
+      dispatch(replaceQuery({ ...query, search, page: 1 }));
     }
     dispatch(resetHistoryUserBookingsPagination());
   };
