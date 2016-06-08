@@ -6,7 +6,7 @@ import ReactDom from 'react-dom';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './store/configureStore';
-import { loginWithToken } from './actions/auth';
+import bootstrapStore from './store/bootstrapStore';
 import Root from './containers/Root';
 import moment from 'moment';
 
@@ -16,10 +16,8 @@ moment.locale('it');
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-const existingUserToken = localStorage.getItem('user_token');
-if (existingUserToken) {
-  store.dispatch(loginWithToken(existingUserToken));
-}
+// Fill store with various stuff
+bootstrapStore(store);
 
 ReactDom.render(
   <Root store={store} history={history} />,

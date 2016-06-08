@@ -16,7 +16,7 @@ import {
   BOOK_FAILURE
 } from '../constants/ActionTypes';
 
-// Can do it better...
+// TODO: Find a better way to calculate the period
 function calculateStartAndEndForCalendar(date) {
   const m = moment(date, 'YYYY-MM-DD');
   return {
