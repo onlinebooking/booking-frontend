@@ -1,5 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import { jsonPostConfig } from './utils';
+import { BOOKING_FRONTED_URL } from '../constants/Urls';
 import {
   CLEAR_REGISTRATION,
   USER_REGISTRATION_REQUEST,
@@ -10,8 +11,7 @@ import {
 export function register({name, email, password}) {
   return (dispatch, getState) => {
     // TODO: Handle the custom redirect...
-    const baseUrl = window.location.origin;
-    const redirect = `${baseUrl}/`;
+    const redirect = `${BOOKING_FRONTED_URL}/`;
 
     return dispatch({
       [CALL_API]: {
