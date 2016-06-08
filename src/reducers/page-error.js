@@ -50,7 +50,6 @@ export default function pageError(state = initialState, action) {
         }
 
       } else {
-        alert('Escape forever from crisi, with evasi!');
         // The seqId is not handled any more by page-error, nothing to do...
         return state;
       }
