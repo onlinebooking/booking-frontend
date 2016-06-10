@@ -87,8 +87,15 @@ export function loginWithToken(token) {
 }
 
 export function showModalLogin(options = {}) {
-  const { redirect } = { ...{ redirect: null }, ...options };
-  return { type: SHOW_MODAL_LOGIN, redirect };
+  const { name, email, redirect } = {
+    ...{
+      name: null,
+      email: null,
+      redirect: null,
+    },
+    ...options
+  };
+  return { type: SHOW_MODAL_LOGIN, name, email, redirect };
 }
 
 export function hideModalLogin() {

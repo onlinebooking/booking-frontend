@@ -1,19 +1,44 @@
 import React from 'react';
 import Spinner from '../components/Spinner';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import { login } from '../actions/auth';
+import {
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  HelpBlock
+} from 'react-bootstrap';
+import {
+  createValidator,
+  required,
+  email as emailValidationRule
+} from '../utils/validation';
+
+const submitLogin = (values, dispatch) => {
+  return dispatch(login(values));
+};
 
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.onLoginFormSubmit = this.onLoginFormSubmit.bind(this);
+  render() {
+    const { userName } = this.props;
+
+    return (
+      <div>
+        {
+          userName &&
+          <h3>Bentornato {userName}! Grazie per esserti registrato in Qando!</h3>
+        }
+        {this.renderForm()}
+      </div>
+    );
   }
 
   renderErrors() {
-    const { error, loading } = this.props;
+    const { authError, authLoading } = this.props;
 
-    if (error && !loading) {
+    // TODO: Improve error handling divide by 400 Bad login and other errors...
+    if (authError && !authLoading) {
       return (
         <div>
           <br />
@@ -25,21 +50,46 @@ class LoginForm extends React.Component {
     }
   }
 
-  render() {
-    const { loading } = this.props;
+  renderForm() {
+    const {
+      fields: { email, password },
+      handleSubmit,
+      authLoading
+    } = this.props
 
     return (
-      <form onSubmit={this.onLoginFormSubmit} noValidate>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" ref="email" disabled={loading} className="form-control" />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" ref="password" disabled={loading} className="form-control"/>
-        </div>
+      <form onSubmit={handleSubmit(submitLogin)} noValidate>
+
+        <FormGroup
+          controlId="formControlsEmail"
+          validationState={(email.touched && email.error) ? 'error' : null}
+        >
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
+            type="email"
+            placeholder="Email"
+            disabled={authLoading}
+            {...email}
+          />
+          {email.touched && email.error && <HelpBlock>{email.error}</HelpBlock>}
+        </FormGroup>
+
+        <FormGroup
+          controlId="formControlsPassword"
+          validationState={(password.touched && password.error) ? 'error' : null}
+        >
+          <ControlLabel>Password</ControlLabel>
+          <FormControl
+            type="password"
+            placeholder="Password"
+            disabled={authLoading}
+            {...password}
+          />
+          {password.touched && password.error && <HelpBlock>{password.error}</HelpBlock>}
+        </FormGroup>
+
         {(() => {
-          if (loading) {
+          if (authLoading) {
             return <Spinner />;
           }
 
@@ -49,22 +99,24 @@ class LoginForm extends React.Component {
       </form>
     );
   }
-
-  onLoginFormSubmit(e) {
-    e.preventDefault();
-    this.props.login({
-      email: this.refs.email.value,
-      password: this.refs.password.value
-    });
-  }
 }
 
 function mapStateToProps(state) {
   return {
-    loading: state.auth.loading,
-    error: state.auth.error,
-    user: state.auth.user,
+    authLoading: state.auth.loading,
+    authError: state.auth.error,
+    userName: state.auth.name, // Came from registration link
+    initialValues: {
+      email: state.auth.email,
+    },
   };
 }
 
-export default connect(mapStateToProps, { login })(LoginForm);
+export default reduxForm({
+  form: 'login',
+  fields: ['email', 'password'],
+  validate: createValidator({
+    email: [required, emailValidationRule],
+    password: [required],
+  })
+}, mapStateToProps)(LoginForm);

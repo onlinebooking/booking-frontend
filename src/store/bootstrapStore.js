@@ -14,14 +14,17 @@ function showModalLoginFromQueryString(store) {
   // Authenticated user can't logged anymore
   if (!store.getState().auth.token) {
     const query = store.getState().routing.locationBeforeTransitions.query;
-    const { loginOpenModal /*, loginEmail*/ } = query;
+    const { loginOpenModal, loginEmail, loginName } = query;
 
     if (loginOpenModal) {
       // Remove shit from url
       store.dispatch(replaceQuery(omit(query, [
-        'loginOpenModal', 'loginEmail'])));
+        'loginOpenModal', 'loginEmail', 'loginName'])));
       // Open modal
-      store.dispatch(showModalLogin());
+      store.dispatch(showModalLogin({
+        email: loginEmail,
+        name: loginName,
+      }));
     }
   }
 }

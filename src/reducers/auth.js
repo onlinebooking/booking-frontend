@@ -19,37 +19,72 @@ const initialState = {
   token: null,
   user: null,
   redirect: null,
+  email: null,
+  name: null,
 };
 
 export default function auth(state=initialState, action) {
-  const { type, data, error, token, redirect } = action;
+  const { type, data, error, token, name, email, redirect } = action;
   switch (type) {
     case USER_LOGIN_REQUEST:
     case ME_REQUEST:
-      return { ...state, loading: true };
+      return {
+        ...state,
+        loading: true,
+      };
 
     case USER_LOGIN_FAILURE:
     case ME_FAILURE:
-      return { ...state, loading: false, error };
+      return {
+        ...state,
+        error,
+        loading: false,
+      };
 
     case USER_LOGIN_SUCCESS:
-      return { ...state, token: data.token, error: null };
+      return {
+        ...state,
+        token: data.token,
+        error: null,
+      };
 
     case ME_SUCCESS:
-      return { ...state, user: data, loading: false, error: null };
+      return {
+        ...state,
+        user: data,
+        loading: false,
+        error: null,
+      };
 
     case SET_USER_TOKEN:
-      return { ...state, token };
+      return {
+        ...state,
+        token,
+      };
 
     case USER_LOGOUT:
       return initialState;
 
     case SHOW_MODAL_LOGIN:
-      return { ...state, redirect, showModal: true, error: null };
+      return {
+        ...state,
+        name,
+        email,
+        redirect,
+        showModal: true,
+        error: null,
+      };
 
     case HIDE_MODAL_LOGIN:
     case LOCATION_CHANGE:
-      return { ...state, redirect: null, showModal: false, error: null };
+      return {
+        ...state,
+        redirect: null,
+        email: null,
+        name: null,
+        showModal: false,
+        error: null,
+    };
 
     default:
       return state;
