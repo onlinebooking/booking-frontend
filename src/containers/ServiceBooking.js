@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import Spinner from '../components/Spinner';
 import { loadShop, loadShopService } from '../actions/shops';
 import { setBookingService } from '../actions/booking';
+import ShopHeader from '../components/ShopHeader';
 
 function loadData(props) {
   const { shopId, serviceId } = props.params;
@@ -33,9 +34,9 @@ class ServiceBooking extends React.Component {
     }
 
     return (
-      <div className="booking-page-container">
+      <div>
         {this.renderTopShopAndServiceInfo()}
-        <div className="booking-container">
+        <div>
           {this.props.children && React.cloneElement(this.props.children, {
             shop,
             service,
@@ -47,18 +48,18 @@ class ServiceBooking extends React.Component {
 
   renderTopShopAndServiceInfo() {
     const { shop, service } = this.props;
-
-    return (
+    const title = (
+      <Link to={`/shops/${shop.id}`} style={{ textDecoration: 'none', color: 'white' }}>
+        <h1>{shop.name}</h1>
+      </Link>
+    );
+    const caption = (
       <div>
-        <div className="service-description">
-          <Link to={`/shops/${shop.id}`}>
-            <h1>{shop.name}</h1>
-          </Link>
-          <p>{service.name}</p>
-          <p>{service.description}</p>
-        </div>
+        <p>{service.name}</p>
+        <p>{service.description}</p>
       </div>
     );
+    return <ShopHeader title={title} caption={caption} full={false} />
   }
 }
 

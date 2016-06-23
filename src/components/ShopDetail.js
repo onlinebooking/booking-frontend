@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
-import { Link, Panel } from 'react-router';
+import { Link } from 'react-router';
+import ShopHeader from './ShopHeader';
 
 class ShopServiceListItem extends React.Component {
 
@@ -57,17 +58,17 @@ class ShopServiceList extends React.Component {
   }
 }
 
-class ShopDetailTop extends React.Component {
-
+class ShopFooter extends React.Component {
   render() {
     const { shop } = this.props;
-
     return (
-      <div className="shop-header" style={{backgroundImage:`url(https://source.unsplash.com/category/nature?a=${Math.random()*10000})`}}>
-        <div className="text-center shop-header-background">
-          <h1>{shop.name.toUpperCase()}</h1>
-          <p>{shop.description}</p>
-        </div>
+      <div className="container-fluid shop-footer text-center">
+        {shop.name}<br/>
+        <small>
+          {shop.address} - {shop.city}{' '}
+          <Glyphicon glyph="phone-alt"/> {shop.phone}{' '}
+          <Glyphicon glyph="envelope"/> {shop.mail}
+        </small>
       </div>
     );
   }
@@ -80,20 +81,11 @@ export default class ShopDetail extends React.Component {
 
     return (
       <div>
-        <ShopDetailTop shop={shop} />
+        <ShopHeader title={shop.name.toUpperCase()} caption={shop.description} />
         <div className="container-fluid shop-services">
           <ShopServiceList shop={shop} services={services} />
         </div>
-        <div className="container-fluid shop-footer text-center">
-          {shop.name}<br/>
-          <small>
-            {shop.address} - {shop.city}{' '}
-            <Glyphicon glyph="phone-alt"/> {shop.phone}{' '}
-            <Glyphicon glyph="envelope"/> {shop.mail}
-          </small>
-
-        </div>
-
+        <ShopFooter shop={shop} />
       </div>
     );
   }

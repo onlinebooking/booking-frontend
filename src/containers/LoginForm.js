@@ -107,7 +107,7 @@ function mapStateToProps(state) {
     authError: state.auth.error,
     userName: state.auth.name, // Came from registration link
     initialValues: {
-      email: state.auth.email,
+      email: state.auth.email || '',
     },
   };
 }

@@ -57,17 +57,11 @@ body {
 
 /** booking **/
 
-.booking-page-container {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-.booking-container {
-  margin-top: 10px;
-}
-
 .booking-calendar-container {
-  padding-top: 20px;
-  padding-bottom: 30px;
+  padding: 10px;
+  /*height: 100px !important;*/
+  /*padding-top: 20px;*/
+  /*padding-bottom: 30px;*/
 }
 .booking-calendar-loader {
   color: white;
@@ -139,12 +133,15 @@ body {
 
 .shop-header {
   position:relative;
-  padding-top:140px;
+  /*padding-top: 50px;*/
   background-size: cover;
   color: #fff;
 }
+.shop-header-full {
+  padding-top: 140px
+}
 
-.shop-header-background{
+.shop-header-background {
   position:relative;
   background-color: rgba(0,0,0,.50);
   padding: 20px;
@@ -180,7 +177,7 @@ body {
   z-index: 100000;
   top:0;left:0; bottom:0; right:0;
   background-color: white;
-
+  /*color: $brand-primary;*/
 }
 
 .loading-spinner{

@@ -28,16 +28,21 @@ class ShopDetailPage extends React.Component {
     const { shop, isFetchingServices, services } = this.props;
     const showSpinner = !shop || (isFetchingServices && !services.length);
 
-    const contentClass = classNames('content-hidden', { 'content-shown' : !showSpinner });
+    if (showSpinner) {
+      return <Spinner />;
+    }
 
-    return  (
-      <div>
-        <Spinner show={showSpinner}/>
-        <div className={contentClass} >
-          <ShopDetail shop={shop} services={services} />
-        </div>
-      </div>
-    )
+    return <ShopDetail shop={shop} services={services} />
+    //const contentClass = classNames('content-hidden', { 'content-shown' : !showSpinner });
+
+    //return  (
+      //<div>
+        //<Spinner show={showSpinner}/>
+        //<div className={contentClass} >
+          //<ShopDetail shop={shop} services={services} />
+        //</div>
+      //</div>
+    //)
 
   }
 }
