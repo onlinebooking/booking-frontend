@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ShopDetail from '../components/ShopDetail';
 import Spinner from '../components/Spinner';
 import { loadShop, loadShopServices } from '../actions/shops';
+import classNames from 'classnames';
 
 function loadData(props) {
   const { shopId } = props.params;
@@ -27,11 +28,17 @@ class ShopDetailPage extends React.Component {
     const { shop, isFetchingServices, services } = this.props;
     const showSpinner = !shop || (isFetchingServices && !services.length);
 
-    if (showSpinner) {
-      return <Spinner />;
-    }
+    const contentClass = classNames('content-hidden', { 'content-shown' : !showSpinner });
 
-    return <ShopDetail shop={shop} services={services} />;
+    return  (
+      <div>
+        <Spinner show={showSpinner}/>
+        <div className={contentClass} >
+          <ShopDetail shop={shop} services={services} />
+        </div>
+      </div>
+    )
+
   }
 }
 

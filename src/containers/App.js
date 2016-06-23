@@ -21,7 +21,7 @@ class App extends React.Component {
       return <ErrorPage error={error} />;
     } else {
       return (
-        <div className="container-fluid">
+        <div>
           {this.props.children}
         </div>
       );
