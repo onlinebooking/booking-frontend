@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import moment from 'moment';
 import Spinner from './Spinner';
 import ErrorAlert from './ErrorAlert';
+import Form from "react-jsonschema-form";
 
 export default class BookingRange extends React.Component {
 
@@ -41,7 +42,7 @@ export default class BookingRange extends React.Component {
       return this.renderBookedRange();
     }
 
-    // Render actions: cofrim, change dates...
+    // Render actions: form, cofrim, change dates...
     return this.renderActions();
   }
 
@@ -57,14 +58,21 @@ export default class BookingRange extends React.Component {
   }
 
   renderActions() {
-    const { onConfirmBooking, changeRangeUrl, changeDateUrl } = this.props;
+    const { schema, onConfirmBooking, changeRangeUrl, changeDateUrl } = this.props;
+    const onSubmit = ({ formData }) => onConfirmBooking({ bookingOptions: formData });
 
+    // TODO: Default form data / Initial form data by server
     return (
       <div>
-        <button
-          className="btn btn-success"
-          onClick={onConfirmBooking}
-          style={{ marginBottom: '10px' }}>Conferma Prenotazione</button>
+        <Form
+          className="booking-form"
+          schema={schema}
+          onSubmit={onSubmit}>
+          <button
+            type="submit"
+            className="btn btn-success"
+            style={{ marginBottom: '10px' }}>Conferma Prenotazione</button>
+        </Form>
         <div>
           <Link
             className="btn btn-primary"

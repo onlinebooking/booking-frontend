@@ -93,7 +93,7 @@ export function setBookingRange(range) {
   };
 };
 
-export function book() {
+export function book({ bookingOptions }) {
   return (dispatch, getState) => {
     const {service, book: { range } } = getState().booking;
 
@@ -106,9 +106,10 @@ export function book() {
     const config = merge(authTokenConfig(getState()), jsonPostConfig({
       service,
       start,
-      end
+      end,
+      bookingOptions
     }));
-    const endpoint = `/book-service/?start=${start}&end=${end}&service=${service}`;
+    const endpoint = `/book-service/`;
 
     dispatch({
       entitySchema: Schemas.BOOKING,

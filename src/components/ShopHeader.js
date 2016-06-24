@@ -12,7 +12,7 @@ class ShopHeader extends Component {
       <div className={headerClass} style={{ backgroundImage: `url(${headerImageUrl})` }}>
         <div className="text-center shop-header-background">
           <h1>{title}</h1>
-          <p>{caption}</p>
+          <div>{caption}</div>
         </div>
       </div>
     );

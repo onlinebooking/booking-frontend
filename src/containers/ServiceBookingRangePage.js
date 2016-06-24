@@ -7,6 +7,7 @@ import BookingRange from '../components/BookingRange';
 import { getBookedRange } from '../selectors/bookings';
 import { find, isEqual, isArray } from 'lodash';
 import moment from 'moment';
+import { decamelizeKeys } from 'humps';
 import { replace } from 'react-router-redux';
 import {
   book,
@@ -31,12 +32,6 @@ function loadData(props) {
 
 class ServiceBookingRangePage extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.onConfirmBooking = this.onConfirmBooking.bind(this)
-  }
-
   componentWillMount() {
     loadData(this.props);
   }
@@ -58,10 +53,6 @@ class ServiceBookingRangePage extends React.Component {
   changeRangeUrl() {
     const { bookingDate, shop, service } = this.props;
     return `/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`;
-  }
-
-  onConfirmBooking() {
-    this.props.book();
   }
 
   render() {
@@ -98,7 +89,9 @@ class ServiceBookingRangePage extends React.Component {
       isSavingBook,
       bookingDate,
       bookedRange,
-      savingBookError
+      savingBookError,
+      book,
+      service: { bookingOptionsSchema }
     } = this.props;
     const opacity = isFetchingRange ? '0.5' : '1';
 
@@ -106,11 +99,12 @@ class ServiceBookingRangePage extends React.Component {
       <div style={{opacity}}>
         <BookingRange
           range={range}
+          schema={decamelizeKeys(bookingOptionsSchema)}
           date={bookingDate}
           loading={isSavingBook}
           error={savingBookError}
           bookedRange={bookedRange}
-          onConfirmBooking={this.onConfirmBooking}
+          onConfirmBooking={book}
           changeDateUrl={this.changeDateUrl()}
           changeRangeUrl={this.changeRangeUrl()}
         />

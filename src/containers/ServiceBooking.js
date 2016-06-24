@@ -55,8 +55,8 @@ class ServiceBooking extends React.Component {
     );
     const caption = (
       <div>
-        <p>{service.name}</p>
-        <p>{service.description}</p>
+        <div>{service.name}</div>
+        <div>{service.description}</div>
       </div>
     );
     return <ShopHeader title={title} caption={caption} full={false} />
