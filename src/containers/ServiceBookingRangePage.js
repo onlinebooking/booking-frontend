@@ -166,4 +166,4 @@ export default connect(mapStateToProps, {
   setBookingRange,
   loadBookingRanges,
   book,
-})(ServiceBookingRangePage);
+}, undefined, { pure: false })(ServiceBookingRangePage);
