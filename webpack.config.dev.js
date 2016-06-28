@@ -13,6 +13,8 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+    // https://github.com/mozilla-services/react-jsonschema-form#build-error-wrt-missing-buffertools-module
+    new webpack.IgnorePlugin(/^(buffertools)$/),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
