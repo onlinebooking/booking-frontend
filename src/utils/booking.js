@@ -17,7 +17,7 @@ export function getBookingsActionsList() {
 
 export function humanizeBookingStatus(status) {
   return {
-    [BookingStatuses.PENDING]: 'In Attesa',
+    [BookingStatuses.PENDING]: 'In attesa',
     [BookingStatuses.DENIED]: 'Rifiutato',
     [BookingStatuses.CONFIRMED]: 'Confermato',
     [BookingStatuses.CANCELED]: 'Cancellato',

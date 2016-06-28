@@ -7,6 +7,7 @@ import {
 } from '../utils/booking';
 import {
   ListGroup,
+  ListGroupItem,
   Badge,
   FormGroup,
   FormControl,
@@ -21,12 +22,12 @@ import {
 class IncomingUserBookingsList extends React.Component {
 
   render() {
-    const { bookingsCount, bookingsCountFiltered, loading } = this.props;
+    const { bookingsCount, bookingsCountFiltered, loading, statusFilter } = this.props;
     const opacity = loading ? '0.5' : '1';
 
     return (
       <div>
-        <div>{bookingsCountFiltered} di {bookingsCount}</div>
+        <div className="booking-list-counter text-muted">{humanizeBookingStatus(statusFilter)}: {bookingsCountFiltered} di {bookingsCount} prenotazioni</div>
         <div style={{opacity}}>
           {this.renderList()}
         </div>
@@ -64,11 +65,18 @@ class IncomingUserBookingsList extends React.Component {
     return (
       <div>
         {bookings.map(({ shop, bookings }) => (
-          <div key={shop.id} style={{ padding: '10px' }}>
-            <p>{shop.name} <Badge>{bookings.length}</Badge></p>
+          <div key={shop.id}>
+
+            <ListGroup>
+              <ListGroupItem className="booking-list-header">
+                <h4>{shop.name}</h4>
+                <p>{bookings.length} prenotazioni</p>
+              </ListGroupItem>
+
             {bookings.map(booking => (
               <UserBookingListItem {...booking} key={booking.id} />
             ))}
+            </ListGroup>
           </div>
         ))}
       </div>
@@ -129,9 +137,9 @@ class IncomingUserBookingsControls extends React.Component {
 
     return (
       <div>
-        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}?search=${searchText}&status=${statusFilter}`}>List</Link>
+        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}?search=${searchText}&status=${statusFilter}`}>Elenco completo</Link>
         {' | '}
-        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}?search=${searchText}&status=${statusFilter}`}>Per Shop</Link>
+        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}?search=${searchText}&status=${statusFilter}`}>Elenco per shop</Link>
       </div>
     );
   }
@@ -166,6 +174,7 @@ export default class IncomingUserBookings extends React.Component {
           bookings={bookings}
           bookingsCount={bookingsCount}
           bookingsCountFiltered={bookingsCountFiltered}
+          statusFilter={statusFilter}
           loading={loading}
           view={view}
         />

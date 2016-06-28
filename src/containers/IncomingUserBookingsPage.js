@@ -104,7 +104,9 @@ class IncomingUserBookingsPage extends React.Component {
       return <Spinner />;
     }
 
-    return <IncomingUserBookings
+    return (
+      <div className="container-fluid margin-top-20">
+      <IncomingUserBookings
       bookings={bookings}
       bookingsCount={bookingsCount}
       bookingsCountFiltered={bookingsCountFiltered}
@@ -114,7 +116,9 @@ class IncomingUserBookingsPage extends React.Component {
       searchText={searchText}
       onSearchTextChanged={this.onSearchTextChanged}
       onStatusFilterChanged={this.onStatusFilterChanged}
-    />;
+    />
+    </div>
+  )
   }
 }
 

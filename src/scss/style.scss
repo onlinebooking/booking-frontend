@@ -1,7 +1,14 @@
 @import '~bootswatch/yeti/_variables.scss';
 
+.margin-top-20{
+  margin-top: 20px;
+}
 .with-navbar {
   padding-top: 40px;
+}
+
+.no-link-style{
+  color: inherit;
 }
 .home-jumbo {
   background: deepskyblue; /* fallback for old browsers */
@@ -134,6 +141,18 @@
   margin-top: 20px;
 }
 
+.booking-list-counter{
+  padding: 8px;
+}
+
+.booking-list-header{
+  background-color: $brand-primary;
+  color: white;
+}
+
+.booking-list-badge{
+  
+}
 
 .shop-header {
   position:relative;

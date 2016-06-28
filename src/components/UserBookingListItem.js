@@ -21,13 +21,18 @@ export default class UserBookingListItem extends React.Component {
     const { start, end } = formattedRange;
 
     return (
-      <Link to={`/my-bookings/${id}`}>
+      <Link to={`/my-bookings/${id}`} className="no-link-style">
         <ListGroupItem>
-            <div>{service.name}</div>
-            <div>{service.shop.name}</div>
-            <div>{formattedDate}</div>
-            <div>{start} - {end}</div>
-            <div>{humanizeBookingStatus(status)}</div>
+            <div className="pull-left">
+              <h4 className="text-primary">{service.name}</h4>
+              <div>{service.shop.name}</div>
+              <div>{formattedDate}</div>
+              <div>{start} - {end}</div>
+            </div>
+            <div className="pull-right">
+              <h5>{humanizeBookingStatus(status)}</h5>
+            </div>
+            <div className="clearfix"/>
         </ListGroupItem>
       </Link>
     );
