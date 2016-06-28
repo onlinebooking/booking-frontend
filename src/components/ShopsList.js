@@ -28,12 +28,17 @@ export default class ShopsList extends React.Component {
   render() {
     const { shops } = this.props;
     return (
-      <div>
+      <div className="shops-list">
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          Shops
+        </div>
         <ListGroup>
           {shops.map(shop => (
             <ShopsListItem {...shop} key={shop.id} />
           ))}
         </ListGroup>
+      </div>
       </div>
     );
   }

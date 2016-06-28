@@ -4,6 +4,7 @@ import ShopsList from '../components/ShopsList';
 import { Jumbotron } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
 import { loadShops } from '../actions/shops';
+import classNames from 'classnames';
 
 function loadData(props) {
   props.loadShops();
@@ -16,13 +17,18 @@ class ShopsListPage extends React.Component {
   }
 
   render() {
+    const headerImageUrl = `https://images.unsplash.com/photo-1458682625221-3a45f8a844c7`;
+    const headerClass = classNames('shop-header shop-header-full');
+
     return (
       <div>
-        <Jumbotron className="text-center home-jumbo">
+      <div className={headerClass} style={{ backgroundImage: `url(${headerImageUrl})` }}>
+        <div className="text-center shop-header-background">
           <h1>Qando</h1>
-          <p>La piattaforma di prenotazioni multiservizio</p>
-        </Jumbotron>
-        {this.renderShopList()}
+          <div>La piattaforma di prenotazioni multiservizio</div>
+        </div>
+      </div>
+      {this.renderShopList()}
       </div>
     );
   }
@@ -33,7 +39,13 @@ class ShopsListPage extends React.Component {
     if (isFetching && !shops.length) {
       return <Spinner />;
     }
-    return <ShopsList shops={shops} />;
+    return (
+      <div className="container-fluid">
+        <ShopsList shops={shops} />
+      </div>
+    )
+
+
   }
 }
 
