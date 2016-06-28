@@ -8,6 +8,7 @@ import userData from './user-data';
 import auth from './auth';
 import registration from './registration';
 import pageError from './page-error';
+import options from './options';
 import {
   SHOPS_REQUEST,
   SHOPS_SUCCESS,
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
   registration,
   userData,
   pageError,
+  options,
   routing,
   form: formReducer,
 });
