@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import ErrorPage from '../components/ErrorPage';
+import ModalLogin from './ModalLogin';
 
 class App extends React.Component {
 
@@ -18,6 +19,7 @@ class App extends React.Component {
       <div className={appClass}>
         {!options.iframe && <NavBar showAuthNav={this.props.showAuthNav} />}
         {this.renderPageContent()}
+        <ModalLogin />
       </div>
     );
   }
