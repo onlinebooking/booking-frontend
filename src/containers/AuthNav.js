@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Modal, Navbar } from 'react-bootstrap';
-import LoginForm from './LoginForm'
+import { Button, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { logout, showModalLogin, hideModalLogin } from '../actions/auth';
+import { logout, showModalLogin } from '../actions/auth';
 
 class AuthNav extends React.Component {
 
@@ -35,22 +34,6 @@ class AuthNav extends React.Component {
     return <Navbar.Text pullRight>Login you...</Navbar.Text>;
   }
 
-  renderModal() {
-    return (
-      <Modal show={this.props.showModal} onHide={this.props.hideModalLogin}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <LoginForm />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.hideModalLogin}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-
   render() {
     const { user, loading } = this.props;
 
@@ -66,7 +49,6 @@ class AuthNav extends React.Component {
             return this.renderNavNotLogged();
           }
         })()}
-        {this.renderModal()}
       </span>
     );
   }
@@ -77,12 +59,10 @@ function mapStateToProps(state){
     user: state.auth.user,
     token: state.auth.token,
     loading: state.auth.loading,
-    showModal: state.auth.showModal,
   };
 }
 
 export default connect(mapStateToProps, {
   logout,
   showModalLogin,
-  hideModalLogin,
 })(AuthNav);
