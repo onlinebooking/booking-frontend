@@ -93,7 +93,7 @@ class ServiceBookingRangePage extends React.Component {
       user,
       service,
     } = this.props;
-    const schema = service['booking_options_schema'];
+    const {schema, uiSchema } = service['booking_options_schema'];
     const opacity = isFetchingRange ? '0.5' : '1';
 
     return (
@@ -102,6 +102,7 @@ class ServiceBookingRangePage extends React.Component {
         <BookingRange
           range={range}
           schema={schema}
+          uiSchema={uiSchema}
           date={bookingDate}
           loading={isSavingBook}
           error={savingBookError}

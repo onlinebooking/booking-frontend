@@ -67,7 +67,7 @@ export default class BookingRange extends React.Component {
   }
 
   renderActions() {
-    const { schema, onConfirmBooking, changeRangeUrl, changeDateUrl } = this.props;
+    const { schema, uiSchema, onConfirmBooking, changeRangeUrl, changeDateUrl } = this.props;
     const onSubmit = ({ formData }) => onConfirmBooking({ bookingOptions: formData });
 
     return (
@@ -75,6 +75,7 @@ export default class BookingRange extends React.Component {
         <Form
           className="booking-form"
           schema={schema}
+          uiSchema={uiSchema}
           onSubmit={onSubmit}>
           <div className="text-center">
           <button
