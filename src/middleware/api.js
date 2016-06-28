@@ -21,7 +21,7 @@ function callApi(endpoint, callConfig = {}) {
     })
     .then(response =>
       response.json().then(
-        json => ({ response, json: camelizeKeys(json) }),
+        json => ({ response, json }),
         message => {
           // Error while parsing json
           return Promise.reject(({ ...pickResponse(response), message }));

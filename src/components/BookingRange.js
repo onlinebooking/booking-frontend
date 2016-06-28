@@ -70,19 +70,20 @@ export default class BookingRange extends React.Component {
     const { schema, onConfirmBooking, changeRangeUrl, changeDateUrl } = this.props;
     const onSubmit = ({ formData }) => onConfirmBooking({ bookingOptions: formData });
 
-    // TODO: Default form data / Initial form data by server
     return (
       <div>
         <Form
           className="booking-form"
           schema={schema}
           onSubmit={onSubmit}>
+          <div className="text-center">
           <button
             type="submit"
             className="btn btn-success"
             style={{ marginBottom: '10px' }}>Conferma Prenotazione</button>
+          </div>
         </Form>
-        <div>
+        <div className="text-center">
           <Link
             className="btn btn-primary"
             to={changeRangeUrl}>Cambia Orario</Link>

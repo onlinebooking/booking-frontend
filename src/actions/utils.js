@@ -12,6 +12,6 @@ export function jsonPostConfig(body = {}) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(decamelizeKeys(body))
+    body: JSON.stringify(body)
   };
 }
