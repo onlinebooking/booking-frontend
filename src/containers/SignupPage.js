@@ -55,7 +55,7 @@ class SignupPage extends React.Component {
   renderWelcome() {
     const { signupUser: { name, email } } = this.props;
     return (
-      <div>
+      <div className="container-fluid padding-top-20 text-center">
         <h1>Ciao {name}, benvenuto in Qando!</h1>
         <p>
           Ti sarà inviata una mail all'indirizzo {email}, apri il
@@ -74,6 +74,7 @@ class SignupPage extends React.Component {
     } = this.props
 
     return (
+      <div className="container-fluid padding-top-20">
       <form onSubmit={handleSubmit(submit)} noValidate>
 
         <FormGroup
@@ -127,6 +128,7 @@ class SignupPage extends React.Component {
             </FormGroup>
         }
       </form>
+      </div>
     );
   }
 }

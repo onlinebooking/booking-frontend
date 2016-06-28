@@ -76,7 +76,7 @@ class UserBookingDetailPage extends React.Component {
 
   renderBookingActions() {
     const {
-      booking: { reachableStates, id },
+      booking: { reachable_states, id },
       currentActionName,
       isActionSaving
     } = this.props;
@@ -95,7 +95,7 @@ class UserBookingDetailPage extends React.Component {
     return (
       <div>
       {this.renderBookingActionError()}
-      {reachableStates.map(a => (
+      {reachable_states.map(a => (
         <button
           className="btn btn-primary"
           key={a}

@@ -101,8 +101,8 @@ class ServiceBookingRangePage extends React.Component {
       <div style={{opacity}}>
         <BookingRange
           range={range}
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={schema||{}}
+          uiSchema={uiSchema||{}}
           date={bookingDate}
           loading={isSavingBook}
           error={savingBookError}

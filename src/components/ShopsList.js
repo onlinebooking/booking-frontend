@@ -5,14 +5,14 @@ import { ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 class ShopsListItem extends React.Component {
 
   render() {
-    const { name } = this.props;
+    const { name, description } = this.props;
     return (
       <Link to={`/shops/${this.props.id}`}>
         <ListGroupItem>
           <div>
             <div className="pull-left">
               <h4>{name}</h4>
-              <p>Maybe Some description here.</p>
+              <p>{description}</p>
             </div>
             <Image className="pull-right responsive" src="http://placehold.it/150x100" />
             <div className="clearfix"></div>
