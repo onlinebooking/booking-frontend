@@ -1,5 +1,3 @@
-import { decamelizeKeys } from 'humps';
-
 export function authTokenConfig(state, config = {headers: {}}) {
   const authtoken = state.auth ? 'JWT ' + state.auth.token : null;
   return { ...config, headers: { ...config.headers, Authorization: authtoken } };

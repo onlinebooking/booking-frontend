@@ -7,7 +7,6 @@ import BookingRange from '../components/BookingRange';
 import { getBookedRange } from '../selectors/bookings';
 import { find, isEqual, isArray } from 'lodash';
 import moment from 'moment';
-import { decamelizeKeys } from 'humps';
 import { replace } from 'react-router-redux';
 import {
   book,
@@ -92,8 +91,9 @@ class ServiceBookingRangePage extends React.Component {
       savingBookError,
       book,
       user,
-      service: { bookingOptionsSchema }
+      service,
     } = this.props;
+    const schema = service['booking_options_schema'];
     const opacity = isFetchingRange ? '0.5' : '1';
 
     return (
@@ -101,7 +101,7 @@ class ServiceBookingRangePage extends React.Component {
       <div style={{opacity}}>
         <BookingRange
           range={range}
-          schema={bookingOptionsSchema}
+          schema={schema}
           date={bookingDate}
           loading={isSavingBook}
           error={savingBookError}

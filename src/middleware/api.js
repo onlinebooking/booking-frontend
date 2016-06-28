@@ -1,5 +1,4 @@
 import { omit, pick } from 'lodash';
-import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
 import { logout } from '../actions/auth';
 import { BOOKING_API_URL } from '../constants/Urls';
