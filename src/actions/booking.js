@@ -107,7 +107,7 @@ export function book({ bookingOptions }) {
       service,
       start,
       end,
-      bookingOptions
+      booking_options: bookingOptions
     }));
     const endpoint = `/book-service/`;
 
