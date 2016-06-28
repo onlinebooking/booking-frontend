@@ -69,6 +69,14 @@
 .booking-form {
   padding-left: 20px;
   padding-right: 20px;
+
+  //#TODO: not show from react
+  .errors.panel{
+    display: none;
+  }
+  .error-detail{
+    display: none;
+  }
 }
 
 .booking-calendar-container {
@@ -137,7 +145,7 @@
 }
 
 .booking-range {
-  
+
 }
 
 .booking-range-container{
