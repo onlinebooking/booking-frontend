@@ -51,19 +51,24 @@ class UserBookingDetailPage extends React.Component {
     };
 
     return (
-      <div>
+      <div className="container-fluid margin-top-20">
         <div>
           <Link to={'/my-bookings/incoming'}>Elenco Prenotazioni</Link>
         </div>
         <br />
-        <div>
-          <div>{service.name}</div>
+        <div className="panel panel-primary">
+          <div className="panel panel-heading">
+          {service.name}
+          </div>
+          <div className="panel panel-body">
           <div>{shop.name}</div>
           <div>{formattedDate}</div>
           <div>{formattedRange.start} - {formattedRange.end}</div>
+          <br/>
           <div>{humanizeBookingStatus(status)}</div>
           <hr />
           <div>{this.renderBookingActions()}</div>
+          </div>
         </div>
       </div>
      );
@@ -92,6 +97,7 @@ class UserBookingDetailPage extends React.Component {
       {this.renderBookingActionError()}
       {reachableStates.map(a => (
         <button
+          className="btn btn-primary"
           key={a}
           onClick={() => this.props.actionOnUserBooking(id, a)}
         >{humanizeBookingAction(a)}</button>
