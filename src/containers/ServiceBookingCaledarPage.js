@@ -53,14 +53,20 @@ class ServiceBookingCaledarPage extends React.Component {
 
   render() {
     return (
-      <div className="booking-calendar-container">
-        {this.renderError()}
-        {this.renderLoading()}
-        <BookingCalendar
-          events={this.props.availableDates}
-          calendarDate={this.props.calendarDate}
-          onEventClick={this.onEventClick}
-          onCalendarChange={this.onCalendarChange} />
+      <div className="container-fluid">
+      <div className="panel panel-primary booking-calendar-container">
+        <div className="panel-heading panel-heading-calendar">
+          Seleziona una data {this.renderLoading()}
+        </div>
+        <div className="panel-body  panel-body-calendar">
+          {this.renderError()}
+          <BookingCalendar
+            events={this.props.availableDates}
+            calendarDate={this.props.calendarDate}
+            onEventClick={this.onEventClick}
+            onCalendarChange={this.onCalendarChange} />
+        </div>
+      </div>
       </div>
     );
   }

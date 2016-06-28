@@ -20,11 +20,13 @@ class BookingRangeItem extends React.Component {
     }
 
     return (
+
       <ListGroupItem className="booking-item">
         <div className="pull-left booking-item-time">{start} - {end}</div>
         <div className="pull-right">{bookingBtn}</div>
         <div className="clearfix"></div>
       </ListGroupItem>
+
     );
   }
 }
@@ -36,25 +38,29 @@ export default class BookingRangeList extends React.Component {
     const formattedDate = moment(date, 'YYYY-MM-DD').format('dddd D MMMM YYYY');
 
     return (
-      <div>
-        <div className="booking-range-list-header">
+      <div className="booking-range-list">
+      <div className="panel panel-primary">
+        <div className="panel-heading">
           <div className="pull-left">{formattedDate}</div>
           <div className="pull-right">
             <Link className="change-day-link" to={changeDateUrl}>Cambia Giorno</Link>
           </div>
           <div className="clearfix"></div>
         </div>
-        <ListGroup>
-          {ranges.map((range) => {
-            const key = `${range.start}_${range.end}`;
-            return <BookingRangeItem
-              showBookingButton={showBookingButton}
-              onRangeBooked={onRangeBooked}
-              range={range}
-              key={key}
-            />;
-          })}
-        </ListGroup>
+        <div className="panel-body">
+          <ListGroup>
+            {ranges.map((range) => {
+              const key = `${range.start}_${range.end}`;
+              return <BookingRangeItem
+                showBookingButton={showBookingButton}
+                onRangeBooked={onRangeBooked}
+                range={range}
+                key={key}
+              />;
+            })}
+          </ListGroup>
+        </div>
+      </div>
       </div>
     );
   }

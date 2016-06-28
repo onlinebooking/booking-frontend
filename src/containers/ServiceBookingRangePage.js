@@ -91,11 +91,13 @@ class ServiceBookingRangePage extends React.Component {
       bookedRange,
       savingBookError,
       book,
+      user,
       service: { bookingOptionsSchema }
     } = this.props;
     const opacity = isFetchingRange ? '0.5' : '1';
 
     return (
+      <div className="container-fluid">
       <div style={{opacity}}>
         <BookingRange
           range={range}
@@ -107,7 +109,9 @@ class ServiceBookingRangePage extends React.Component {
           onConfirmBooking={book}
           changeDateUrl={this.changeDateUrl()}
           changeRangeUrl={this.changeRangeUrl()}
+          user={user}
         />
+      </div>
       </div>
     );
   }
@@ -147,6 +151,8 @@ function mapStateToProps(state) {
     ? find(rangeItems[bookingDate], range => isEqual(range, requestedRange))
     : null;
 
+  const user = state.auth.user;
+
   return {
     range,
     requestedRange,
@@ -157,6 +163,7 @@ function mapStateToProps(state) {
     isSavingBook: state.booking.book.isSaving,
     savingBookError: state.booking.book.error,
     bookedRange: getBookedRange(state),
+    user,
   };
 }
 

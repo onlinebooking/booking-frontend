@@ -62,7 +62,7 @@
 }
 
 .booking-calendar-container {
-  padding: 10px;
+  margin-top: 20px;
   /*height: 100px !important;*/
   /*padding-top: 20px;*/
   /*padding-bottom: 30px;*/
@@ -93,10 +93,8 @@
   font-weight: bold;
 }
 
-.booking-range-list-header {
-  color: white;
-  background-color: #007196;
-  padding: 20px;
+.booking-range-list {
+  margin-top: 20px;
 }
 .change-day-link {
   color: white;
@@ -130,8 +128,10 @@
 
 .booking-range {
   text-align: center;
-  font-size: 23px;
-  color: #007196;
+}
+
+.booking-range-container{
+  margin-top: 20px;
 }
 
 
@@ -209,4 +209,30 @@
   transition-delay: 2s;
   transition: opacity 1s linear;
 
+}
+
+
+.fc-toolbar{
+  background-color: $brand-primary;
+  border-top: solid #fff 1px;
+  margin-bottom: 0em !important;
+  padding:4px;
+  h2{
+    font-size: 18px;
+    margin-bottom: 0px;
+    padding :8px;
+    text-transform:'capitalize';
+    color: white;
+  }
+}
+
+.fc-day-header{
+  padding: 6px !important;
+}
+.panel-heading-calendar{
+
+}
+
+.panel-body-calendar{
+  padding: 0;
 }

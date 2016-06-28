@@ -45,6 +45,7 @@ export default class BookingCalendar extends React.Component {
 
     $(calendar).fullCalendar({
       lang: 'it',
+      height:'auto',
       events: this.props.events,
       dayClick: date => {
         const events = this.props.events;

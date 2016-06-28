@@ -17,9 +17,18 @@ export default class BookingRange extends React.Component {
     const { start, end } = formattedRange;
 
     return (
-      <div className="booking-range">
-        <h3>{formattedDate} {start} - {end}</h3>
-        {this.renderContent()}
+      <div className="booking-range-container">
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          {formattedDate} {start} - {end}
+        </div>
+        <div className="panel-body">
+          <div className="booking-range">
+            {this.renderContent()}
+          </div>
+        </div>
+      </div>
+
       </div>
     );
   }
@@ -87,13 +96,21 @@ export default class BookingRange extends React.Component {
   }
 
   renderBookedRange() {
-    const { bookedRange } = this.props;
+    const { bookedRange, user } = this.props;
 
     return (
       <div>
-        Prenotazione effettuata con successo!
-        <div><Link to={`/my-bookings/${bookedRange.id}`}>Prenotazione</Link></div>
-        <div><Link to={'/my-bookings/incoming'}>Lista Prenotazioni</Link></div>
+        <h3>Prenotazione effettuata con successo!</h3>
+        <p>
+          Riceverai una mail di conferma all'indirizzo<br/>
+        <span className="text-primary">{user.email}</span>
+        </p>
+        <br/>
+        <br/>
+        <div className="text-center">
+          <Link className="btn btn-success" to={`/my-bookings/${bookedRange.id}`}>Visualizza prenotazione</Link>
+          <Link className="btn btn-primary" to={'/my-bookings/incoming'}>Lista Prenotazioni</Link>
+        </div>
       </div>
     );
   }

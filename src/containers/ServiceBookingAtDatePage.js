@@ -84,6 +84,7 @@ class ServiceBookingAtDatePage extends React.Component {
     const opacity = loading ? '0.5' : '1';
 
     return (
+      <div className="container-fluid">
       <div style={{opacity}}>
         <BookingRangeList
           date={bookingDate}
@@ -92,6 +93,7 @@ class ServiceBookingAtDatePage extends React.Component {
           changeDateUrl={this.changeDateUrl()}
           onRangeBooked={this.onRangeBooked}
         />
+      </div>
       </div>
     );
   }
