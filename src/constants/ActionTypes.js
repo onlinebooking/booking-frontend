@@ -1,6 +1,8 @@
 export const RESET_PAGE_ERROR = 'RESET_PAGE_ERROR';
 export const SET_PAGE_ERROR = 'SET_PAGE_ERROR';
 
+export const SET_OPTION = 'SET_OPTION';
+
 export const SHOPS_REQUEST = 'SHOPS_REQUEST';
 export const SHOPS_SUCCESS = 'SHOPS_SUCCESS';
 export const SHOPS_FAILURE = 'SHOPS_FAILURE';

@@ -1,6 +1,7 @@
 import { omit } from 'lodash';
 import { replaceQuery } from '../actions/routing';
 import { loginWithToken, showModalLogin } from '../actions/auth';
+import { setIFrameMode } from '../actions/options';
 
 // Login user with persistent local storage jwt token
 function loginUserWithLocalStorageToken(store) {
@@ -29,8 +30,19 @@ function showModalLoginFromQueryString(store) {
   }
 }
 
+function setIFrameModeFromQueryString(store) {
+  const query = store.getState().routing.locationBeforeTransitions.query;
+  const { iframe } = query;
+
+  if (iframe) {
+    store.dispatch(setIFrameMode(true));
+    store.dispatch(replaceQuery(omit(query, ['iframe'])));
+  }
+}
+
 // Bootstrapping the store
 export default function bootstrapStore(store) {
   loginUserWithLocalStorageToken(store);
+  setIFrameModeFromQueryString(store);
   showModalLoginFromQueryString(store);
 }
