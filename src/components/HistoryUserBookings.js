@@ -21,16 +21,18 @@ class Paginator extends React.Component  {
     const { count, pages, pageSize, currentPage, onSetPage } = this.props;
 
     return (
-      <ButtonGroup>
-        {range(1, pages + 1).map(page => (
-          <Button
-            key={page}
-            onClick={() => onSetPage(page)}
-            className={classNames({
-              'active': page === currentPage
-          })}>{page}</Button>
-        ))}
-      </ButtonGroup>
+      <div className="paginator">
+        <ButtonGroup>
+          {range(1, pages + 1).map(page => (
+            <Button
+              key={page}
+              onClick={() => onSetPage(page)}
+              className={classNames({
+                'active': page === currentPage
+            })}>{page}</Button>
+          ))}
+        </ButtonGroup>
+      </div>
     );
   }
 }
