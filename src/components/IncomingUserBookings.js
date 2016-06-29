@@ -27,7 +27,11 @@ class IncomingUserBookingsList extends React.Component {
 
     return (
       <div>
-        <div className="booking-list-counter text-muted">{humanizeBookingStatus(statusFilter)}: {bookingsCountFiltered} di {bookingsCount} prenotazioni</div>
+        <div className="booking-list-counter text-muted">
+          {statusFilter &&  `${humanizeBookingStatus(statusFilter)}:`}
+          {' '}
+          {bookingsCountFiltered} di {bookingsCount} prenotazioni
+        </div>
         <div style={{opacity}}>
           {this.renderList()}
         </div>

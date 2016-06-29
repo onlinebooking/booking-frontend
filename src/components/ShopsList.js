@@ -6,19 +6,23 @@ class ShopsListItem extends React.Component {
 
   render() {
     const { name, description } = this.props;
+    const { imageUrl } = this.props['booking_frontend_data'];
+
     return (
-      <Link to={`/shops/${this.props.id}`}>
-        <ListGroupItem>
-          <div>
-            <div className="pull-left">
+      <ListGroupItem className="shop-list-item">
+        <Link to={`/shops/${this.props.id}`}>
+          <div className="media">
+            <div className="media-body">
               <h4>{name}</h4>
               <p>{description}</p>
             </div>
-            <Image className="pull-right responsive" src="http://placehold.it/150x100" />
-            <div className="clearfix"></div>
+            <div className="media-right">
+              <img className="media-object img-rounded"
+                   src={imageUrl || 'http://placehold.it/150x100'} />
+            </div>
           </div>
-        </ListGroupItem>
-      </Link>
+        </Link>
+      </ListGroupItem>
     );
   }
 }
