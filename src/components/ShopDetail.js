@@ -13,8 +13,9 @@ class ShopServiceListItem extends React.Component {
         <Link to={`/shops/${shop.id}/booking/${service.id}`}>
           <div className="media">
             <div className="media-left">
-                {/*<img className="media-object img-rounded" src={`https://source.unsplash.com/random?a=${Math.random()*10000}`}/>*/}
-                <img className="media-object img-rounded" src={service.serviceImage}/>
+              <img className="media-object img-rounded"
+                src={service.service_image || 'http://placehold.it/150x100'}
+              />
             </div>
             <div className="media-body">
               <h4>{service.name}</h4>
@@ -78,10 +79,15 @@ export default class ShopDetail extends React.Component {
 
   render() {
     const { shop, services } = this.props;
+    const { imageUrl } = shop['booking_frontend_data'];
 
     return (
       <div>
-        <ShopHeader title={shop.name.toUpperCase()} caption={shop.description} />
+        <ShopHeader
+          title={shop.name.toUpperCase()}
+          caption={shop.description}
+          imageUrl={imageUrl || `https://source.unsplash.com/category/nature?a=${Math.random()*10000}`}
+        />
         <div className="container-fluid shop-services">
           <ShopServiceList shop={shop} services={services} />
         </div>

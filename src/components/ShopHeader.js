@@ -4,12 +4,11 @@ import classNames from 'classnames';
 class ShopHeader extends Component {
 
   render() {
-    const { title, caption, full } = this.props;
-    const headerImageUrl = `https://source.unsplash.com/category/nature?a=${Math.random()*10000}`;
+    const { title, caption, full, imageUrl } = this.props;
     const headerClass = classNames('shop-header', { 'shop-header-full': full });
 
     return (
-      <div className={headerClass} style={{ backgroundImage: `url(${headerImageUrl})` }}>
+      <div className={headerClass} style={{ backgroundImage: `url(${imageUrl})` }}>
         <div className="text-center shop-header-background">
           <h1>{title}</h1>
           <div>{caption}</div>

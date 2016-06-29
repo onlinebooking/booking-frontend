@@ -33,17 +33,6 @@ class ShopDetailPage extends React.Component {
     }
 
     return <ShopDetail shop={shop} services={services} />
-    //const contentClass = classNames('content-hidden', { 'content-shown' : !showSpinner });
-
-    //return  (
-      //<div>
-        //<Spinner show={showSpinner}/>
-        //<div className={contentClass} >
-          //<ShopDetail shop={shop} services={services} />
-        //</div>
-      //</div>
-    //)
-
   }
 }
 

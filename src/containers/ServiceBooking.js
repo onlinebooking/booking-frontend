@@ -48,6 +48,7 @@ class ServiceBooking extends React.Component {
 
   renderTopShopAndServiceInfo() {
     const { shop, service } = this.props;
+    const { imageUrl } = shop['booking_frontend_data'];
     const title = (
       <Link to={`/shops/${shop.id}`} style={{ textDecoration: 'none', color: 'white' }}>
         <h1>{shop.name}</h1>
@@ -59,7 +60,14 @@ class ServiceBooking extends React.Component {
         <div>{service.description}</div>
       </div>
     );
-    return <ShopHeader title={title} caption={caption} full={false} />
+    return (
+      <ShopHeader
+        title={title}
+        caption={caption}
+        full={false}
+        imageUrl={service.service_image || imageUrl || `https://source.unsplash.com/category/nature?a=${Math.random()*10000}`}
+      />
+    );
   }
 }
 
