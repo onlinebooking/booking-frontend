@@ -25,14 +25,21 @@ class ShopDetailPage extends React.Component {
 
   render() {
     // We can change this bheviur to show all loading or only a part
-    const { shop, isFetchingServices, services } = this.props;
+    const { shop, isFetchingServices, services, options } = this.props;
     const showSpinner = !shop || (isFetchingServices && !services.length);
 
     if (showSpinner) {
       return <Spinner />;
     }
 
-    return <ShopDetail shop={shop} services={services} />
+    return (
+      <ShopDetail
+        shop={shop}
+        services={services}
+        showFooter={!options.iframe || options.iframe.footer}
+        showHeader={!options.iframe || options.iframe.header}
+      />
+    );
   }
 }
 
@@ -40,6 +47,7 @@ function mapStateToProps(state, ownProps) {
   const shopId = ownProps.params.shopId;
   const shop = state.entities.shops[shopId];
   const shopServicesRes = state.shopServices[shopId];
+  const options = state.options;
 
   let isFetchingServices = null;
   let services = [];
@@ -53,6 +61,7 @@ function mapStateToProps(state, ownProps) {
     shop,
     isFetchingServices,
     services,
+    options,
   };
 }
 

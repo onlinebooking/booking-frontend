@@ -32,11 +32,17 @@ function showModalLoginFromQueryString(store) {
 
 function setIFrameModeFromQueryString(store) {
   const query = store.getState().routing.locationBeforeTransitions.query;
-  const { iframe } = query;
+  const { iframe, iframeWithHeader, iframeWithFooter } = query;
 
   if (iframe) {
-    store.dispatch(setIFrameMode(true));
-    store.dispatch(replaceQuery(omit(query, ['iframe'])));
+    store.dispatch(setIFrameMode({
+      header: !!~~iframeWithHeader,
+      footer: !!~~iframeWithFooter,
+    }));
+    store.dispatch(replaceQuery(omit(query, [
+      'iframe', 'iframeWithHeader', 'iframeWithFooter'])));
+    // For parent iframe resize
+    require('iframe-resizer').iframeResizerContentWindow;
   }
 }
 

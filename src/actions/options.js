@@ -2,8 +2,8 @@ import {
   SET_OPTION
 } from '../constants/ActionTypes';
 
-export const setIFrameMode = (value) => ({
+export const setIFrameMode = (options = {}) => ({
   type: SET_OPTION,
   key: 'iframe',
-  value
+  value: options,
 });

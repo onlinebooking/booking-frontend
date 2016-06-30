@@ -47,6 +47,9 @@ class ServiceBooking extends React.Component {
   }
 
   renderTopShopAndServiceInfo() {
+    if (this.props.options.iframe && !this.props.options.iframe.header) {
+      return null;
+    }
     const { shop, service } = this.props;
     const { imageUrl } = shop['booking_frontend_data'];
     const title = (
@@ -75,6 +78,7 @@ function mapStateToProps(state, ownProps) {
   const shopId = ownProps.params.shopId;
   const serviceId = ownProps.params.serviceId;
   const shop = state.entities.shops[shopId];
+  const options = state.options;
   let service;
 
   // Is a service shop?
@@ -88,6 +92,7 @@ function mapStateToProps(state, ownProps) {
   return {
     shop,
     service,
+    options,
   };
 }
 

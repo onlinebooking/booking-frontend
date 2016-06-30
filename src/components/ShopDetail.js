@@ -78,20 +78,20 @@ class ShopFooter extends React.Component {
 export default class ShopDetail extends React.Component {
 
   render() {
-    const { shop, services } = this.props;
+    const { shop, services, showHeader, showFooter } = this.props;
     const { imageUrl } = shop['booking_frontend_data'];
 
     return (
       <div>
-        <ShopHeader
+        {showHeader && <ShopHeader
           title={shop.name.toUpperCase()}
           caption={shop.description}
           imageUrl={imageUrl || `https://source.unsplash.com/category/nature?a=${Math.random()*10000}`}
-        />
+        />}
         <div className="container-fluid shop-services">
           <ShopServiceList shop={shop} services={services} />
         </div>
-        <ShopFooter shop={shop} />
+        {showFooter && <ShopFooter shop={shop} />}
       </div>
     );
   }
