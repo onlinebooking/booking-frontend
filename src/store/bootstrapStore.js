@@ -52,9 +52,6 @@ function setIFrameModeFromQueryString(store) {
     style.type = 'text/css';
     style.href = BOOKING_API_URL + '/embed-css/' + iframe;
     document.getElementsByTagName('head')[0].appendChild(style);
-  } else {
-    // Qando standar css
-    require('../scss/style.scss');
   }
 }
 
