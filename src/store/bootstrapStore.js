@@ -50,6 +50,7 @@ function setIFrameModeFromQueryString(store) {
     // Append custom shop css
     const style = document.createElement('link');
     style.type = 'text/css';
+    style.rel = 'stylesheet';
     style.href = BOOKING_API_URL + '/embed-css/' + iframe;
     document.getElementsByTagName('head')[0].appendChild(style);
   }
