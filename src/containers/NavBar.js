@@ -14,15 +14,15 @@ class QandoNavBar extends React.Component {
     if (authenticated) {
       userNav = (
         <Nav>
-          <NavDropdown eventKey={1} title="Le mie prenotazioni" id="bookings-nav-dropdown">
+          <NavDropdown eventKey={3} title="Le mie prenotazioni" id="bookings-nav-dropdown">
             <MenuItem
-              eventKey={1.1}
+              eventKey={3.1}
               href="/my-bookings/incoming"
               to="/my-bookings/incoming"
               componentClass={Link}
             >Future</MenuItem>
             <MenuItem
-              eventKey={1.2}
+              eventKey={3.2}
               href="/my-bookings/history"
               to="/my-bookings/history"
               componentClass={Link}
@@ -34,6 +34,7 @@ class QandoNavBar extends React.Component {
       guestNav = (
         <Nav>
           <NavItem
+            eventKey={1}
             href="/signup"
             to="/signup"
             componentClass={Link}
