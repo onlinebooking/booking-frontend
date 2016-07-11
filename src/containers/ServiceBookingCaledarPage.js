@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import BookingCalendar from '../components/BookingCalendar';
 import ErrorAlert from '../components/ErrorAlert';
+import BookingSteps from '../components/BookingSteps';
 import { getBookingAvailblesCalendarDates } from '../selectors/calendar';
 import { push } from 'react-router-redux';
 import { loadBookingRanges, setBookingCalendarDate } from '../actions/booking';
@@ -54,6 +55,7 @@ class ServiceBookingCaledarPage extends React.Component {
   render() {
     return (
       <div className="container-fluid">
+      <BookingSteps step={1} />
       <div className="panel panel-primary booking-calendar-container">
         <div className="panel-heading panel-heading-calendar">
           Seleziona una data {this.renderLoading()}

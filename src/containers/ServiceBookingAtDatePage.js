@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import BookingRangeList from '../components/BookingRangeList';
+import BookingSteps from '../components/BookingSteps';
 import ErrorAlert from '../components/ErrorAlert';
 import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { push, replace } from 'react-router-redux';
@@ -85,6 +86,7 @@ class ServiceBookingAtDatePage extends React.Component {
 
     return (
       <div className="container-fluid">
+      <BookingSteps step={2} />
       <div style={{opacity}}>
         <BookingRangeList
           date={bookingDate}

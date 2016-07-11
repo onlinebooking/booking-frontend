@@ -1,7 +1,8 @@
 @import '~bootswatch/yeti/_variables.scss';
 @import '~bootswatch/yeti/bootstrap.css';
 
-@import '_spinner';
+@import 'spinner';
+@import 'steps';
 
 .qando-color {
   color: $brand-primary;

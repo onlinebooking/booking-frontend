@@ -3,6 +3,7 @@ import ErrorAlert from '../components/ErrorAlert';
 import InvalidBookPeriod from '../components/InvalidBookPeriod';
 import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
+import BookingSteps from '../components/BookingSteps';
 import BookingRange from '../components/BookingRange';
 import { getBookedRange } from '../selectors/bookings';
 import { find, isEqual, isArray } from 'lodash';
@@ -98,6 +99,7 @@ class ServiceBookingRangePage extends React.Component {
 
     return (
       <div className="container-fluid">
+      <BookingSteps step={3} />
       <div style={{opacity}}>
         <BookingRange
           range={range}
