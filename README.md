@@ -2,9 +2,9 @@
 
 ## Deploy
 
-Export `QANDO_DEPOLY_PATH` the path of https://github.com/qandobooking/qando-deploy repo on your local machine.
+Export `QANDO_DEPLOY_PATH` the path of https://github.com/qandobooking/qando-deploy repo on your local machine.
 ```sh
-export QANDO_DEPOLY_PATH=/path/to/qando-deploy-repo
+export QANDO_DEPLOY_PATH=/path/to/qando-deploy-repo
 ```
 
 Deploy: simply upload production stuff files.
