@@ -29,7 +29,7 @@ class ShopDetailPage extends React.Component {
     const showSpinner = !shop || (isFetchingServices && !services.length);
 
     if (showSpinner) {
-      return <Spinner fullpage/>;
+      return <Spinner fullpage />;
     }
 
     return (

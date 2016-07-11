@@ -34,7 +34,7 @@ class UserBookingDetailPage extends React.Component {
     const { booking } = this.props;
 
     if (!booking) {
-      return <Spinner />;
+      return <Spinner fullpage />;
     }
 
     return this.renderBooking();

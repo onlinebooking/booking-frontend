@@ -101,24 +101,24 @@ class IncomingUserBookingsPage extends React.Component {
     } = this.props;
 
     if (loading && !bookings.length) {
-      return <Spinner />;
+      return <Spinner fullpage />;
     }
 
     return (
       <div className="container-fluid margin-top-20">
-      <IncomingUserBookings
-      bookings={bookings}
-      bookingsCount={bookingsCount}
-      bookingsCountFiltered={bookingsCountFiltered}
-      loading={loading}
-      statusFilter={statusFilter}
-      view={view}
-      searchText={searchText}
-      onSearchTextChanged={this.onSearchTextChanged}
-      onStatusFilterChanged={this.onStatusFilterChanged}
-    />
-    </div>
-  )
+        <IncomingUserBookings
+          bookings={bookings}
+          bookingsCount={bookingsCount}
+          bookingsCountFiltered={bookingsCountFiltered}
+          loading={loading}
+          statusFilter={statusFilter}
+          view={view}
+          searchText={searchText}
+          onSearchTextChanged={this.onSearchTextChanged}
+          onStatusFilterChanged={this.onStatusFilterChanged}
+        />
+      </div>
+    );
   }
 }
 

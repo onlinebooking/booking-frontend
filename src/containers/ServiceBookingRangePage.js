@@ -59,7 +59,7 @@ class ServiceBookingRangePage extends React.Component {
 
     // Not yet a requested range
     if (!requestedRange) {
-      return <Spinner />;
+      return <Spinner fullpage><div>Carico la disponibilità richiesta</div></Spinner>;
     }
 
     // Error while fetching range
@@ -69,7 +69,7 @@ class ServiceBookingRangePage extends React.Component {
 
     // Loading for range, no data to show yet so show a spinner!
     if (isFetchingRange && !range) {
-      return <Spinner />;
+      return <Spinner fullpage><div>Carico la disponibilità richiesta</div></Spinner>;
     }
 
     // No loading no range, invalid range!

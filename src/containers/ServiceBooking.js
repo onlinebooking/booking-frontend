@@ -30,7 +30,7 @@ class ServiceBooking extends React.Component {
     const { shop, service } = this.props;
 
     if (!shop || !service) {
-      return <Spinner />;
+      return <Spinner fullpage />;
     }
 
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { Link } from 'react-router';
 import UserBookingListItem from './UserBookingListItem';
 import {
@@ -94,10 +95,10 @@ class IncomingUserBookingsControls extends React.Component {
     return (
       <div>
         {this.renderSearchBar()}
-        {this.renderStatusFilterButtons()}
-        <br />
-        <br />
         {this.renderViewSwitcher()}
+        <br />
+        <br />
+        {this.renderStatusFilterButtons()}
       </div>
     );
   }
@@ -137,14 +138,17 @@ class IncomingUserBookingsControls extends React.Component {
   }
 
   renderViewSwitcher() {
-    const { searchText, statusFilter } = this.props;
+    const { searchText, statusFilter, view } = this.props;
 
     return (
-      <div>
-        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}?search=${searchText}&status=${statusFilter}`}>Elenco completo</Link>
-        {' | '}
-        <Link to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}?search=${searchText}&status=${statusFilter}`}>Elenco per shop</Link>
-      </div>
+      <ButtonGroup>
+        <Link
+          className={classNames('btn btn-default', { 'active': view === INCOMING_USER_BOOKINGS_LIST })}
+          to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_LIST}?search=${searchText}&status=${statusFilter}`}>Elenco completo</Link>
+        <Link
+          className={classNames('btn btn-default', { 'active': view === INCOMING_USER_BOOKINGS_BY_SHOP })}
+          to={`/my-bookings/incoming/${INCOMING_USER_BOOKINGS_BY_SHOP}?search=${searchText}&status=${statusFilter}`}>Elenco per shop</Link>
+      </ButtonGroup>
     );
   }
 }

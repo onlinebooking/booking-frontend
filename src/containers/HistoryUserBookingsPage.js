@@ -65,14 +65,15 @@ class HistoryUserBookingsPage extends React.Component {
 
     return (
       <div className="container-fluid margin-top-20">
-      <HistoryUserBookings
-        bookings={bookings}
-        pagination={pagination}
-        searchText={search}
-        onSearchTextChanged={this.onSearchTextChanged}
-        onSetPage={this.onSetPage}
-      />
-    </div>)
+        <HistoryUserBookings
+          bookings={bookings}
+          pagination={pagination}
+          searchText={search}
+          onSearchTextChanged={this.onSearchTextChanged}
+          onSetPage={this.onSetPage}
+        />
+      </div>
+    );
   }
 }
 

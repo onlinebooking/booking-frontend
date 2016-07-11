@@ -66,7 +66,7 @@ class ServiceBookingAtDatePage extends React.Component {
     // in current state but if you don't believe you can simply
     // remove the second && condition :)
     if (loading && !bookingRanges.length) {
-      return <Spinner />;
+      return <Spinner fullpage><div>Carico gli orari disponibili</div></Spinner>
     }
 
     // No loading, no ranges, this date is not good

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { ButtonGroup, Button } from 'react-bootstrap';
 import moment from 'moment';
 import Spinner from './Spinner';
 import ErrorAlert from './ErrorAlert';
@@ -38,7 +39,7 @@ export default class BookingRange extends React.Component {
 
     // Waiting for booking result...
     if (loading) {
-      return <Spinner />;
+      return <Spinner><div>Prenotazione in corso</div></Spinner>;
     }
 
     // Error in booking...
@@ -110,8 +111,8 @@ export default class BookingRange extends React.Component {
         <br/>
         <br/>
         <div className="text-center">
-          <Link className="btn btn-success" to={`/my-bookings/${bookedRange.id}`}>Visualizza prenotazione</Link>
-          <Link className="btn btn-primary" to={'/my-bookings/incoming'}>Lista Prenotazioni</Link>
+          <Link className="btn btn-success" to={`/my-bookings/${bookedRange.id}`} style={{width:'200px'}}>Visualizza prenotazione</Link>
+          <Link className="btn btn-primary" to={'/my-bookings/incoming'} style={{width:'200px'}}>Lista Prenotazioni</Link>
         </div>
       </div>
     );

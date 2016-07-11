@@ -37,15 +37,14 @@ class ShopsListPage extends React.Component {
     const { isFetching, shops } = this.props;
 
     if (isFetching && !shops.length) {
-      return <Spinner fullpage/>;
+      return <Spinner fullpage />;
     }
+
     return (
       <div className="container-fluid">
         <ShopsList shops={shops} />
       </div>
-    )
-
-
+    );
   }
 }
 

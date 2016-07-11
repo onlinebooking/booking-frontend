@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-//import 'bootswatch/yeti/bootstrap.css';
 import './scss/style.scss';
 import React from 'react';
 import ReactDom from 'react-dom';

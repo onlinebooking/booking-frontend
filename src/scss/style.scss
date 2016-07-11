@@ -1,11 +1,16 @@
 @import '~bootswatch/yeti/_variables.scss';
 @import '~bootswatch/yeti/bootstrap.css';
 
+@import '_spinner';
 
-.margin-top-20{
+.qando-color {
+  color: $brand-primary;
+}
+
+.margin-top-20 {
   margin-top: 20px;
 }
-.padding-top-20{
+.padding-top-20 {
   padding-top: 20px;
 }
 .with-navbar {
@@ -14,12 +19,6 @@
 
 .no-link-style{
   color: inherit;
-}
-.home-jumbo {
-  background: deepskyblue; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, deepskyblue , #228); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, deepskyblue , #228); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  color: #fff;
 }
 
 .service-description {
@@ -66,14 +65,6 @@
 
 .point {
   cursor: pointer;
-}
-
-.spinner {
-  text-align: center;
-}
-
-.spinner-fullpage{
-  margin-top: 100px;
 }
 
 /** booking **/
@@ -250,10 +241,6 @@
   top:0;left:0; bottom:0; right:0;
   background-color: white;
   /*color: $brand-primary;*/
-}
-
-.loading-spinner{
-
 }
 
 .loader-hidden {

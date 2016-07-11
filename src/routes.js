@@ -16,12 +16,13 @@ import Spinner from './components/Spinner';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { routerActions } from 'react-router-redux';
 
+const UserAuthSpinner = (props) => <Spinner fullpage />;
 const UserIsAuthenticated = UserAuthWrapper({
   authSelector: state => state.auth.user,
   authenticatingSelector: state => state.auth.loading,
   redirectAction: routerActions.replace,
   wrapperDisplayName: 'UserIsAuthenticated',
-  LoadingComponent: Spinner,
+  LoadingComponent: UserAuthSpinner,
   failureRedirectPath: '/',
   allowRedirectBack: false,
 });
