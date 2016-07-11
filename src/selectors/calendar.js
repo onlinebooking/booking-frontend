@@ -5,7 +5,7 @@ import moment from 'moment';
 function mapDatesToCalendarEvents(availableDates){
   return availableDates.map(date => {
     return {
-      title: 'Prenota',
+      title: '',
       date: moment(date, 'YYYY-MM-DD'),
       allDay: true,
       className: 'booking-event',

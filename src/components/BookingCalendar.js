@@ -57,6 +57,9 @@ export default class BookingCalendar extends React.Component {
       eventClick: event => this.props.onEventClick(event),
       viewRender: view => this.props.onCalendarChange(view.calendar.getDate()),
       eventAfterAllRender: view => this.setClassesToBookedDayCell(),
+      eventRender : (event, element) => {
+        element.find(".fc-title").prepend("<i class='glyphicon glyphicon-tags'></i>");
+      }
     });
   }
 
