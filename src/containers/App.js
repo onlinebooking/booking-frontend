@@ -17,7 +17,7 @@ class App extends React.Component {
 
     return (
       <div className={appClass}>
-        {!options.iframe && <NavBar showAuthNav={this.props.showAuthNav} />}
+        {!options.iframe && <NavBar />}
         {this.renderPageContent()}
         <ModalLogin />
       </div>
@@ -41,15 +41,11 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   const error = state.pageError.error;
-  // Hide the AuthNav when page errors occurs
-  const showAuthNav = !error;
-
   const options = state.options;
 
   return {
     error,
     options,
-    showAuthNav,
   };
 }
 
