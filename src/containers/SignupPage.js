@@ -154,7 +154,7 @@ export default reduxForm({
     password: [required, minLength(5)],
     confirmedPassword: [
       required,
-      withMessage(match('password'), 'La password inserita è diversa')
+      withMessage(match('password'), 'Le due password non combaciano')
     ]
   })
 }, mapStateToProps, { replace, clearRegistration })(SignupPage)
