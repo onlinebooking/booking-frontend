@@ -9,7 +9,8 @@ import {
   SET_USER_TOKEN,
   USER_LOGOUT,
   SHOW_MODAL_LOGIN,
-  HIDE_MODAL_LOGIN
+  HIDE_MODAL_LOGIN,
+  UPDATE_USER_DATA_SUCCESS
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -46,6 +47,12 @@ export default function auth(state=initialState, action) {
         ...state,
         token: data.token,
         error: null,
+      };
+
+    case UPDATE_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        user: data,
       };
 
     case ME_SUCCESS:

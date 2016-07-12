@@ -1,6 +1,6 @@
 import { omit, pick } from 'lodash';
 import fetch from 'isomorphic-fetch';
-import { logout } from '../actions/auth';
+import { logout, updateUserToken } from '../actions/auth';
 import { BOOKING_API_URL } from '../constants/Urls';
 
 function callApi(endpoint, callConfig = {}) {
@@ -48,7 +48,7 @@ export default store => next => action => {
     return next(action);
   }
 
-  const { types, endpoint, config = {} } = callAPI;
+  const { types, endpoint, config = {}, shouldUpdateUserToken } = callAPI;
   const [ requestType, successType, failureType ] = types;
 
   const actionWith = data => Object.assign({}, omit(action, [CALL_API]), data);
@@ -70,6 +70,11 @@ export default store => next => action => {
           type: successType
         }));
       } else {
+
+        if (shouldUpdateUserToken && json.token) {
+          store.dispatch(updateUserToken(json.token));
+        }
+
         return next(actionWith({
           data: json,
           type: successType

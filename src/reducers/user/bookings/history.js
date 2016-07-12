@@ -7,7 +7,7 @@ import {
   SET_HISTORY_USER_BOOKINGS_PAGE,
   RESET_HISTORY_USER_BOOKINGS_PAGINATION,
   SET_HISTORY_USER_BOOKINGS_SEARCH_FILTER
-} from '../../constants/ActionTypes';
+} from '../../../constants/ActionTypes';
 
 const initialPaginateListState = {
   isFetching: false,

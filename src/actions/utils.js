@@ -13,3 +13,14 @@ export function jsonPostConfig(body = {}) {
     body: JSON.stringify(body)
   };
 }
+
+export function jsonPutConfig(body = {}) {
+  return {
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  };
+}

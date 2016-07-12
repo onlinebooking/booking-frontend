@@ -10,6 +10,7 @@ import ServiceBookingRangePage from './containers/ServiceBookingRangePage';
 import IncomingUserBookingsPage from './containers/IncomingUserBookingsPage';
 import HistoryUserBookingsPage from './containers/HistoryUserBookingsPage';
 import UserBookingDetailPage from './containers/UserBookingDetailPage';
+import ProfilePage from './containers/ProfilePage';
 import SignupPage from './containers/SignupPage';
 import NotFoundPage from './components/NotFoundPage';
 import Spinner from './components/Spinner';
@@ -36,6 +37,7 @@ export default (
       <Route path="at/:bookingDate" component={ServiceBookingAtDatePage} />
       <Route path="book/:rangeStart/:rangeEnd" component={UserIsAuthenticated(ServiceBookingRangePage)} />
     </Route>
+    <Route path="profile" component={UserIsAuthenticated(ProfilePage)} />
     <Route path="my-bookings/incoming(/:view)" component={UserIsAuthenticated(IncomingUserBookingsPage)} />
     <Route path="my-bookings/history" component={UserIsAuthenticated(HistoryUserBookingsPage)} />
     <Route path="my-bookings/:bookingId" component={UserIsAuthenticated(UserBookingDetailPage)} />

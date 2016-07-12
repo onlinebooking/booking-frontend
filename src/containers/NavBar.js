@@ -40,6 +40,9 @@ class QandoNavBar extends React.Component {
             <NavItem
               eventKey={4}
               onClick={() => this.setState({ expanded: false })}
+              href="/profile"
+              to="/profile"
+              componentClass={Link}
             >Signed in as {this.props.user.email}</NavItem>
             <NavItem
               eventKey={5}

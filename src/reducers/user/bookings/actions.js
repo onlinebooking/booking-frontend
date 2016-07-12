@@ -3,7 +3,7 @@ import {
   ACTION_ON_USER_BOOKING_SUCCESS,
   ACTION_ON_USER_BOOKING_FAILURE,
   CLEAR_ACTION_ERROR_ON_USER_BOOKING
-} from '../../constants/ActionTypes';
+} from '../../../constants/ActionTypes';
 
 const initialUserBookingActionState = {
   isSaving: false,

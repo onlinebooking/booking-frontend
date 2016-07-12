@@ -4,7 +4,7 @@ import {reducer as formReducer} from 'redux-form';
 import entities from './entities';
 import simpleResList from './utils/simple-res-list';
 import booking from './booking';
-import userData from './user-data';
+import userData from './user';
 import auth from './auth';
 import registration from './registration';
 import pageError from './page-error';

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import simpleResList from '../utils/simple-res-list';
+import simpleResList from '../../utils/simple-res-list';
 import {
   INCOMING_USER_BOOKINGS_REQUEST,
   INCOMING_USER_BOOKINGS_SUCCESS,
@@ -7,10 +7,10 @@ import {
   SET_INCOMING_USER_BOOKINGS_VIEW,
   SET_INCOMING_USER_BOOKINGS_STATUS_FILTER,
   SET_INCOMING_USER_BOOKINGS_SEARCH_FILTER
-} from '../../constants/ActionTypes';
+} from '../../../constants/ActionTypes';
 import {
   INCOMING_USER_BOOKINGS_LIST
-} from '../../constants/ViewTypes';
+} from '../../../constants/ViewTypes';
 
 const incomingUserBookingsList = simpleResList([
   INCOMING_USER_BOOKINGS_REQUEST,

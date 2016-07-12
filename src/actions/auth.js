@@ -86,6 +86,14 @@ export function loginWithToken(token) {
   };
 }
 
+export const updateUserToken = (token) => (dispatch, getState) => {
+  dispatch({
+    token,
+    type: SET_USER_TOKEN,
+  });
+  localStorage.setItem('user_token', token);
+};
+
 export function showModalLogin(options = {}) {
   const { name, email, redirect } = {
     ...{
@@ -98,6 +106,6 @@ export function showModalLogin(options = {}) {
   return { type: SHOW_MODAL_LOGIN, name, email, redirect };
 }
 
-export function hideModalLogin() {
-  return { type: HIDE_MODAL_LOGIN };
-}
+export const hideModalLogin = () => ({
+  type: HIDE_MODAL_LOGIN
+});
