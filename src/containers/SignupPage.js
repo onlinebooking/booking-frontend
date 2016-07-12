@@ -16,7 +16,6 @@ import {
   createValidator,
   withMessage,
   required,
-  minLength,
   match,
   email as emailValidationRule
 } from '../utils/validation';
@@ -151,7 +150,7 @@ export default reduxForm({
   validate: createValidator({
     name: [required],
     email: [required, emailValidationRule],
-    password: [required, minLength(5)],
+    password: [required],
     confirmedPassword: [
       required,
       withMessage(match('password'), 'Le due password non combaciano')

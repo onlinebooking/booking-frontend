@@ -7,8 +7,7 @@ import {
   createValidator,
   required,
   match,
-  withMessage,
-  minLength
+  withMessage
 } from '../utils/validation';
 import {
   FormGroup,
@@ -80,7 +79,7 @@ export default reduxForm({
   form: 'update-user-password',
   fields: ['password', 'confirmedPassword'],
   validate: createValidator({
-    password: [required, minLength(5)],
+    password: [required],
     confirmedPassword: [
       required,
       withMessage(match('password'), 'Le due password non combaciano')
