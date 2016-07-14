@@ -1,6 +1,6 @@
 import { Schema, arrayOf } from 'normalizr';
 
-const shopSchema = new Schema('shops');
+const shopSchema = new Schema('shops', { idAttribute: 'domain_name' });
 const serviceSchema = new Schema('services');
 const bookingSchema = new Schema('bookings');
 const serviceWithShopSchema = new Schema('services');

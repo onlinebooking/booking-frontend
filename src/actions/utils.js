@@ -24,3 +24,12 @@ export function jsonPutConfig(body = {}) {
     body: JSON.stringify(body)
   };
 }
+
+// Check if an error reponse and when is an error
+// response give null
+export function checkResponse(response) {
+  if (typeof response.error === 'undefined') {
+    return response.data;
+  }
+  return null;
+};

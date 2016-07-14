@@ -1,4 +1,4 @@
-import { omit, pick } from 'lodash';
+import { omit, pick, identity, isArray } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import { logout, updateUserToken } from '../actions/auth';
 import { BOOKING_API_URL } from '../constants/Urls';
@@ -48,7 +48,7 @@ export default store => next => action => {
     return next(action);
   }
 
-  const { types, endpoint, config = {}, shouldUpdateUserToken } = callAPI;
+  const { types, endpoint, config = {}, shouldUpdateUserToken, transform } = callAPI;
   const [ requestType, successType, failureType ] = types;
 
   const actionWith = data => Object.assign({}, omit(action, [CALL_API]), data);
@@ -58,6 +58,9 @@ export default store => next => action => {
     isRequestAction: true, // Other reducer can now distinguish this kind of action
   }));
 
+  const transformData = (data) =>
+    isArray(data) ? data.map(transform || identity) : (transform || identity)(data);
+
   //return new Promise((resolve, reject) => setTimeout(() => {
 
   return callApi(endpoint, config).then(
@@ -65,7 +68,7 @@ export default store => next => action => {
       // Check if a paginate response
       if (json.results) {
         return next(actionWith({
-          data: json.results,
+          data: transformData(json.results),
           pagination: omit(json, 'results'),
           type: successType
         }));
@@ -76,7 +79,7 @@ export default store => next => action => {
         }
 
         return next(actionWith({
-          data: json,
+          data: transformData(json),
           type: successType
         }));
       }

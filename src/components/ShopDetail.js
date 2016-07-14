@@ -10,7 +10,7 @@ class ShopServiceListItem extends React.Component {
 
     return (
       <ListGroupItem className="shop-list-item">
-        <Link to={`/shops/${shop.id}/booking/${service.id}`}>
+        <Link to={`/${shop.domain_name}/booking/${service.id}`}>
           <div className="media">
             <div className="media-left">
               <img className="media-object img-rounded"

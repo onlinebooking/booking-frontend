@@ -16,7 +16,6 @@ const steps = [
 export default class BookingSteps extends Component {
   render() {
     const { step } = this.props;
-    console.log(step);
     return (
       <div className="booking-steps">
         {steps.map(({text}, i) => (

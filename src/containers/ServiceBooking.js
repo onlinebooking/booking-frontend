@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Spinner from '../components/Spinner';
-import { loadShop, loadShopService } from '../actions/shops';
+import { loadShopAndService } from '../actions/shops';
 import { setBookingService } from '../actions/booking';
 import ShopHeader from '../components/ShopHeader';
 
 function loadData(props) {
-  const { shopId, serviceId } = props.params;
-  props.loadShop(shopId);
-  props.loadShopService(shopId, serviceId);
+  const { shopDomainName, serviceId } = props.params;
+  props.loadShopAndService(shopDomainName, serviceId);
   props.setBookingService(serviceId);
 }
 
@@ -20,7 +19,7 @@ class ServiceBooking extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.shopId !== this.props.params.shopId ||
+    if (nextProps.params.shopDomainName !== this.props.params.shopDomainName ||
         nextProps.params.serviceId !== this.props.params.serviceId) {
       loadData(nextProps);
     }
@@ -75,16 +74,16 @@ class ServiceBooking extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const shopId = ownProps.params.shopId;
+  const shopDomainName = ownProps.params.shopDomainName;
   const serviceId = ownProps.params.serviceId;
-  const shop = state.entities.shops[shopId];
+  const shop = state.entities.shops[shopDomainName];
   const options = state.options;
   let service;
 
   // Is a service shop?
   if (shop) {
     service = state.entities.services[serviceId];
-    if (service && Number(service.shop) !== Number(shop.id)) {
+    if (service && service.shop !== shop.domain_name) {
       service = null;
     }
   }
@@ -97,7 +96,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
-  loadShop,
-  loadShopService,
+  loadShopAndService,
   setBookingService,
 })(ServiceBooking);

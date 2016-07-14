@@ -11,12 +11,12 @@ import { loadBookingRanges, setBookingCalendarDate } from '../actions/booking';
 import { showModalLogin } from '../actions/auth';
 
 function loadData(props) {
-  const { bookingDate, shopId, serviceId } = props.params;
+  const { bookingDate, shopDomainName, serviceId } = props.params;
   if (moment(bookingDate, 'YYYY-MM-DD', true).isValid()) {
     props.setBookingCalendarDate(bookingDate);
     props.loadBookingRanges({ loadSingleDay: true });
   } else {
-    props.replace(`/shops/${shopId}/booking/${serviceId}`);
+    props.replace(`/${shopDomainName}/booking/${serviceId}`);
   }
 }
 
@@ -33,7 +33,7 @@ class ServiceBookingAtDatePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.shopId !== this.props.params.shopId ||
+    if (nextProps.params.shopDomainName !== this.props.params.shopDomainName ||
         nextProps.params.serviceId !== this.props.params.serviceId ||
         nextProps.params.bookingDate !== this.props.params.bookingDate) {
       loadData(nextProps);
@@ -42,12 +42,12 @@ class ServiceBookingAtDatePage extends React.Component {
 
   changeDateUrl() {
     const { bookingDate, shop, service } = this.props;
-    return `/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`;
+    return `/${shop.domain_name}/booking/${service.id}?date=${bookingDate}`;
   }
 
   onRangeBooked(range) {
     const { shop, service, push } = this.props;
-    const redirect = `/shops/${shop.id}/booking/${service.id}/book/${range.start}/${range.end}`;
+    const redirect = `/${shop.domain_name}/booking/${service.id}/book/${range.start}/${range.end}`;
     if (this.props.authenticated) {
       push(redirect);
     } else {

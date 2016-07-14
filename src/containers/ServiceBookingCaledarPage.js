@@ -23,7 +23,7 @@ class ServiceBookingCaledarPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.shopId !== this.props.params.shopId ||
+    if (nextProps.params.shopDomainName !== this.props.params.shopDomainName ||
         nextProps.params.serviceId !== this.props.params.serviceId ||
         nextProps.location.query.date !== this.props.location.query.date) {
       loadData(nextProps);
@@ -49,7 +49,7 @@ class ServiceBookingCaledarPage extends React.Component {
     // Go to booking date page
     const { shop, service, push } = this.props;
     const bookingDate = event.date.format('YYYY-MM-DD');
-    push(`/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`);
+    push(`/${shop.domain_name}/booking/${service.id}/at/${bookingDate}`);
   }
 
   render() {

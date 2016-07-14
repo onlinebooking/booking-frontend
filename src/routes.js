@@ -31,17 +31,17 @@ const UserIsAuthenticated = UserAuthWrapper({
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={ShopsListPage} />
-    <Route path="shops/:shopId" component={ShopDetailPage} />
-    <Route path="shops/:shopId/booking/:serviceId" component={ServiceBooking} >
-      <IndexRoute component={ServiceBookingCaledarPage} />
-      <Route path="at/:bookingDate" component={ServiceBookingAtDatePage} />
-      <Route path="book/:rangeStart/:rangeEnd" component={UserIsAuthenticated(ServiceBookingRangePage)} />
-    </Route>
     <Route path="profile" component={UserIsAuthenticated(ProfilePage)} />
     <Route path="my-bookings/incoming(/:view)" component={UserIsAuthenticated(IncomingUserBookingsPage)} />
     <Route path="my-bookings/history" component={UserIsAuthenticated(HistoryUserBookingsPage)} />
     <Route path="my-bookings/:bookingId" component={UserIsAuthenticated(UserBookingDetailPage)} />
     <Route path="signup" component={SignupPage} />
+    <Route path=":shopDomainName" component={ShopDetailPage} />
+    <Route path=":shopDomainName/booking/:serviceId" component={ServiceBooking} >
+      <IndexRoute component={ServiceBookingCaledarPage} />
+      <Route path="at/:bookingDate" component={ServiceBookingAtDatePage} />
+      <Route path="book/:rangeStart/:rangeEnd" component={UserIsAuthenticated(ServiceBookingRangePage)} />
+    </Route>
     <Route path="*" component={NotFoundPage} />
   </Route>
 );

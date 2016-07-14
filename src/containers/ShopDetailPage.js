@@ -2,13 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ShopDetail from '../components/ShopDetail';
 import Spinner from '../components/Spinner';
-import { loadShop, loadShopServices } from '../actions/shops';
-import classNames from 'classnames';
+import { loadShopAndServices } from '../actions/shops';
+//import classNames from 'classnames';
 
 function loadData(props) {
-  const { shopId } = props.params;
-  props.loadShop(shopId);
-  props.loadShopServices(shopId);
+  const { shopDomainName } = props.params;
+  props.loadShopAndServices(shopDomainName);
 }
 
 class ShopDetailPage extends React.Component {
@@ -18,7 +17,7 @@ class ShopDetailPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.shopId !== this.props.params.shopId) {
+    if (nextProps.params.shopDomainName !== this.props.params.shopDomainName) {
       loadData(nextProps);
     }
   }
@@ -44,11 +43,12 @@ class ShopDetailPage extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const shopId = ownProps.params.shopId;
-  const shop = state.entities.shops[shopId];
-  const shopServicesRes = state.shopServices[shopId];
+  const shopDomainName = ownProps.params.shopDomainName;
+  const shop = state.entities.shops[shopDomainName];
+  const shopServicesRes = state.shopServices[shopDomainName];
   const options = state.options;
 
+  // TODO: RESELECTIZE!
   let isFetchingServices = null;
   let services = [];
 
@@ -66,6 +66,5 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
-  loadShop,
-  loadShopServices,
+  loadShopAndServices,
 })(ShopDetailPage);

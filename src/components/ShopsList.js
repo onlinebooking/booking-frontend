@@ -10,7 +10,7 @@ class ShopsListItem extends React.Component {
 
     return (
       <ListGroupItem className="shop-list-item">
-        <Link to={`/shops/${this.props.id}`}>
+        <Link to={`${this.props.domain_name}`}>
           <div className="media">
             <div className="media-body">
               <h4>{name}</h4>

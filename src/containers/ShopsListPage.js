@@ -4,6 +4,7 @@ import ShopsList from '../components/ShopsList';
 import { Jumbotron } from 'react-bootstrap';
 import Spinner from '../components/Spinner';
 import { loadShops } from '../actions/shops';
+import { getHomeShops } from '../selectors/shops';
 import classNames from 'classnames';
 
 function loadData(props) {
@@ -49,7 +50,7 @@ class ShopsListPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const shops = state.homeShops.ids.map(id => state.entities.shops[id]);
+  const shops = getHomeShops(state);
   const isFetching = state.homeShops.isFetching;
   return { shops, isFetching };
 }

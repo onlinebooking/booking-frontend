@@ -5,7 +5,7 @@ const initialState = {
   ids: [],
 };
 
-export default function simpleResList(types) {
+export default function simpleResList(types, idAttribute = 'id') {
   const [ requestType, successType, failureType ] = types;
 
   return (state = initialState, action) => {
@@ -17,7 +17,7 @@ export default function simpleResList(types) {
         return { ...state, isFetching: false };
 
       case successType:
-        const ids = pluck(action.data, 'id');
+        const ids = pluck(action.data, idAttribute);
         return { ...state, isFetching: false, ids };
 
       default:

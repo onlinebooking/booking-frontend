@@ -17,7 +17,7 @@ import {
 } from '../actions/booking';
 
 function loadData(props) {
-  const { rangeStart, rangeEnd, shopId, serviceId } = props.params;
+  const { rangeStart, rangeEnd, shopDomainName, serviceId } = props.params;
   const start = moment(rangeStart, moment.ISO_8601, true);
   const end = moment(rangeEnd, moment.ISO_8601, true);
 
@@ -26,7 +26,7 @@ function loadData(props) {
     props.setBookingRange({ start: rangeStart, end: rangeEnd });
     props.loadBookingRanges({ loadSingleDay: true });
   } else {
-    props.replace(`/shops/${shopId}/booking/${serviceId}`);
+    props.replace(`/${shopDomainName}/booking/${serviceId}`);
   }
 }
 
@@ -37,7 +37,7 @@ class ServiceBookingRangePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.shopId !== this.props.params.shopId ||
+    if (nextProps.params.shopDomainName !== this.props.params.shopDomainName ||
         nextProps.params.serviceId !== this.props.params.serviceId ||
         nextProps.params.rangeStart !== this.props.params.rangeStart ||
         nextProps.params.rangeEnd !== this.props.params.rangeEnd) {
@@ -47,12 +47,12 @@ class ServiceBookingRangePage extends React.Component {
 
   changeDateUrl() {
     const { bookingDate, shop, service } = this.props;
-    return `/shops/${shop.id}/booking/${service.id}?date=${bookingDate}`;
+    return `/${shop.domain_name}/booking/${service.id}?date=${bookingDate}`;
   }
 
   changeRangeUrl() {
     const { bookingDate, shop, service } = this.props;
-    return `/shops/${shop.id}/booking/${service.id}/at/${bookingDate}`;
+    return `/${shop.domain_name}/booking/${service.id}/at/${bookingDate}`;
   }
 
   render() {

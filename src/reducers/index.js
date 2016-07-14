@@ -22,7 +22,7 @@ const homeShops = simpleResList([
   SHOPS_REQUEST,
   SHOPS_SUCCESS,
   SHOPS_FAILURE
-]);
+], 'domain_name');
 
 const service = simpleResList([
   SHOP_SERVICES_REQUEST,
@@ -38,7 +38,7 @@ function shopServices(state = {}, action){
     case SHOP_SERVICES_SUCCESS:
       return {
         ...state,
-        [action.shopId] : service(state[action.shopId], action)
+        [action.shopDomainName] : service(state[action.shopDomainName], action)
       };
 
     default:
