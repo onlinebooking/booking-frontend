@@ -94,9 +94,9 @@ const fetchShopService = (shop, serviceId) => ({
       SHOP_SERVICE_REQUEST,
       SHOP_SERVICE_SUCCESS,
       SHOP_SERVICE_FAILURE
-    ]
-  },
-  transform: (service) => set(service, 'shop', shop.domain_name)
+    ],
+    transform: (service) => set(service, 'shop', shop.domain_name)
+  }
 });
 
 export const loadShopAndService = (shopDomainName, serviceId) => (dispatch, getState) => {
