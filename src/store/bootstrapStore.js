@@ -36,23 +36,27 @@ function setIFrameModeFromQueryString(store) {
   const { iframe, iframeWithHeader, iframeWithFooter, iframeCustomCss } = query;
 
   if (iframe) {
+    // Tell state to use iframe mode...
     store.dispatch(setIFrameMode({
       header: !!~~iframeWithHeader,
       footer: !!~~iframeWithFooter,
     }));
-    store.dispatch(replaceQuery(omit(query, [
-      'iframe', 'iframeWithHeader', 'iframeWithFooter', 'iframeCustomCss'])));
+
+    // Append custom css of shop
+    if (!!~~iframeCustomCss) {
+      const style = document.createElement('link');
+      style.type = 'text/css';
+      style.rel = 'stylesheet';
+      style.href = BOOKING_API_URL + '/embed-css/' + iframe;
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
     // For parent iframe resize
     require('iframe-resizer').iframeResizerContentWindow;
-  }
 
-  if (iframe && iframeCustomCss) {
-    // Append custom shop css
-    const style = document.createElement('link');
-    style.type = 'text/css';
-    style.rel = 'stylesheet';
-    style.href = BOOKING_API_URL + '/embed-css/' + iframe;
-    document.getElementsByTagName('head')[0].appendChild(style);
+    // Remov shit from url
+    store.dispatch(replaceQuery(omit(query, [
+      'iframe', 'iframeWithHeader', 'iframeWithFooter', 'iframeCustomCss'])));
   }
 }
 
